@@ -226,94 +226,114 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
         )}
       </div>
 
-      {/* ── Personnage ──────────────────────────────── */}
-      <fieldset disabled={!allLinked} style={{ opacity: allLinked ? 1 : 0.45, transition: 'opacity 0.2s', border: 'none', padding: 0, margin: 0 }}>
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label className="form-label">Prénom du personnage *</label>
-              <input name="prenom" type="text" className="form-input" placeholder="Prénom" required />
-            </div>
-            <div>
-              <label className="form-label">Nom de famille *</label>
-              <input name="nom" type="text" className="form-input" placeholder="Nom" required />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label className="form-label">Âge du personnage *</label>
-              <input name="age" type="number" className="form-input" placeholder="Ex : 32" min="18" max="80" required />
-            </div>
-            <div>
-              <label className="form-label">Ville de naissance (lore) *</label>
-              <input name="ville" type="text" className="form-input" placeholder="Ex : St Denis, Blackwater…" required />
-            </div>
-          </div>
-
-          <div>
-            <label className="form-label">Métier déclaré à l&apos;arrivée *</label>
-            <input name="metier" type="text" className="form-input" placeholder="Ex : Chasseur, Fermier, Médecin…" required />
-          </div>
-
-          <div>
-            <label className="form-label">Histoire du personnage * (min. 300 mots)</label>
-            <textarea
-              name="histoire"
-              className="form-input"
-              placeholder="Racontez l'histoire de votre personnage : d'où vient-il, qu'a-t-il vécu, pourquoi arrive-t-il dans le comté…"
-              required
-              style={{ resize: 'vertical', minHeight: '180px', lineHeight: '1.65' }}
-            />
-          </div>
-
-          <div>
-            <label className="form-label">Votre expérience en RP *</label>
-            <textarea
-              name="experience"
-              className="form-input"
-              placeholder="Décrivez votre expérience en roleplay (serveurs, durée, rôles joués)…"
-              required
-              style={{ resize: 'vertical', minHeight: '100px', lineHeight: '1.65' }}
-            />
-          </div>
-
-          <div>
-            <label className="form-label">Pourquoi Wild Frontier RP ? *</label>
-            <textarea
-              name="motivation"
-              className="form-input"
-              placeholder="Qu'est-ce qui vous attire dans ce serveur ? Qu'attendez-vous de cette expérience ?"
-              required
-              style={{ resize: 'vertical', minHeight: '100px', lineHeight: '1.65' }}
-            />
-          </div>
-
-          <div>
-            <label className="form-label" style={{ display: 'flex', alignItems: 'start', gap: '12px', cursor: 'pointer' }}>
-              <input type="checkbox" required style={{ marginTop: '4px', flexShrink: 0 }} />
-              <span className="body-text" style={{ fontSize: '0.95rem', textTransform: 'none', letterSpacing: 0 }}>
-                J&apos;ai lu intégralement le règlement de Wild Frontier RP et j&apos;accepte de m&apos;y conformer.
+      {/* Form fields — only rendered once all accounts are linked */}
+      {allLinked && (
+        <>
+          {/* Recap bar */}
+          <div
+            className="flex flex-wrap items-center gap-3 px-4 py-3"
+            style={{ border: '1px solid rgba(26,92,26,0.3)', backgroundColor: 'rgba(26,92,26,0.04)' }}
+          >
+            <span className="label-display" style={{ color: '#1a5c1a', fontSize: '0.72rem' }}>Comptes vérifiés</span>
+            {[
+              { label: 'Discord', name: discordName },
+              { label: 'Steam',   name: steamData!.name },
+              { label: 'CFX.re',  name: cfxreData!.username },
+            ].map(a => (
+              <span key={a.label} className="body-text" style={{ fontSize: '0.82rem', color: 'var(--ink-20)' }}>
+                <span style={{ color: '#1a5c1a', fontWeight: 600 }}>{a.label}</span> {a.name}
               </span>
-            </label>
+            ))}
           </div>
-        </div>
-      </fieldset>
 
-      {formState === 'error' && (
-        <p className="label-display" style={{ color: 'var(--rust)' }}>
-          Erreur : {formError}
-        </p>
+          {/* ── Personnage ────────────────────────────── */}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="form-label">Prénom du personnage *</label>
+                <input name="prenom" type="text" className="form-input" placeholder="Prénom" required />
+              </div>
+              <div>
+                <label className="form-label">Nom de famille *</label>
+                <input name="nom" type="text" className="form-input" placeholder="Nom" required />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="form-label">Âge du personnage *</label>
+                <input name="age" type="number" className="form-input" placeholder="Ex : 32" min="18" max="80" required />
+              </div>
+              <div>
+                <label className="form-label">Ville de naissance (lore) *</label>
+                <input name="ville" type="text" className="form-input" placeholder="Ex : St Denis, Blackwater…" required />
+              </div>
+            </div>
+
+            <div>
+              <label className="form-label">Métier déclaré à l&apos;arrivée *</label>
+              <input name="metier" type="text" className="form-input" placeholder="Ex : Chasseur, Fermier, Médecin…" required />
+            </div>
+
+            <div>
+              <label className="form-label">Histoire du personnage * (min. 300 mots)</label>
+              <textarea
+                name="histoire"
+                className="form-input"
+                placeholder="Racontez l'histoire de votre personnage : d'où vient-il, qu'a-t-il vécu, pourquoi arrive-t-il dans le comté…"
+                required
+                style={{ resize: 'vertical', minHeight: '180px', lineHeight: '1.65' }}
+              />
+            </div>
+
+            <div>
+              <label className="form-label">Votre expérience en RP *</label>
+              <textarea
+                name="experience"
+                className="form-input"
+                placeholder="Décrivez votre expérience en roleplay (serveurs, durée, rôles joués)…"
+                required
+                style={{ resize: 'vertical', minHeight: '100px', lineHeight: '1.65' }}
+              />
+            </div>
+
+            <div>
+              <label className="form-label">Pourquoi Wild Frontier RP ? *</label>
+              <textarea
+                name="motivation"
+                className="form-input"
+                placeholder="Qu'est-ce qui vous attire dans ce serveur ? Qu'attendez-vous de cette expérience ?"
+                required
+                style={{ resize: 'vertical', minHeight: '100px', lineHeight: '1.65' }}
+              />
+            </div>
+
+            <div>
+              <label className="form-label" style={{ display: 'flex', alignItems: 'start', gap: '12px', cursor: 'pointer' }}>
+                <input type="checkbox" required style={{ marginTop: '4px', flexShrink: 0 }} />
+                <span className="body-text" style={{ fontSize: '0.95rem', textTransform: 'none', letterSpacing: 0 }}>
+                  J&apos;ai lu intégralement le règlement de Wild Frontier RP et j&apos;accepte de m&apos;y conformer.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {formState === 'error' && (
+            <p className="label-display" style={{ color: 'var(--rust)' }}>
+              Erreur : {formError}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={formState === 'loading'}
+            style={{ width: '100%', justifyContent: 'center' }}
+          >
+            {formState === 'loading' ? 'Envoi en cours…' : 'Soumettre ma candidature'}
+          </button>
+        </>
       )}
-
-      <button
-        type="submit"
-        className="btn-primary"
-        disabled={formState === 'loading' || !allLinked}
-        style={{ width: '100%', justifyContent: 'center', opacity: !allLinked ? 0.4 : 1 }}
-      >
-        {formState === 'loading' ? 'Envoi en cours…' : 'Soumettre ma candidature'}
-      </button>
     </form>
   )
 }
