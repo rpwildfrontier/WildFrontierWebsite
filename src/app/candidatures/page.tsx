@@ -145,7 +145,7 @@ export default async function CandidaturesPage() {
 
                 {session ? (
                   /* Formulaire actif — utilisateur connecté */
-                  <CandidatureForm />
+                  <CandidatureForm discordName={session.user?.name ?? ''} />
                 ) : (
                   /* Portail de connexion */
                   <div

@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
-export default function CandidatureForm() {
+export default function CandidatureForm({ discordName = '' }: { discordName?: string }) {
   const [state, setState] = useState<FormState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -86,7 +86,14 @@ export default function CandidatureForm() {
         </div>
         <div>
           <label className="form-label">Votre pseudo Discord</label>
-          <input name="discordName" type="text" className="form-input" placeholder="Nom#0000" />
+          <input
+            name="discordName"
+            type="text"
+            className="form-input"
+            defaultValue={discordName}
+            readOnly={!!discordName}
+            style={discordName ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
+          />
         </div>
       </div>
 
