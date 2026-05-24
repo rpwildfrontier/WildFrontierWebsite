@@ -13,23 +13,23 @@ export default function EspaceStaffPage() {
         className="py-20 md:py-32"
         style={{
           background: 'linear-gradient(160deg, #0d0500 0%, #1a0a00 100%)',
-          borderBottom: '3px solid var(--color-gold)',
+          borderBottom: '3px solid var(--gold)',
         }}
       >
         <div className="container-narrow text-center">
           <div
-            className="display-text text-xs uppercase tracking-[0.5em] mb-4"
-            style={{ color: 'var(--color-gold)', opacity: 0.6 }}
+            className="label-display mb-4"
+            style={{ color: 'var(--gold)', opacity: 0.55, letterSpacing: '0.5em' }}
           >
             ✦ Accès Restreint ✦
           </div>
           <h1
-            className="font-serif font-black uppercase mb-4"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--color-parchment)', letterSpacing: '0.05em' }}
+            className="display-heading mb-4"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--parchment)' }}
           >
             Administration
           </h1>
-          <p style={{ color: 'rgba(240, 230, 200, 0.5)', fontFamily: 'var(--font-crimson)', fontSize: '1.1rem' }}>
+          <p className="body-text" style={{ color: 'rgba(240,230,200,0.45)' }}>
             Zone strictement réservée au staff de Wild Frontier RP.
           </p>
         </div>
@@ -37,53 +37,62 @@ export default function EspaceStaffPage() {
 
       {/* Connexion */}
       <section className="py-20" style={{ backgroundColor: '#1a0a00' }}>
-        <div className="container-narrow max-w-md mx-auto">
+        <div className="container-narrow" style={{ maxWidth: '28rem', marginLeft: 'auto', marginRight: 'auto' }}>
           <div
             className="p-8 text-center"
             style={{
-              border: '2px solid rgba(184, 134, 11, 0.4)',
-              backgroundColor: 'rgba(240, 230, 200, 0.04)',
+              border: '2px solid rgba(184,134,11,0.4)',
+              backgroundColor: 'rgba(240,230,200,0.04)',
             }}
           >
             <div
-              className="official-seal w-20 h-20 mx-auto mb-6"
-              style={{ color: 'var(--color-gold)', borderColor: 'var(--color-gold)' }}
+              className="official-seal mx-auto mb-6"
+              style={{
+                width: '72px',
+                height: '72px',
+                color: 'var(--gold)',
+                borderColor: 'var(--gold)',
+                fontFamily: 'var(--font-serif)',
+                fontWeight: 800,
+                fontSize: '1.5rem',
+              }}
             >
-              <span className="display-text text-2xl">⚖</span>
+              S.F.
             </div>
 
             <h2
-              className="font-serif font-bold text-2xl mb-2"
-              style={{ color: 'var(--color-parchment)' }}
+              className="section-heading mb-2"
+              style={{ color: 'var(--parchment)', fontSize: '1.4rem' }}
             >
               Authentification Staff
             </h2>
-            <p className="mb-8" style={{ color: 'rgba(240, 230, 200, 0.5)', fontFamily: 'var(--font-crimson)' }}>
+            <p className="body-text mb-8" style={{ color: 'rgba(240,230,200,0.45)' }}>
               Connexion requise avec un compte Discord lié à un rôle staff actif.
             </p>
 
-            <button
-              className="btn-gold w-full mb-4"
-            >
-              💬 Connexion Discord Staff
+            <button className="btn-gold" style={{ width: '100%', justifyContent: 'center', marginBottom: '1rem' }}>
+              Connexion Discord Staff
             </button>
 
             <p
-              className="display-text text-xs uppercase tracking-wider"
-              style={{ color: 'rgba(240, 230, 200, 0.3)' }}
+              className="label-display"
+              style={{ color: 'rgba(240,230,200,0.25)' }}
             >
-              Accès non autorisé = exclusion définitive
+              Accès non autorisé — exclusion définitive
             </p>
           </div>
         </div>
       </section>
 
       {/* Avertissement */}
-      <section style={{ backgroundColor: '#0d0500', borderTop: '1px solid rgba(184, 134, 11, 0.15)' }} className="py-8">
+      <section
+        style={{ backgroundColor: '#0d0500', borderTop: '1px solid rgba(184,134,11,0.15)' }}
+        className="py-8"
+      >
         <div className="container-narrow text-center">
           <p
-            className="display-text text-xs uppercase tracking-widest"
-            style={{ color: 'rgba(240, 230, 200, 0.2)' }}
+            className="label-display"
+            style={{ color: 'rgba(240,230,200,0.2)', letterSpacing: '0.3em' }}
           >
             Toutes les actions sur cet espace sont journalisées et tracées.
           </p>

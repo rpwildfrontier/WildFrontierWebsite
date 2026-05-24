@@ -4,160 +4,129 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const navLinks = [
-  { href: '/univers', label: 'Univers' },
-  { href: '/reglement', label: 'Règlement' },
+  { href: '/univers',      label: 'Univers' },
+  { href: '/reglement',    label: 'Règlement' },
   { href: '/institutions', label: 'Institutions' },
-  { href: '/metiers', label: 'Métiers' },
-  { href: '/journal', label: 'Journal' },
-  { href: '/archives', label: 'Archives' },
+  { href: '/metiers',      label: 'Métiers' },
+  { href: '/journal',      label: 'Journal' },
+  { href: '/archives',     label: 'Archives' },
   { href: '/candidatures', label: 'Candidatures' },
-  { href: '/faq', label: 'F.A.Q.' },
+  { href: '/faq',          label: 'F.A.Q.' },
 ]
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header
-      style={{
-        backgroundColor: 'var(--color-ink)',
-        borderBottom: '3px solid var(--color-gold)',
-      }}
-    >
+    <header style={{ backgroundColor: 'var(--ink)', borderBottom: '3px solid var(--gold)' }}>
+
       {/* Bandeau supérieur */}
-      <div
-        style={{
-          borderBottom: '1px solid rgba(184, 134, 11, 0.3)',
-          padding: '6px 0',
-        }}
-      >
+      <div style={{ borderBottom: '1px solid rgba(184, 134, 11, 0.2)', padding: '5px 0' }}>
         <div className="container-wide flex justify-between items-center">
-          <span
-            className="display-text text-xs uppercase tracking-widest"
-            style={{ color: 'var(--color-gold)', opacity: 0.7 }}
-          >
-            Comté de New Hanover — Territoire de l&apos;Ouest
+          <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, fontSize: '0.6rem' }}>
+            Comté de New Hanover — Territoire de l&apos;Ouest — An de grâce 1886
           </span>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/espace-joueur"
-              className="display-text text-xs uppercase tracking-widest transition-colors"
-              style={{ color: 'rgba(240, 230, 200, 0.6)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(240, 230, 200, 0.6)')}
-            >
-              Espace Joueur
-            </Link>
-            <span style={{ color: 'rgba(184, 134, 11, 0.4)' }}>|</span>
-            <Link
-              href="/espace-staff"
-              className="display-text text-xs uppercase tracking-widest transition-colors"
-              style={{ color: 'rgba(240, 230, 200, 0.6)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(240, 230, 200, 0.6)')}
-            >
-              Administration
-            </Link>
+          <div className="flex items-center gap-5">
+            <Link href="/espace-joueur" className="nav-link-dark">Espace Joueur</Link>
+            <span style={{ color: 'rgba(184, 134, 11, 0.25)' }}>|</span>
+            <Link href="/espace-staff" className="nav-link-dark">Administration</Link>
           </div>
         </div>
       </div>
 
-      {/* Logo principal */}
-      <div className="container-wide py-6 md:py-8 text-center">
-        <Link href="/" className="block group">
+      {/* Masthead */}
+      <div className="container-wide py-8 text-center">
+        <Link href="/" style={{ textDecoration: 'none', display: 'block' }}>
           {/* Ligne décorative supérieure */}
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <div style={{ height: '1px', width: '60px', backgroundColor: 'var(--color-gold)', opacity: 0.5 }} />
-            <span className="display-text text-xs uppercase tracking-[0.3em]" style={{ color: 'var(--color-gold)', opacity: 0.7 }}>
-              ✦ Gazette Officielle ✦
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to right, transparent, rgba(184,134,11,0.4))' }} />
+            <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, letterSpacing: '0.35em' }}>
+              Gazette Officielle
             </span>
-            <div style={{ height: '1px', width: '60px', backgroundColor: 'var(--color-gold)', opacity: 0.5 }} />
+            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to left, transparent, rgba(184,134,11,0.4))' }} />
           </div>
 
           {/* Titre principal */}
           <h1
-            className="font-serif font-black uppercase leading-none"
+            className="display-heading"
             style={{
-              fontSize: 'clamp(2rem, 6vw, 4rem)',
-              color: 'var(--color-parchment)',
-              letterSpacing: '0.05em',
-              textShadow: '0 2px 4px rgba(0,0,0,0.4)',
+              fontSize: 'clamp(2.2rem, 6vw, 4.2rem)',
+              color: 'var(--parchment-50)',
+              letterSpacing: '0.06em',
+              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
             }}
           >
             Wild Frontier
           </h1>
+
           <div
-            className="display-text uppercase tracking-[0.5em] mt-1"
-            style={{
-              fontSize: 'clamp(0.7rem, 2vw, 1rem)',
-              color: 'var(--color-gold)',
-            }}
+            className="label-display mt-2"
+            style={{ color: 'var(--gold)', opacity: 0.6, letterSpacing: '0.55em', fontSize: '0.65rem' }}
           >
-            — Roleplay —
+            Roleplay
           </div>
 
           {/* Ligne décorative inférieure */}
-          <div className="flex items-center justify-center gap-3 mt-3">
-            <div style={{ height: '1px', width: '40px', backgroundColor: 'var(--color-gold)', opacity: 0.5 }} />
-            <div style={{ height: '3px', width: '80px', backgroundColor: 'var(--color-gold)', opacity: 0.6 }} />
-            <div style={{ height: '1px', width: '40px', backgroundColor: 'var(--color-gold)', opacity: 0.5 }} />
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
+            <div style={{ height: '3px', width: '96px', background: 'rgba(184,134,11,0.5)' }} />
+            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
           </div>
         </Link>
       </div>
 
-      {/* Navigation desktop */}
-      <nav style={{ borderTop: '1px solid rgba(184, 134, 11, 0.25)' }}>
+      {/* Navigation */}
+      <nav style={{ borderTop: '1px solid rgba(184, 134, 11, 0.18)' }}>
         <div className="container-wide">
           {/* Desktop */}
-          <ul className="hidden md:flex items-center justify-center flex-wrap">
+          <ul className="hidden md:flex items-stretch justify-center">
             {navLinks.map((link, i) => (
-              <li key={link.href}>
+              <li key={link.href} className="flex items-stretch">
                 <Link
                   href={link.href}
-                  className="display-text block px-4 py-4 text-xs uppercase tracking-widest transition-all duration-200"
-                  style={{ color: 'rgba(240, 230, 200, 0.75)', letterSpacing: '0.15em' }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = 'var(--color-gold)'
-                    e.currentTarget.style.backgroundColor = 'rgba(184, 134, 11, 0.08)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = 'rgba(240, 230, 200, 0.75)'
-                    e.currentTarget.style.backgroundColor = 'transparent'
-                  }}
+                  className="nav-link-dark flex items-center px-5 py-4 hover:bg-white/5"
+                  style={{ transition: 'color 0.15s ease, background-color 0.15s ease' }}
                 >
                   {link.label}
                 </Link>
                 {i < navLinks.length - 1 && (
-                  <span style={{ color: 'rgba(184, 134, 11, 0.3)', userSelect: 'none' }} className="hidden md:inline">·</span>
+                  <span
+                    className="self-center"
+                    style={{ color: 'rgba(184,134,11,0.2)', userSelect: 'none', fontSize: '0.4rem' }}
+                  >
+                    ◆
+                  </span>
                 )}
               </li>
             ))}
           </ul>
 
-          {/* Mobile toggle */}
+          {/* Mobile */}
           <div className="md:hidden flex justify-end py-3">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="display-text text-xs uppercase tracking-widest py-2 px-4"
-              style={{ color: 'var(--color-gold)', border: '1px solid rgba(184, 134, 11, 0.4)' }}
-              aria-label="Menu"
+              aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              className="label-display px-4 py-2 transition-colors"
+              style={{
+                color: 'var(--gold)',
+                border: '1px solid rgba(184,134,11,0.35)',
+                fontSize: '0.62rem',
+                background: 'none',
+                cursor: 'pointer',
+              }}
             >
-              {menuOpen ? '✕ Fermer' : '☰ Menu'}
+              {menuOpen ? 'Fermer' : 'Menu'}
             </button>
           </div>
 
-          {/* Mobile menu */}
           {menuOpen && (
-            <ul className="md:hidden py-2">
+            <ul className="md:hidden pb-2">
               {navLinks.map(link => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="display-text block px-4 py-3 text-xs uppercase tracking-widest border-b"
-                    style={{
-                      color: 'rgba(240, 230, 200, 0.75)',
-                      borderColor: 'rgba(184, 134, 11, 0.15)',
-                    }}
+                    className="nav-link-dark block px-4 py-3"
+                    style={{ borderBottom: '1px solid rgba(184,134,11,0.1)' }}
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.label}

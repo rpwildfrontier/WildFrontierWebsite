@@ -38,7 +38,7 @@ const articles = [
     category: 'Avis de décès',
     date: '21 mai 1887',
     title: 'Décès de Margaret Colton, sage-femme du comté',
-    excerpt: 'Nous avons l\'affliction d\'annoncer le décès de Mme Margaret Colton, sage-femme dévouée du comté depuis dix-sept ans. Elle s\'est éteinte paisiblement entourée des siens.',
+    excerpt: 'Nous avons l\'affliction d\'annoncer le décès de Mme Margaret Colton, sage-femme dévouée depuis dix-sept ans. Elle s\'est éteinte paisiblement entourée des siens.',
     author: 'Registre des décès',
     featured: false,
   },
@@ -53,7 +53,7 @@ const articles = [
   },
   {
     id: 6,
-    category: 'Cronique',
+    category: 'Chronique',
     date: '19 mai 1887',
     title: 'L\'hiver tardif fait des ravages dans les troupeaux',
     excerpt: 'Les éleveurs du comté signalent des pertes importantes suite aux dernières gelées. Plusieurs familles sollicitent l\'aide du conseil municipal pour faire face à la saison difficile.',
@@ -70,50 +70,69 @@ export default function JournalPage() {
 
   return (
     <>
-      {/* En-tête style journal */}
+      {/* Masthead style gazette */}
       <section
         style={{
-          background: 'linear-gradient(160deg, #ddc88e 0%, #f0e6c8 60%)',
-          borderBottom: '2px solid var(--color-ink)',
+          background: 'linear-gradient(170deg, var(--parchment-dark) 0%, var(--parchment-100) 80%)',
+          borderBottom: '3px double var(--border-dark)',
         }}
         className="py-8"
       >
         <div className="container-wide">
           {/* Dateline */}
-          <div className="flex justify-between items-center mb-4 text-xs display-text uppercase tracking-widest" style={{ color: 'var(--color-sepia)', borderBottom: '1px solid var(--color-border)', paddingBottom: '8px' }}>
-            <span>Comté de New Hanover, Territoire de l&apos;Ouest</span>
-            <span>Lundi, 24 Mai 1887</span>
-            <span>Prix : 5 cents</span>
+          <div
+            className="flex justify-between items-center mb-5 pb-3"
+            style={{ borderBottom: '1px solid var(--border-light)' }}
+          >
+            <span className="label-display" style={{ color: 'var(--ink-20)' }}>
+              Comté de New Hanover, Territoire de l&apos;Ouest
+            </span>
+            <span className="label-display" style={{ color: 'var(--ink-20)' }}>
+              Lundi, 24 Mai 1887
+            </span>
+            <span className="label-display" style={{ color: 'var(--ink-20)' }}>
+              Prix : 5 cents
+            </span>
           </div>
 
-          {/* Titre */}
-          <div className="text-center py-6" style={{ borderBottom: '3px double var(--color-ink)' }}>
-            <p className="display-text text-xs uppercase tracking-[0.4em] mb-2" style={{ color: 'var(--color-sepia)' }}>
+          {/* Titre masthead */}
+          <div
+            className="text-center py-7"
+            style={{ borderBottom: '3px double var(--border-dark)', borderTop: '1px solid var(--border)' }}
+          >
+            <div className="label-display mb-3" style={{ color: 'var(--ink-20)', letterSpacing: '0.35em' }}>
               Journal officiel du
-            </p>
+            </div>
             <h1
-              className="font-serif font-black uppercase"
-              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', color: 'var(--color-ink)', letterSpacing: '-0.01em' }}
+              className="display-heading"
+              style={{ fontSize: 'clamp(2.2rem, 6vw, 4.5rem)', letterSpacing: '0.03em' }}
             >
               Gazette du Comté
             </h1>
-            <p className="display-text text-xs mt-2 uppercase tracking-widest" style={{ color: 'var(--color-sepia)' }}>
-              Fondée en l&apos;an de grâce 1879 · Publiée chaque semaine
-            </p>
+            <div className="label-display mt-3" style={{ color: 'var(--ink-20)', letterSpacing: '0.2em' }}>
+              Fondée en l&apos;an de grâce 1879 &nbsp;·&nbsp; Publiée chaque semaine
+            </div>
           </div>
         </div>
       </section>
 
       {/* Filtres */}
-      <section className="py-4" style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'rgba(232, 213, 163, 0.3)' }}>
+      <section
+        className="py-4"
+        style={{ borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--parchment-100)' }}
+      >
         <div className="container-wide flex flex-wrap gap-2 justify-center">
           {categories.map(cat => (
             <button
               key={cat}
-              className="display-text text-xs uppercase tracking-wider px-3 py-1 transition-all"
+              className="label-display px-3 py-1.5 transition-all"
               style={{
-                color: 'var(--color-sepia)',
-                border: '1px solid var(--color-border)',
+                color: 'var(--ink-40)',
+                border: '1px solid var(--border-light)',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '0.6rem',
+                letterSpacing: '0.18em',
               }}
             >
               {cat}
@@ -123,65 +142,75 @@ export default function JournalPage() {
       </section>
 
       {/* Articles */}
-      <section className="py-12">
+      <section className="py-14">
         <div className="container-wide">
-          {/* Article à la une */}
+
+          {/* À la une */}
           {featured && (
-            <div className="mb-12">
+            <div className="mb-14">
               <div
-                className="display-text text-xs uppercase tracking-[0.3em] mb-4 text-center"
-                style={{ color: 'var(--color-rust)' }}
+                className="label-display text-center mb-5"
+                style={{ color: 'var(--rust)', letterSpacing: '0.35em' }}
               >
-                ✦ À la une ✦
+                À la une
               </div>
-              <article className="document-panel">
+              <div className="document-panel">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
                   <div className="md:col-span-2">
-                    <div className="article-meta mb-2">{featured.category}</div>
-                    <h2 className="font-serif font-bold text-3xl mb-4 leading-snug" style={{ color: 'var(--color-ink)' }}>
+                    <div className="meta-text mb-2" style={{ color: 'var(--rust)' }}>{featured.category}</div>
+                    <h2 className="section-heading mb-4" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', lineHeight: '1.25' }}>
                       {featured.title}
                     </h2>
-                    <p className="body-text text-lg mb-4">{featured.excerpt}</p>
-                    <div className="display-text text-xs" style={{ color: 'var(--color-sepia)', opacity: 0.7 }}>
+                    <p className="body-text mb-4">{featured.excerpt}</p>
+                    <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
                       {featured.date} — {featured.author}
                     </div>
                   </div>
                   <div className="flex justify-center md:justify-end">
                     <div
-                      className="official-seal w-32 h-32 flex flex-col items-center justify-center text-center"
-                      style={{ color: 'var(--color-rust)', borderColor: 'var(--color-rust)', borderWidth: '3px' }}
+                      className="official-seal flex-col text-center"
+                      style={{ width: '120px', height: '120px', color: 'var(--rust)', borderColor: 'var(--rust)' }}
                     >
-                      <div className="display-text text-xs uppercase leading-tight tracking-wider px-2">
+                      <div className="label-display leading-tight px-2" style={{ color: 'var(--rust)', letterSpacing: '0.1em' }}>
                         Gazette<br />du Comté
                       </div>
-                      <div className="text-2xl mt-1">★</div>
+                      <div
+                        className="section-heading mt-2"
+                        style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--rust)' }}
+                      >
+                        W.F.
+                      </div>
                     </div>
                   </div>
                 </div>
-              </article>
+              </div>
             </div>
           )}
 
-          {/* Grille d'articles */}
-          <div className="newspaper-columns">
+          {/* Grille */}
+          <div className="newspaper-grid">
             {rest.map(article => (
-              <article key={article.id} className="article-card pb-6">
-                <div className="article-meta mb-2">{article.category}</div>
-                <h3 className="font-serif font-bold text-xl mb-3 leading-snug" style={{ color: 'var(--color-ink)' }}>
+              <article
+                key={article.id}
+                className="pb-6"
+                style={{ borderBottom: '1px solid var(--border-light)' }}
+              >
+                <div className="meta-text mb-2" style={{ color: 'var(--rust)' }}>{article.category}</div>
+                <h3 className="section-heading mb-3" style={{ fontSize: '1.15rem', lineHeight: '1.3' }}>
                   {article.title}
                 </h3>
-                <p className="body-text text-base mb-4">{article.excerpt}</p>
-                <div className="display-text text-xs" style={{ color: 'var(--color-sepia)', opacity: 0.7 }}>
+                <p className="body-text mb-4" style={{ fontSize: '0.92rem' }}>{article.excerpt}</p>
+                <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
                   {article.date} — {article.author}
                 </div>
               </article>
             ))}
           </div>
 
-          {/* Pagination style journal */}
+          {/* Pagination */}
           <div
-            className="mt-12 pt-8 text-center display-text text-xs uppercase tracking-widest"
-            style={{ borderTop: '2px solid var(--color-border)', color: 'var(--color-sepia)' }}
+            className="mt-14 pt-8 text-center label-display"
+            style={{ borderTop: '2px solid var(--border)', color: 'var(--ink-20)' }}
           >
             Page 1 sur 12 — Archives disponibles à la bibliothèque du comté
           </div>
