@@ -1,30 +1,39 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { readSignedCookie, generateCfxCode } from '@/lib/signed-cookie'
 import SignInButton from '@/components/SignInButton'
 import CandidatureForm from '@/components/CandidatureForm'
 
 export const metadata: Metadata = {
   title: 'Candidatures',
-  description: 'Déposez votre candidature pour rejoindre Wild Frontier RP. Discord, Steam et CFX.re requis.',
+  description: 'Déposez votre candidature pour rejoindre Wild Frontier RP.',
 }
 
-const comptes = [
-  { initial: 'D', name: 'Discord', desc: 'Canal principal de communication avec le staff et la communauté.' },
-  { initial: 'S', name: 'Steam',   desc: 'Votre identité sur la plateforme. RedDeadRedemption II requis.' },
-  { initial: 'C', name: 'CFX.re', desc: 'Compte RedM/FiveM pour accéder au serveur de jeu.' },
-]
+export type SteamData  = { id: string; name: string; avatar: string; ownsRdr2: boolean }
+export type CfxreData  = { username: string; name: string; avatar: string }
 
 const etapes = [
-  { n: '1', title: 'Lire',      desc: 'Lisez le règlement et découvrez l\'univers du serveur.' },
-  { n: '2', title: 'Connecter', desc: 'Reliez vos comptes Discord, Steam et CFX.re.' },
+  { n: '1', title: 'Lire',      desc: 'Lisez le règlement et l\'univers du serveur.' },
+  { n: '2', title: 'Connecter', desc: 'Liez vos trois comptes (Discord, Steam, CFX.re).' },
   { n: '3', title: 'Rédiger',   desc: 'Remplissez le formulaire de candidature avec soin.' },
   { n: '4', title: 'Attendre',  desc: 'Le staff examine votre dossier et vous contacte.' },
 ]
 
 export default async function CandidaturesPage() {
-  const session = await getServerSession(authOptions)
+  const session    = await getServerSession(authOptions)
+  const cookieStore = cookies()
+
+  const steamRaw  = cookieStore.get('wf_steam')?.value
+  const cfxreRaw  = cookieStore.get('wf_cfxre')?.value
+
+  const steamData = steamRaw  ? readSignedCookie<SteamData>(steamRaw)  : null
+  const cfxreData = cfxreRaw  ? readSignedCookie<CfxreData>(cfxreRaw)  : null
+
+  const discordId = (session?.user as { id?: string })?.id ?? ''
+  const cfxCode   = discordId ? generateCfxCode(discordId) : ''
 
   return (
     <>
@@ -72,55 +81,20 @@ export default async function CandidaturesPage() {
         </div>
       </section>
 
-      {/* Formulaire et comptes requis */}
+      {/* Formulaire */}
       <section className="py-16 md:py-20">
         <div className="container-narrow">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            {/* Colonne gauche */}
+            {/* Liens utiles */}
             <div className="lg:col-span-1 space-y-6">
-              <div className="document-panel">
-                <h3 className="section-heading mb-5" style={{ fontSize: '1.1rem', color: 'var(--rust)' }}>
-                  Comptes requis
-                </h3>
-                <div className="space-y-4">
-                  {comptes.map(compte => (
-                    <div
-                      key={compte.name}
-                      className="flex items-start gap-3 p-3"
-                      style={{ border: '1px solid var(--border-light)', backgroundColor: 'rgba(253,249,240,0.6)' }}
-                    >
-                      <div className="monogram flex-shrink-0" style={{ width: '36px', height: '36px', fontSize: '0.9rem' }}>
-                        {compte.initial}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="section-heading" style={{ fontSize: '0.95rem' }}>{compte.name}</span>
-                          <span className="badge badge-closed">Obligatoire</span>
-                        </div>
-                        <p className="body-text" style={{ fontSize: '0.85rem' }}>{compte.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  className="mt-4 p-3"
-                  style={{ backgroundColor: 'rgba(139,58,30,0.06)', border: '1px solid rgba(139,58,30,0.25)' }}
-                >
-                  <div className="label-display mb-1" style={{ color: 'var(--rust)' }}>Attention</div>
-                  <p className="body-text" style={{ fontSize: '0.85rem' }}>
-                    Sans les trois comptes liés, le formulaire ne peut pas être soumis.
-                  </p>
-                </div>
-              </div>
-
               <div className="parchment-card">
                 <h3 className="section-heading mb-4" style={{ fontSize: '1rem' }}>Avant de candidater</h3>
                 <ul className="space-y-2">
                   {[
-                    { href: '/univers',   label: 'Lire l\'univers du serveur' },
-                    { href: '/reglement', label: 'Lire le règlement complet' },
-                    { href: '/metiers',   label: 'Découvrir les métiers whitelist' },
+                    { href: '/univers',    label: 'Lire l\'univers' },
+                    { href: '/reglement', label: 'Lire le règlement' },
+                    { href: '/metiers',   label: 'Découvrir les métiers' },
                     { href: '/faq',       label: 'Consulter la FAQ' },
                   ].map(link => (
                     <li key={link.href}>
@@ -131,9 +105,20 @@ export default async function CandidaturesPage() {
                   ))}
                 </ul>
               </div>
+
+              <div
+                className="p-4"
+                style={{ border: '1px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.2)' }}
+              >
+                <div className="label-display mb-2" style={{ color: 'var(--ink-20)' }}>Délai de réponse</div>
+                <p className="body-text" style={{ fontSize: '0.88rem' }}>
+                  Le staff répond sous <strong>48h à 7 jours</strong>.
+                  Ne soumettez pas un second dossier — cela ralentit le traitement.
+                </p>
+              </div>
             </div>
 
-            {/* Colonne droite : formulaire */}
+            {/* Formulaire principal */}
             <div className="lg:col-span-2">
               <div className="document-panel">
                 <div className="label-display mb-2" style={{ color: 'var(--rust)', letterSpacing: '0.3em' }}>
@@ -144,13 +129,17 @@ export default async function CandidaturesPage() {
                 </h2>
 
                 {session ? (
-                  /* Formulaire actif — utilisateur connecté */
-                  <CandidatureForm discordName={session.user?.name ?? ''} />
+                  <CandidatureForm
+                    discordName={session.user?.name ?? ''}
+                    discordAvatar={session.user?.image ?? ''}
+                    steamData={steamData}
+                    cfxreData={cfxreData}
+                    cfxCode={cfxCode}
+                  />
                 ) : (
-                  /* Portail de connexion */
                   <div
                     className="p-6 text-center"
-                    style={{ border: '2px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.25)' }}
+                    style={{ border: '2px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.2)' }}
                   >
                     <div
                       className="official-seal mx-auto mb-4"
@@ -159,11 +148,10 @@ export default async function CandidaturesPage() {
                       §
                     </div>
                     <h3 className="section-heading mb-2" style={{ fontSize: '1.1rem' }}>
-                      Connexion requise
+                      Connexion Discord requise
                     </h3>
                     <p className="body-text mb-5" style={{ fontSize: '0.95rem' }}>
-                      Connectez-vous avec Discord pour accéder au formulaire. Votre identité Discord sera
-                      liée à votre dossier.
+                      Connectez-vous avec Discord pour accéder au formulaire et lier vos comptes.
                     </p>
                     <SignInButton label="Se connecter avec Discord" />
                   </div>
