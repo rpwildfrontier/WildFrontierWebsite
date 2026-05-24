@@ -114,11 +114,10 @@ export default async function EspaceStaffPage() {
                   Authentification Staff
                 </h2>
                 <p className="body-text mb-8" style={{ color: 'rgba(240,230,200,0.45)' }}>
-                  Connectez-vous avec votre compte CFX.re pour accéder au panneau d&apos;administration.
+                  Connexion requise avec un compte Discord lié à un rôle staff actif.
                 </p>
                 <SignInButton
-                  label="Se connecter avec CFX.re"
-                  provider="cfxre"
+                  label="Connexion Discord Staff"
                   className="btn-gold"
                   style={{ width: '100%', justifyContent: 'center' }}
                 />
