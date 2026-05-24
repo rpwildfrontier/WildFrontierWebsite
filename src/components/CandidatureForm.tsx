@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import type { SteamData, CfxreData } from '@/app/candidatures/page'
 
@@ -10,47 +9,16 @@ type Props = {
   discordAvatar: string
   steamData:     SteamData | null
   cfxreData:     CfxreData | null
-  cfxCode:       string
+  cfxCode:       string  // kept in props signature for backwards compat, unused
 }
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
-type CfxState  = 'idle' | 'loading' | 'error'
 
-export default function CandidatureForm({ discordName, discordAvatar, steamData, cfxreData, cfxCode }: Props) {
-  const router = useRouter()
-
+export default function CandidatureForm({ discordName, discordAvatar, steamData, cfxreData }: Props) {
   const [formState, setFormState] = useState<FormState>('idle')
   const [formError, setFormError] = useState('')
 
-  const [cfxUsername, setCfxUsername] = useState('')
-  const [cfxState, setCfxState]       = useState<CfxState>('idle')
-  const [cfxError, setCfxError]       = useState('')
-
   const allLinked = !!steamData && !!cfxreData
-
-  async function verifyCfx() {
-    if (!cfxUsername.trim()) return
-    setCfxState('loading')
-    setCfxError('')
-    try {
-      const res  = await fetch('/api/auth/cfxre/verify', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ username: cfxUsername.trim() }),
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        setCfxState('error')
-        setCfxError(data.error ?? 'Erreur de vérification')
-        return
-      }
-      setCfxState('idle')
-      router.refresh()
-    } catch {
-      setCfxState('error')
-      setCfxError('Erreur réseau, réessayez.')
-    }
-  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -69,9 +37,9 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
       experience:    fd.get('experience') as string,
       motivation:    fd.get('motivation') as string,
       discordName,
-      steamId:       steamData?.id        ?? '',
-      steamName:     steamData?.name      ?? '',
-      cfxreUsername: cfxreData?.username  ?? '',
+      steamId:       steamData?.id       ?? '',
+      steamName:     steamData?.name     ?? '',
+      cfxreUsername: cfxreData?.username ?? '',
     }
 
     try {
@@ -125,29 +93,17 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
           {/* Discord — always linked */}
-          <ConnectedCard
-            service="Discord"
-            avatar={discordAvatar}
-            name={discordName}
-          />
+          <ConnectedCard service="Discord" avatar={discordAvatar} name={discordName} />
 
           {/* Steam */}
           {steamData ? (
-            <ConnectedCard
-              service="Steam"
-              avatar={steamData.avatar}
-              name={steamData.name}
-            />
+            <ConnectedCard service="Steam" avatar={steamData.avatar} name={steamData.name} />
           ) : (
             <LinkCard
               service="Steam"
               hint="Profil public requis"
               action={
-                <a
-                  href="/api/auth/steam"
-                  className="btn-primary"
-                  style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}
-                >
+                <a href="/api/auth/steam" className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}>
                   Connecter Steam
                 </a>
               }
@@ -156,64 +112,15 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
 
           {/* CFX.re */}
           {cfxreData ? (
-            <ConnectedCard
-              service="CFX.re"
-              avatar={cfxreData.avatar}
-              name={cfxreData.name || cfxreData.username}
-            />
+            <ConnectedCard service="CFX.re" avatar={cfxreData.avatar} name={cfxreData.name || cfxreData.username} />
           ) : (
             <LinkCard
               service="CFX.re"
-              hint="Ajoutez le code à votre bio"
+              hint="Compte FiveM / RedM requis"
               action={
-                <div className="space-y-2 w-full">
-                  <div
-                    className="text-center py-1.5"
-                    style={{
-                      fontFamily: 'monospace',
-                      fontSize: '1rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.18em',
-                      backgroundColor: 'rgba(232,213,163,0.6)',
-                      border: '1px solid var(--border)',
-                      color: 'var(--ink)',
-                      userSelect: 'all',
-                    }}
-                  >
-                    {cfxCode}
-                  </div>
-                  <p className="body-text" style={{ fontSize: '0.75rem', color: 'var(--ink-40)', lineHeight: 1.4 }}>
-                    Collez ce code dans votre bio sur{' '}
-                    <a href="https://forum.cfx.re" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--rust)' }}>
-                      forum.cfx.re
-                    </a>
-                  </p>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      className="form-input"
-                      placeholder="Pseudo cfx.re"
-                      value={cfxUsername}
-                      onChange={e => setCfxUsername(e.target.value)}
-                      disabled={cfxState === 'loading'}
-                      style={{ flex: 1, fontSize: '0.85rem', padding: '6px 10px' }}
-                    />
-                    <button
-                      type="button"
-                      className="btn-secondary"
-                      onClick={verifyCfx}
-                      disabled={cfxState === 'loading' || !cfxUsername.trim()}
-                      style={{ whiteSpace: 'nowrap', flexShrink: 0, fontSize: '0.82rem', padding: '6px 12px' }}
-                    >
-                      {cfxState === 'loading' ? '…' : 'Vérifier'}
-                    </button>
-                  </div>
-                  {cfxState === 'error' && (
-                    <p className="label-display" style={{ color: 'var(--rust)', fontSize: '0.72rem' }}>
-                      {cfxError}
-                    </p>
-                  )}
-                </div>
+                <a href="/api/auth/cfxre/connect" className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}>
+                  Connecter CFX.re
+                </a>
               }
             />
           )}
@@ -226,10 +133,10 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
         )}
       </div>
 
-      {/* Form fields — only rendered once all accounts are linked */}
+      {/* ── Formulaire — visible uniquement si tout est lié ── */}
       {allLinked && (
         <>
-          {/* Recap bar */}
+          {/* Recap */}
           <div
             className="flex flex-wrap items-center gap-3 px-4 py-3"
             style={{ border: '1px solid rgba(26,92,26,0.3)', backgroundColor: 'rgba(26,92,26,0.04)' }}
@@ -237,8 +144,8 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
             <span className="label-display" style={{ color: '#1a5c1a', fontSize: '0.72rem' }}>Comptes vérifiés</span>
             {[
               { label: 'Discord', name: discordName },
-              { label: 'Steam',   name: steamData!.name },
-              { label: 'CFX.re',  name: cfxreData!.username },
+              { label: 'Steam',   name: steamData.name },
+              { label: 'CFX.re',  name: cfxreData.username },
             ].map(a => (
               <span key={a.label} className="body-text" style={{ fontSize: '0.82rem', color: 'var(--ink-20)' }}>
                 <span style={{ color: '#1a5c1a', fontWeight: 600 }}>{a.label}</span> {a.name}
@@ -246,7 +153,7 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
             ))}
           </div>
 
-          {/* ── Personnage ────────────────────────────── */}
+          {/* Personnage */}
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
@@ -344,14 +251,7 @@ function ConnectedCard({ service, avatar, name }: { service: string; avatar: str
   return (
     <div
       className="p-4 text-center"
-      style={{
-        border: '1.5px solid rgba(26,92,26,0.4)',
-        backgroundColor: 'rgba(26,92,26,0.04)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px',
-      }}
+      style={{ border: '1.5px solid rgba(26,92,26,0.4)', backgroundColor: 'rgba(26,92,26,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}
     >
       <div style={{ position: 'relative', width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(26,92,26,0.5)', flexShrink: 0 }}>
         {avatar ? (
@@ -368,10 +268,7 @@ function ConnectedCard({ service, avatar, name }: { service: string; avatar: str
         <p className="label-display" style={{ color: 'var(--ink-20)', fontSize: '0.68rem', marginBottom: '2px' }}>{service}</p>
         <p className="body-text" style={{ fontSize: '0.88rem', color: 'var(--ink)', fontWeight: 600 }}>{name}</p>
       </div>
-      <span
-        className="badge"
-        style={{ backgroundColor: 'rgba(26,92,26,0.12)', color: '#1a5c1a', border: '1px solid rgba(26,92,26,0.3)', fontSize: '0.7rem' }}
-      >
+      <span className="badge" style={{ backgroundColor: 'rgba(26,92,26,0.12)', color: '#1a5c1a', border: '1px solid rgba(26,92,26,0.3)', fontSize: '0.7rem' }}>
         Connecté
       </span>
     </div>
@@ -382,14 +279,7 @@ function LinkCard({ service, hint, action }: { service: string; hint: string; ac
   return (
     <div
       className="p-4"
-      style={{
-        border: '1.5px dashed var(--border)',
-        backgroundColor: 'rgba(232,213,163,0.08)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px',
-      }}
+      style={{ border: '1.5px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.08)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}
     >
       <div style={{ width: 56, height: 56, borderRadius: '50%', border: '2px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
         <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', color: 'var(--ink-40)', lineHeight: 1 }}>?</span>
