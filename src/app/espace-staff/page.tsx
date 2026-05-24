@@ -16,6 +16,8 @@ type SessionUser = {
   email?: string | null
   image?: string | null
   id?: string
+  provider?: string
+  cfxreUsername?: string
   isStaff?: boolean
   isJoueurValide?: boolean
 }
@@ -96,7 +98,7 @@ export default async function EspaceStaffPage() {
         <div className="container-wide">
 
           {!session ? (
-            /* ── Connexion ──────────────────────────────── */
+            /* ── Connexion CFX.re ───────────────────────── */
             <div className="mx-auto" style={{ maxWidth: '28rem' }}>
               <div
                 className="p-8 text-center"
@@ -112,9 +114,14 @@ export default async function EspaceStaffPage() {
                   Authentification Staff
                 </h2>
                 <p className="body-text mb-8" style={{ color: 'rgba(240,230,200,0.45)' }}>
-                  Connexion requise avec un compte Discord lié à un rôle staff actif.
+                  Connectez-vous avec votre compte CFX.re pour accéder au panneau d&apos;administration.
                 </p>
-                <SignInButton label="Connexion Discord Staff" className="btn-gold" style={{ width: '100%', justifyContent: 'center' }} />
+                <SignInButton
+                  label="Se connecter avec CFX.re"
+                  provider="cfxre"
+                  className="btn-gold"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                />
                 <p className="label-display mt-4" style={{ color: 'rgba(240,230,200,0.2)' }}>
                   Accès non autorisé — exclusion définitive
                 </p>
@@ -133,7 +140,9 @@ export default async function EspaceStaffPage() {
                   Compte non autorisé
                 </h2>
                 <p className="body-text mb-6" style={{ color: 'rgba(240,230,200,0.55)' }}>
-                  Le compte <strong style={{ color: 'var(--gold)' }}>{user?.name}</strong> ne dispose pas du rôle staff sur le serveur Discord.
+                  Le compte CFX.re <strong style={{ color: 'var(--gold)' }}>
+                    {user?.cfxreUsername || user?.name}
+                  </strong> ne figure pas sur la liste staff autorisée.
                 </p>
                 <SignOutButton label="Se déconnecter" className="btn-secondary" />
               </div>
@@ -156,8 +165,10 @@ export default async function EspaceStaffPage() {
                     S.F.
                   </div>
                   <div>
-                    <div className="label-display" style={{ color: 'var(--gold)' }}>Staff authentifié</div>
-                    <p className="section-heading" style={{ color: 'var(--parchment)', fontSize: '1rem' }}>{user?.name}</p>
+                    <div className="label-display" style={{ color: 'var(--gold)' }}>Staff authentifié via CFX.re</div>
+                    <p className="section-heading" style={{ color: 'var(--parchment)', fontSize: '1rem' }}>
+                      {user?.cfxreUsername || user?.name}
+                    </p>
                   </div>
                 </div>
                 <SignOutButton label="Déconnexion" className="btn-secondary" />
