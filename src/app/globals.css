@@ -433,11 +433,24 @@ img { display: block; max-width: 100%; }
 .form-input::placeholder { color: var(--ink-20); opacity: 1; }
 
 .form-textarea {
-  composes: form-input;
+  width: 100%;
+  padding: 10px var(--space-4);
+  background-color: rgba(253, 249, 240, 0.8);
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   resize: vertical;
   min-height: 140px;
   line-height: 1.65;
 }
+.form-textarea:focus {
+  border-color: var(--ink-40);
+  box-shadow: 0 0 0 2px rgba(74, 42, 0, 0.1);
+}
+.form-textarea::placeholder { color: var(--ink-20); opacity: 1; }
 
 /* ═══════════════════════════════════════════════════════════
    TABLEAUX

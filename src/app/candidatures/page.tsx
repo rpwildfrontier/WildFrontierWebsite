@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import SignInButton from '@/components/SignInButton'
+import CandidatureForm from '@/components/CandidatureForm'
 
 export const metadata: Metadata = {
   title: 'Candidatures',
@@ -7,21 +11,9 @@ export const metadata: Metadata = {
 }
 
 const comptes = [
-  {
-    initial: 'D',
-    name: 'Discord',
-    desc: 'Canal principal de communication avec le staff et la communauté.',
-  },
-  {
-    initial: 'S',
-    name: 'Steam',
-    desc: 'Votre identité sur la plateforme. RedDeadRedemption II requis.',
-  },
-  {
-    initial: 'C',
-    name: 'CFX.re',
-    desc: 'Compte RedM/FiveM pour accéder au serveur de jeu.',
-  },
+  { initial: 'D', name: 'Discord', desc: 'Canal principal de communication avec le staff et la communauté.' },
+  { initial: 'S', name: 'Steam',   desc: 'Votre identité sur la plateforme. RedDeadRedemption II requis.' },
+  { initial: 'C', name: 'CFX.re', desc: 'Compte RedM/FiveM pour accéder au serveur de jeu.' },
 ]
 
 const etapes = [
@@ -31,7 +23,9 @@ const etapes = [
   { n: '4', title: 'Attendre',  desc: 'Le staff examine votre dossier et vous contacte.' },
 ]
 
-export default function CandidaturesPage() {
+export default async function CandidaturesPage() {
+  const session = await getServerSession(authOptions)
+
   return (
     <>
       {/* Hero */}
@@ -83,7 +77,7 @@ export default function CandidaturesPage() {
         <div className="container-narrow">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            {/* Colonne gauche : conditions */}
+            {/* Colonne gauche */}
             <div className="lg:col-span-1 space-y-6">
               <div className="document-panel">
                 <h3 className="section-heading mb-5" style={{ fontSize: '1.1rem', color: 'var(--rust)' }}>
@@ -96,10 +90,7 @@ export default function CandidaturesPage() {
                       className="flex items-start gap-3 p-3"
                       style={{ border: '1px solid var(--border-light)', backgroundColor: 'rgba(253,249,240,0.6)' }}
                     >
-                      <div
-                        className="monogram flex-shrink-0"
-                        style={{ width: '36px', height: '36px', fontSize: '0.9rem' }}
-                      >
+                      <div className="monogram flex-shrink-0" style={{ width: '36px', height: '36px', fontSize: '0.9rem' }}>
                         {compte.initial}
                       </div>
                       <div>
@@ -112,10 +103,9 @@ export default function CandidaturesPage() {
                     </div>
                   ))}
                 </div>
-
                 <div
                   className="mt-4 p-3"
-                  style={{ backgroundColor: 'rgba(139, 58, 30, 0.06)', border: '1px solid rgba(139, 58, 30, 0.25)' }}
+                  style={{ backgroundColor: 'rgba(139,58,30,0.06)', border: '1px solid rgba(139,58,30,0.25)' }}
                 >
                   <div className="label-display mb-1" style={{ color: 'var(--rust)' }}>Attention</div>
                   <p className="body-text" style={{ fontSize: '0.85rem' }}>
@@ -124,14 +114,11 @@ export default function CandidaturesPage() {
                 </div>
               </div>
 
-              {/* Liens utiles */}
               <div className="parchment-card">
-                <h3 className="section-heading mb-4" style={{ fontSize: '1rem' }}>
-                  Avant de candidater
-                </h3>
+                <h3 className="section-heading mb-4" style={{ fontSize: '1rem' }}>Avant de candidater</h3>
                 <ul className="space-y-2">
                   {[
-                    { href: '/univers',    label: 'Lire l\'univers du serveur' },
+                    { href: '/univers',   label: 'Lire l\'univers du serveur' },
                     { href: '/reglement', label: 'Lire le règlement complet' },
                     { href: '/metiers',   label: 'Découvrir les métiers whitelist' },
                     { href: '/faq',       label: 'Consulter la FAQ' },
@@ -156,77 +143,31 @@ export default function CandidaturesPage() {
                   Formulaire d&apos;admission
                 </h2>
 
-                {/* Alerte authentification */}
-                <div
-                  className="mb-8 p-6 text-center"
-                  style={{ border: '2px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.25)' }}
-                >
+                {session ? (
+                  /* Formulaire actif — utilisateur connecté */
+                  <CandidatureForm />
+                ) : (
+                  /* Portail de connexion */
                   <div
-                    className="official-seal mx-auto mb-4"
-                    style={{ width: '56px', height: '56px', color: 'var(--ink-40)', borderColor: 'var(--border)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '1rem' }}
+                    className="p-6 text-center"
+                    style={{ border: '2px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.25)' }}
                   >
-                    §
+                    <div
+                      className="official-seal mx-auto mb-4"
+                      style={{ width: '56px', height: '56px', color: 'var(--ink-40)', borderColor: 'var(--border)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '1rem' }}
+                    >
+                      §
+                    </div>
+                    <h3 className="section-heading mb-2" style={{ fontSize: '1.1rem' }}>
+                      Connexion requise
+                    </h3>
+                    <p className="body-text mb-5" style={{ fontSize: '0.95rem' }}>
+                      Connectez-vous avec Discord pour accéder au formulaire. Votre identité Discord sera
+                      liée à votre dossier.
+                    </p>
+                    <SignInButton label="Se connecter avec Discord" />
                   </div>
-                  <h3 className="section-heading mb-2" style={{ fontSize: '1.1rem' }}>
-                    Connexion requise
-                  </h3>
-                  <p className="body-text mb-5" style={{ fontSize: '0.95rem' }}>
-                    Vous devez connecter vos comptes Discord, Steam et CFX.re avant de pouvoir remplir ce formulaire.
-                  </p>
-                  <button className="btn-primary">
-                    Se connecter avec Discord
-                  </button>
-                </div>
-
-                {/* Formulaire (désactivé sans connexion) */}
-                <div className="opacity-50 pointer-events-none">
-                  <div className="space-y-6">
-                    <div>
-                      <label className="form-label">Prénom de votre personnage *</label>
-                      <input type="text" className="form-input" placeholder="Prénom du personnage" disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Nom de famille *</label>
-                      <input type="text" className="form-input" placeholder="Nom de famille" disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Âge du personnage *</label>
-                      <input type="number" className="form-input" placeholder="Ex: 32" disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Ville de naissance (lore) *</label>
-                      <input type="text" className="form-input" placeholder="Ex: St Denis, Blackwater..." disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Métier déclaré à l&apos;arrivée *</label>
-                      <input type="text" className="form-input" placeholder="Ex: Chasseur, Fermier, Médecin..." disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Histoire du personnage * (min. 300 mots)</label>
-                      <textarea className="form-textarea" placeholder="Racontez l'histoire de votre personnage : d'où vient-il, qu'a-t-il vécu, pourquoi arrive-t-il dans le comté..." disabled />
-                    </div>
-                    <div>
-                      <label className="form-label">Votre expérience en RP *</label>
-                      <textarea className="form-textarea" placeholder="Décrivez votre expérience en roleplay (serveurs, durée, rôles joués)..." disabled style={{ minHeight: '100px' }} />
-                    </div>
-                    <div>
-                      <label className="form-label">Pourquoi Wild Frontier RP ? *</label>
-                      <textarea className="form-textarea" placeholder="Qu'est-ce qui vous attire dans ce serveur ? Qu'attendez-vous de cette expérience ?" disabled style={{ minHeight: '100px' }} />
-                    </div>
-                    <div>
-                      <label className="form-label">Avez-vous lu et compris le règlement ? *</label>
-                      <div className="flex items-start gap-3 mt-2">
-                        <input type="checkbox" disabled className="mt-1" />
-                        <span className="body-text" style={{ fontSize: '0.95rem' }}>
-                          J&apos;ai lu intégralement le règlement de Wild Frontier RP et j&apos;accepte de m&apos;y conformer.
-                        </span>
-                      </div>
-                    </div>
-                    <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled>
-                      Soumettre ma candidature
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

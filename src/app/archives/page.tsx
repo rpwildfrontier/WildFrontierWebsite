@@ -1,52 +1,26 @@
 import type { Metadata } from 'next'
+import archivesData from '@/data/archives.json'
 
 export const metadata: Metadata = {
   title: 'Archives',
   description: 'Archives officielles du comté de New Hanover — Chroniques, registres, décisions institutionnelles et mémoire du serveur.',
 }
 
-const archivesData = [
-  {
-    id: 'chroniques',
-    label: 'Section I',
-    category: 'Chroniques officielles',
-    entries: [
-      { date: 'Avril 1887',    title: 'Les grandes élections du printemps',            type: 'Politique',   status: 'Archivé' },
-      { date: 'Mars 1887',     title: 'L\'incendie de l\'entrepôt nord',               type: 'Fait divers', status: 'Archivé' },
-      { date: 'Février 1887',  title: 'Création de la première ligne de diligence',    type: 'Commerce',    status: 'Archivé' },
-    ],
-  },
-  {
-    id: 'judiciaire',
-    label: 'Section II',
-    category: 'Registre judiciaire',
-    entries: [
-      { date: '15 mai 1887',   title: 'Affaire Henderson c/ comté — Vol aggravé',      type: 'Procès',  status: 'Clos' },
-      { date: '3 mai 1887',    title: 'Affaire Morrison — Falsification de document',  type: 'Procès',  status: 'Clos' },
-      { date: '22 avril 1887', title: 'Injonction foncière Lot 14-B',                  type: 'Civil',   status: 'Clos' },
-    ],
-  },
-  {
-    id: 'civil',
-    label: 'Section III',
-    category: 'Registre civil',
-    entries: [
-      { date: 'Mai 1887',      title: 'Naissances & décès — Mois de mai',              type: 'État civil',  status: 'Publié' },
-      { date: 'Avril 1887',    title: 'Mariages célébrés — Printemps 1887',            type: 'État civil',  status: 'Publié' },
-      { date: 'Mars 1887',     title: 'Registre des résidences — Q1 1887',             type: 'Résidence',   status: 'Publié' },
-    ],
-  },
-  {
-    id: 'municipal',
-    label: 'Section IV',
-    category: 'Décisions municipales',
-    entries: [
-      { date: '20 mai 1887',   title: 'Procès-verbal — Session ordinaire du conseil',  type: 'Décision', status: 'Publié' },
-      { date: '5 mai 1887',    title: 'Décret de taxation foncière 1887',              type: 'Décret',   status: 'Publié' },
-      { date: '10 avril 1887', title: 'Attribution des lots fonciers zone nord',       type: 'Foncier',  status: 'Publié' },
-    ],
-  },
-]
+type ArchiveEntry = {
+  date: string
+  title: string
+  type: string
+  status: string
+}
+
+type ArchiveSection = {
+  id: string
+  label: string
+  category: string
+  entries: ArchiveEntry[]
+}
+
+const sections = archivesData as ArchiveSection[]
 
 export default function ArchivesPage() {
   return (
@@ -83,7 +57,7 @@ export default function ArchivesPage() {
       {/* Archives */}
       <section className="py-20 md:py-28">
         <div className="container-wide space-y-16">
-          {archivesData.map(section => (
+          {sections.map(section => (
             <div key={section.id} id={section.id}>
               <div
                 className="flex items-baseline gap-5 mb-8 pb-4"

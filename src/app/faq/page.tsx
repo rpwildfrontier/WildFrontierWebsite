@@ -33,7 +33,7 @@ const faqs = [
     questions: [
       {
         q: 'Comment candidater ?',
-        a: 'Rendez-vous sur la page Candidatures, connectez vos comptes Discord, Steam et CFX.re, puis remplissez le formulaire. Le dossier ne peut pas être soumis si l\'un des trois comptes manque.',
+        a: 'Rendez-vous sur la page Candidatures, connectez-vous avec Discord, puis remplissez le formulaire. Le dossier ne peut pas être soumis si l\'un des trois comptes manque.',
       },
       {
         q: 'Pourquoi trois comptes sont-ils obligatoires ?',
@@ -58,7 +58,7 @@ const faqs = [
     questions: [
       {
         q: 'Que se passe-t-il si mon personnage meurt ?',
-        a: 'La mort entraîne un état de coma. Vous pouvez observer et entendre ce qui se passe autour de vous. Un médecin joueur doit vous prendre en charge dans la fenêtre de temps (5-60 min). Si personne ne vient, votre personnage peut décéder définitivement selon les circonstances.',
+        a: 'La mort entraîne un état de coma. Vous pouvez observer et entendre ce qui se passe autour de vous. Un médecin joueur doit vous prendre en charge dans la fenêtre de temps (5–60 min). Si personne ne vient, votre personnage peut décéder définitivement selon les circonstances.',
       },
       {
         q: 'Comment gagne-t-on de l\'argent ?',
@@ -103,14 +103,16 @@ export default function FaqPage() {
       {/* Hero */}
       <section
         className="page-hero"
-        style={{ background: 'linear-gradient(160deg, #ddc88e 0%, #f0e6c8 60%)' }}
+        style={{ background: 'linear-gradient(170deg, var(--parchment-dark) 0%, var(--parchment) 60%)', borderBottom: '2px solid var(--border)' }}
       >
-        <div className="container-narrow relative text-center">
-          <div className="display-text text-xs uppercase tracking-[0.3em] mb-3" style={{ color: 'var(--color-sepia)' }}>
-            — Questions fréquentes —
+        <div className="container-narrow text-center">
+          <div className="label-display mb-4" style={{ color: 'var(--ink-20)', letterSpacing: '0.25em' }}>
+            Questions fréquentes
           </div>
-          <h1 className="heading-display mb-4">F.A.Q.</h1>
-          <p className="body-text max-w-2xl mx-auto">
+          <h1 className="display-heading mb-5" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}>
+            F.A.Q.
+          </h1>
+          <p className="body-text mx-auto" style={{ maxWidth: '36rem' }}>
             Retrouvez ici les réponses aux questions les plus fréquemment posées
             sur Wild Frontier RP, la candidature et le fonctionnement du serveur.
           </p>
@@ -120,29 +122,44 @@ export default function FaqPage() {
       {/* FAQ sections */}
       <section className="py-16 md:py-20">
         <div className="container-narrow space-y-16">
-          {faqs.map(section => (
+          {faqs.map((section, si) => (
             <div key={section.category}>
-              <h2 className="heading-section mb-8">{section.category}</h2>
-              <div className="divider-ornament mb-8"><span className="divider-ornament-icon">✦</span></div>
+              {/* En-tête de section */}
+              <div
+                className="flex items-baseline gap-5 mb-10 pb-4"
+                style={{ borderBottom: '3px double var(--border)' }}
+              >
+                <div className="ornamental-number">{['I', 'II', 'III', 'IV'][si]}</div>
+                <h2 className="section-heading" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>
+                  {section.category}
+                </h2>
+              </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {section.questions.map((faq, i) => (
-                  <details key={i} className="parchment-card group" style={{ listStyle: 'none' }}>
+                  <details
+                    key={i}
+                    className="accent-card"
+                    style={{ listStyle: 'none' }}
+                  >
                     <summary
-                      className="flex justify-between items-start cursor-pointer list-none"
-                      style={{ listStyle: 'none' }}
+                      className="flex justify-between items-start cursor-pointer"
+                      style={{ listStyle: 'none', userSelect: 'none' }}
                     >
-                      <h3 className="font-serif font-bold text-lg pr-4" style={{ color: 'var(--color-ink)' }}>
+                      <h3 className="section-heading pr-4" style={{ fontSize: '1.05rem', lineHeight: '1.35' }}>
                         {faq.q}
                       </h3>
                       <span
-                        className="display-text text-lg flex-shrink-0"
-                        style={{ color: 'var(--color-gold)' }}
+                        className="label-display flex-shrink-0 mt-1"
+                        style={{ color: 'var(--gold)', fontSize: '1rem', lineHeight: 1 }}
                       >
                         +
                       </span>
                     </summary>
-                    <div className="mt-4 body-text" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '16px' }}>
+                    <div
+                      className="body-text mt-4 pt-4"
+                      style={{ borderTop: '1px solid var(--border-light)' }}
+                    >
                       {faq.a}
                     </div>
                   </details>
@@ -156,10 +173,12 @@ export default function FaqPage() {
       {/* Contact CTA */}
       <section
         className="py-16 text-center"
-        style={{ backgroundColor: 'var(--color-parchment-dark)', borderTop: '2px solid var(--color-border)' }}
+        style={{ backgroundColor: 'var(--parchment-dark)', borderTop: '2px solid var(--border)' }}
       >
         <div className="container-narrow">
-          <h2 className="heading-section mb-4">Vous n&apos;avez pas trouvé votre réponse ?</h2>
+          <h2 className="section-heading mb-4" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>
+            Vous n&apos;avez pas trouvé votre réponse ?
+          </h2>
           <p className="body-text mb-8">
             Contactez directement le staff via Discord ou le formulaire de contact.
           </p>

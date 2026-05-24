@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "category": "Faits divers",
+    "date": "24 mai 1887",
+    "title": "Vol à main armée à la banque de Valentine",
+    "excerpt": "Vers deux heures de l'après-midi, un groupe de trois hommes masqués a pénétré dans la banque du comté et s'est emparé d'une somme estimée à mille deux cents dollars. Le shérif a ouvert une enquête.",
+    "author": "Correspondant local",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "category": "Politique",
+    "date": "23 mai 1887",
+    "title": "Le conseil municipal vote la taxe foncière de printemps",
+    "excerpt": "Réunis en session ordinaire, les membres du conseil ont approuvé à quatre voix contre deux le taux de la taxe foncière annuelle. Le percepteur commencera les collectes le premier juin.",
+    "author": "Rédaction politique",
+    "featured": false
+  },
+  {
+    "id": 3,
+    "category": "Justice",
+    "date": "22 mai 1887",
+    "title": "Verdict prononcé dans l'affaire Hargreaves",
+    "excerpt": "Après deux jours d'audience, le juge Montgomery a rendu son verdict : coupable de vol de bétail avec circonstances aggravantes. Peine : six mois de travaux forcés et amende de deux cents dollars.",
+    "author": "Correspondant judiciaire",
+    "featured": false
+  },
+  {
+    "id": 4,
+    "category": "Avis de décès",
+    "date": "21 mai 1887",
+    "title": "Décès de Margaret Colton, sage-femme du comté",
+    "excerpt": "Nous avons l'affliction d'annoncer le décès de Mme Margaret Colton, sage-femme dévouée depuis dix-sept ans. Elle s'est éteinte paisiblement entourée des siens.",
+    "author": "Registre des décès",
+    "featured": false
+  },
+  {
+    "id": 5,
+    "category": "Annonce commerciale",
+    "date": "20 mai 1887",
+    "title": "Ouverture de l'atelier du forgeron Fletcher",
+    "excerpt": "M. Caleb Fletcher est heureux d'annoncer l'ouverture de sa forge au bout de la rue principale. Fers à cheval, outils agricoles et réparations d'armes. Tarifs affichés sur ardoise.",
+    "author": "Publicité",
+    "featured": false
+  },
+  {
+    "id": 6,
+    "category": "Chronique",
+    "date": "19 mai 1887",
+    "title": "L'hiver tardif fait des ravages dans les troupeaux",
+    "excerpt": "Les éleveurs du comté signalent des pertes importantes suite aux dernières gelées. Plusieurs familles sollicitent l'aide du conseil municipal pour faire face à la saison difficile.",
+    "author": "Chroniqueur agricole",
+    "featured": false
+  }
+]

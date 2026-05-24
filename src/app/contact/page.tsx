@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import ContactForm from '@/components/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -61,10 +62,7 @@ export default function ContactPage() {
               {canaux.map(channel => (
                 <div key={channel.name} className="parchment-card">
                   <div className="flex items-start gap-3">
-                    <div
-                      className="monogram flex-shrink-0"
-                      style={{ width: '40px', height: '40px', fontSize: '1rem' }}
-                    >
+                    <div className="monogram flex-shrink-0" style={{ width: '40px', height: '40px', fontSize: '1rem' }}>
                       {channel.initial}
                     </div>
                     <div>
@@ -80,7 +78,6 @@ export default function ContactPage() {
                 </div>
               ))}
 
-              {/* Politique de contact */}
               <div
                 className="p-4"
                 style={{ border: '1px dashed var(--border)', backgroundColor: 'rgba(232,213,163,0.25)' }}
@@ -102,62 +99,7 @@ export default function ContactPage() {
                 <h2 className="section-heading mb-6" style={{ fontSize: '1.6rem' }}>
                   Envoyer un message
                 </h2>
-
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="form-label">Votre nom / pseudo *</label>
-                      <input type="text" className="form-input" placeholder="Nom ou pseudo Discord" />
-                    </div>
-                    <div>
-                      <label className="form-label">Pseudo Discord *</label>
-                      <input type="text" className="form-input" placeholder="Nom#0000" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="form-label">Type de demande *</label>
-                    <select className="form-input">
-                      <option value="">— Sélectionner —</option>
-                      <option value="candidature">Question sur une candidature</option>
-                      <option value="technique">Problème technique</option>
-                      <option value="signalement">Signalement</option>
-                      <option value="whitelist">Demande de rôle whitelist</option>
-                      <option value="autre">Autre</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="form-label">Objet *</label>
-                    <input type="text" className="form-input" placeholder="Résumé de votre demande" />
-                  </div>
-
-                  <div>
-                    <label className="form-label">Message *</label>
-                    <textarea className="form-textarea" placeholder="Décrivez votre demande en détail..." />
-                  </div>
-
-                  <div>
-                    <label className="form-label">Pièce jointe (lien optionnel)</label>
-                    <input type="text" className="form-input" placeholder="Lien vers une capture d'écran, document..." />
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <input type="checkbox" className="mt-1" id="consent" />
-                    <label htmlFor="consent" className="body-text" style={{ cursor: 'pointer', fontSize: '0.95rem' }}>
-                      J&apos;accepte que mes informations soient utilisées pour traiter ma demande.
-                    </label>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <p className="label-display" style={{ color: 'var(--ink-20)' }}>
-                      * Champs obligatoires
-                    </p>
-                    <button type="submit" className="btn-primary">
-                      Envoyer le message
-                    </button>
-                  </div>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </div>
