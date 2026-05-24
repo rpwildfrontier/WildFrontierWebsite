@@ -24,6 +24,8 @@ export default function CandidatureForm({ discordName = '' }: { discordName?: st
       experience:  fd.get('experience')  as string,
       motivation:  fd.get('motivation')  as string,
       discordName: fd.get('discordName') as string,
+      steamUrl:    fd.get('steamUrl')    as string,
+      cfxreNom:    fd.get('cfxreNom')    as string,
     }
 
     try {
@@ -68,6 +70,58 @@ export default function CandidatureForm({ discordName = '' }: { discordName?: st
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+
+      {/* ── Comptes ─────────────────────────────────── */}
+      <div
+        className="p-4 space-y-4"
+        style={{ border: '1px solid var(--border-light)', backgroundColor: 'var(--parchment-50)' }}
+      >
+        <div className="label-display mb-1" style={{ color: 'var(--rust)' }}>
+          Liaison des comptes — obligatoire
+        </div>
+
+        <div>
+          <label className="form-label">
+            Pseudo Discord *
+            <span className="ml-2 badge badge-validated">Connecté</span>
+          </label>
+          <input
+            name="discordName"
+            type="text"
+            className="form-input"
+            defaultValue={discordName}
+            readOnly={!!discordName}
+            style={discordName ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
+          />
+        </div>
+
+        <div>
+          <label className="form-label">URL profil Steam *</label>
+          <input
+            name="steamUrl"
+            type="text"
+            className="form-input"
+            placeholder="https://steamcommunity.com/id/votre-profil"
+            required
+          />
+          <p className="label-display mt-1" style={{ color: 'var(--ink-20)' }}>
+            Profil public requis — Red Dead Redemption II doit figurer dans votre bibliothèque
+          </p>
+        </div>
+
+        <div>
+          <label className="form-label">Nom d&apos;utilisateur CFX.re *</label>
+          <input
+            name="cfxreNom"
+            type="text"
+            className="form-input"
+            placeholder="Votre pseudo sur forum.cfx.re / RedM"
+            required
+          />
+        </div>
+      </div>
+
+      {/* ── Personnage ──────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label className="form-label">Prénom du personnage *</label>
@@ -85,21 +139,9 @@ export default function CandidatureForm({ discordName = '' }: { discordName?: st
           <input name="age" type="number" className="form-input" placeholder="Ex : 32" min="18" max="80" required />
         </div>
         <div>
-          <label className="form-label">Votre pseudo Discord</label>
-          <input
-            name="discordName"
-            type="text"
-            className="form-input"
-            defaultValue={discordName}
-            readOnly={!!discordName}
-            style={discordName ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
-          />
+          <label className="form-label">Ville de naissance (lore) *</label>
+          <input name="ville" type="text" className="form-input" placeholder="Ex : St Denis, Blackwater..." required />
         </div>
-      </div>
-
-      <div>
-        <label className="form-label">Ville de naissance (lore) *</label>
-        <input name="ville" type="text" className="form-input" placeholder="Ex : St Denis, Blackwater..." required />
       </div>
 
       <div>
