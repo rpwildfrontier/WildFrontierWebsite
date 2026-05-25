@@ -35,25 +35,25 @@ export default async function ArticleDetailPage({ params }: { params: { id: stri
     <>
       {/* Masthead */}
       <section className="py-10" style={{
-        background: 'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(200,144,24,0.12) 0%, transparent 70%), linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
-        borderBottom: '1px solid rgba(120,80,5,0.35)',
+        background: 'var(--bg-section)',
+        borderBottom: '1px solid rgba(42,54,68,0.18)',
       }}>
         <div className="container-wide">
-          <div className="flex justify-between items-center mb-6 pb-4" style={{ borderBottom: '1px solid rgba(120,80,5,0.22)' }}>
-            <Link href="/journal" className="label-display" style={{ color: 'rgba(140,90,8,0.80)', textDecoration: 'none' }}>
+          <div className="flex justify-between items-center mb-6 pb-4" style={{ borderBottom: '1px solid rgba(42,54,68,0.18)' }}>
+            <Link href="/journal" className="label-display" style={{ color: 'var(--fg-60)', textDecoration: 'none' }}>
               ← Gazette du Comté
             </Link>
-            <span className="label-display" style={{ color: 'rgba(140,90,8,0.65)' }}>{article.date}</span>
+            <span className="label-display" style={{ color: 'var(--fg-60)' }}>{article.date}</span>
           </div>
           <div className="text-center py-6"
-            style={{ borderBottom: '1px solid rgba(120,80,5,0.28)', borderTop: '1px solid rgba(120,80,5,0.18)' }}>
+            style={{ borderBottom: '1px solid rgba(42,54,68,0.18)', borderTop: '1px solid rgba(42,54,68,0.18)' }}>
             <div className="label-display mb-3" style={{ color: 'var(--orange)', letterSpacing: '0.3em' }}>
               {article.category}
             </div>
             <h1 className="display-heading mx-auto" style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', maxWidth: '48rem', lineHeight: 1.2 }}>
               {article.title}
             </h1>
-            <div className="label-display mt-4" style={{ color: 'rgba(140,90,8,0.72)' }}>
+            <div className="label-display mt-4" style={{ color: 'var(--fg-60)' }}>
               Par {article.author}
             </div>
           </div>
@@ -61,13 +61,13 @@ export default async function ArticleDetailPage({ params }: { params: { id: stri
       </section>
 
       {/* Corps de l'article */}
-      <section className="py-16" style={{ backgroundColor: 'var(--bg-base)' }}>
+      <section className="py-16" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="container-narrow">
 
           {/* Chapeau */}
           <p className="body-text mb-10 pb-8"
             style={{ fontSize: '1.05rem', lineHeight: 1.8, fontStyle: 'italic',
-              borderBottom: '1px solid rgba(120,80,5,0.28)' }}>
+              borderBottom: '1px solid rgba(42,54,68,0.18)' }}>
             {article.excerpt}
           </p>
 
@@ -82,8 +82,8 @@ export default async function ArticleDetailPage({ params }: { params: { id: stri
 
           {/* Footer */}
           <div className="mt-14 pt-6 flex items-center justify-between flex-wrap gap-4"
-            style={{ borderTop: '1px solid rgba(120,80,5,0.28)' }}>
-            <div className="label-display" style={{ color: 'rgba(140,90,8,0.65)' }}>
+            style={{ borderTop: '1px solid rgba(42,54,68,0.18)' }}>
+            <div className="label-display" style={{ color: 'var(--fg-60)' }}>
               Gazette du Comté · {article.date} · {article.author}
             </div>
             <Link href="/journal" className="label-display" style={{ color: 'var(--orange)', textDecoration: 'none' }}>

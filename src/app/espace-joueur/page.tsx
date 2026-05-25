@@ -43,7 +43,7 @@ export default async function EspaceJoueurPage() {
       {/* ── Hero ─────────────────────────────────────── */}
       <section
         className="py-14 md:py-20"
-        style={{ background: 'linear-gradient(160deg, #2d1500 0%, #4a2500 60%)', borderBottom: '2px solid var(--gold)' }}
+        style={{ backgroundColor: 'var(--paper-warm)', borderBottom: '2px solid var(--rule-bold)' }}
       >
         <div className="container-narrow">
           <div className="flex items-center gap-6 flex-wrap">
@@ -59,7 +59,7 @@ export default async function EspaceJoueurPage() {
                 {user?.name ?? 'Espace Joueur'}
               </h1>
               {user && (
-                <p className="body-text mt-1" style={{ color: 'rgba(240,230,200,0.4)', fontSize: '0.85rem' }}>
+                <p className="body-text mt-1" style={{ color: 'var(--fg-60)', fontSize: '0.85rem' }}>
                   Discord ID : {user.id}
                 </p>
               )}

@@ -39,27 +39,27 @@ export default async function CandidatureDetailPage({ params }: { params: { id: 
   const statusLabels = { pending: 'En attente', approved: 'Validée', rejected: 'Refusée' }
 
   return (
-    <div style={{ backgroundColor: '#140800', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--paper)', minHeight: '100vh' }}>
       <div className="container-narrow py-10">
 
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between flex-wrap gap-3 mb-2">
             <Link href="/espace-staff/candidatures" className="label-display"
-              style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.65rem' }}>
+              style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               ← Candidatures
             </Link>
             {/* Prev / next */}
             <div className="flex gap-2">
               {prevId && (
                 <Link href={`/espace-staff/candidatures/${prevId}`} className="label-display"
-                  style={{ color: 'rgba(184,134,11,0.4)', fontSize: '0.62rem', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(184,134,11,0.2)' }}>
+                  style={{ color: 'var(--gold)', fontSize: '0.62rem', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(42,54,68,0.20)' }}>
                   ← Précédent
                 </Link>
               )}
               {nextId && (
                 <Link href={`/espace-staff/candidatures/${nextId}`} className="label-display"
-                  style={{ color: 'rgba(184,134,11,0.4)', fontSize: '0.62rem', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(184,134,11,0.2)' }}>
+                  style={{ color: 'var(--gold)', fontSize: '0.62rem', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(42,54,68,0.20)' }}>
                   Suivant →
                 </Link>
               )}
@@ -69,7 +69,7 @@ export default async function CandidatureDetailPage({ params }: { params: { id: 
           <div className="flex items-start gap-4 flex-wrap">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="display-heading" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--parchment)' }}>
+                <h1 className="display-heading" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--ink)' }}>
                   {c.prenom} {c.nom}
                 </h1>
                 <span style={{
@@ -90,7 +90,7 @@ export default async function CandidatureDetailPage({ params }: { params: { id: 
                   </span>
                 )}
               </div>
-              <p className="body-text mt-1" style={{ color: 'rgba(240,230,200,0.25)', fontSize: '0.8rem' }}>
+              <p className="body-text mt-1" style={{ color: 'var(--ink-40)', fontSize: '0.8rem' }}>
                 ID : {c.id}
               </p>
             </div>
@@ -100,16 +100,16 @@ export default async function CandidatureDetailPage({ params }: { params: { id: 
         <div className="space-y-5">
 
           {/* Identité & comptes */}
-          <div className="p-5" style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
-            <div className="label-display mb-4" style={{ color: 'rgba(184,134,11,0.6)', fontSize: '0.65rem' }}>
+          <div className="p-5" style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
+            <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Identité & Comptes
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {fields.map(f => (
                 <div key={f.label} className="p-3"
-                  style={{ border: '1px solid rgba(184,134,11,0.1)', backgroundColor: 'rgba(184,134,11,0.02)' }}>
-                  <div className="label-display mb-1" style={{ color: 'rgba(240,230,200,0.22)', fontSize: '0.58rem' }}>{f.label}</div>
-                  <div className="section-heading" style={{ color: 'var(--parchment)', fontSize: '0.88rem' }}>{f.value}</div>
+                  style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-warm)' }}>
+                  <div className="label-display mb-1" style={{ color: 'var(--ink-40)', fontSize: '0.58rem' }}>{f.label}</div>
+                  <div className="section-heading" style={{ color: 'var(--ink)', fontSize: '0.88rem' }}>{f.value}</div>
                 </div>
               ))}
             </div>
@@ -122,21 +122,21 @@ export default async function CandidatureDetailPage({ params }: { params: { id: 
             { label: 'Motivation',             value: c.motivation },
           ].map(f => (
             <div key={f.label} className="p-5"
-              style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
+              style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
               <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-                <div className="label-display" style={{ color: 'rgba(184,134,11,0.6)', fontSize: '0.65rem' }}>{f.label}</div>
-                <div className="label-display" style={{ color: 'rgba(240,230,200,0.2)', fontSize: '0.6rem' }}>
+                <div className="label-display" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>{f.label}</div>
+                <div className="label-display" style={{ color: 'var(--ink-40)', fontSize: '0.6rem' }}>
                   {f.value.split(/\s+/).filter(Boolean).length} mots
                 </div>
               </div>
-              <p className="body-text" style={{ color: 'rgba(240,230,200,0.7)', fontSize: '0.9rem', whiteSpace: 'pre-wrap', lineHeight: 1.75 }}>
+              <p className="body-text" style={{ color: 'var(--ink)', fontSize: '0.9rem', whiteSpace: 'pre-wrap', lineHeight: 1.75 }}>
                 {f.value}
               </p>
             </div>
           ))}
 
           {/* Décision */}
-          <div className="p-5" style={{ border: '1px solid rgba(184,134,11,0.3)', backgroundColor: 'rgba(184,134,11,0.04)' }}>
+          <div className="p-5" style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-warm)' }}>
             <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Décision du staff
             </div>

@@ -31,7 +31,7 @@ export default async function EspaceStaffPage() {
     <>
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="py-14 md:py-20"
-        style={{ background: 'linear-gradient(160deg, #0d0500 0%, #1a0a00 100%)', borderBottom: '3px solid var(--gold)' }}>
+        style={{ backgroundColor: 'var(--paper-warm)', borderBottom: '3px solid var(--rule-bold)' }}>
         <div className="container-narrow">
           <div className="flex items-center gap-6 flex-wrap">
             {user?.image && isStaff && (
@@ -40,10 +40,10 @@ export default async function EspaceStaffPage() {
                 style={{ border: '2px solid var(--gold)', opacity: 0.85 }} unoptimized />
             )}
             <div>
-              <div className="label-display mb-1" style={{ color: 'var(--gold)', opacity: 0.55, letterSpacing: '0.4em' }}>
+              <div className="label-display mb-1" style={{ color: 'var(--gold)', opacity: 0.75, letterSpacing: '0.4em' }}>
                 ✦ Administration ✦
               </div>
-              <h1 className="display-heading" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', color: 'var(--parchment)' }}>
+              <h1 className="display-heading" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', color: 'var(--ink)' }}>
                 {isStaff && user?.name ? `Bienvenue, ${user.name}` : 'Espace Staff'}
               </h1>
             </div>
@@ -51,27 +51,27 @@ export default async function EspaceStaffPage() {
         </div>
       </section>
 
-      <section className="py-12" style={{ backgroundColor: '#140800', minHeight: '60vh' }}>
+      <section className="py-12" style={{ backgroundColor: 'var(--paper)', minHeight: '60vh' }}>
         <div className="container-wide">
 
           {!session ? (
             /* ── Connexion ─────────────────────────── */
             <div className="mx-auto" style={{ maxWidth: '28rem' }}>
               <div className="p-8 text-center"
-                style={{ border: '2px solid rgba(184,134,11,0.4)', backgroundColor: 'rgba(240,230,200,0.03)' }}>
+                style={{ border: '2px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
                 <div className="official-seal mx-auto mb-6"
                   style={{ width: '72px', height: '72px', color: 'var(--gold)', borderColor: 'var(--gold)', fontFamily: 'var(--font-serif)', fontWeight: 800, fontSize: '1.5rem' }}>
                   S.F.
                 </div>
-                <h2 className="section-heading mb-2" style={{ color: 'var(--parchment)', fontSize: '1.4rem' }}>
+                <h2 className="section-heading mb-2" style={{ color: 'var(--ink)', fontSize: '1.4rem' }}>
                   Authentification Staff
                 </h2>
-                <p className="body-text mb-8" style={{ color: 'rgba(240,230,200,0.45)' }}>
+                <p className="body-text mb-8" style={{ color: 'var(--ink-60)' }}>
                   Connexion requise avec un compte Discord lié à un rôle staff actif.
                 </p>
                 <SignInButton label="Connexion Discord Staff" className="btn-gold"
                   style={{ width: '100%', justifyContent: 'center' }} />
-                <p className="label-display mt-4" style={{ color: 'rgba(240,230,200,0.2)' }}>
+                <p className="label-display mt-4" style={{ color: 'var(--ink-20)' }}>
                   Accès non autorisé — exclusion définitive
                 </p>
               </div>
@@ -81,12 +81,12 @@ export default async function EspaceStaffPage() {
             /* ── Accès refusé ──────────────────────── */
             <div className="mx-auto text-center" style={{ maxWidth: '28rem' }}>
               <div className="p-8"
-                style={{ border: '2px solid rgba(139,58,30,0.5)', backgroundColor: 'rgba(139,58,30,0.06)' }}>
+                style={{ border: '2px solid rgba(139,26,26,0.3)', backgroundColor: 'rgba(139,26,26,0.06)' }}>
                 <div className="stamp stamp-refused inline-block mb-6">Accès refusé</div>
-                <h2 className="section-heading mb-2" style={{ color: 'var(--parchment)', fontSize: '1.2rem' }}>
+                <h2 className="section-heading mb-2" style={{ color: 'var(--ink)', fontSize: '1.2rem' }}>
                   Compte non autorisé
                 </h2>
-                <p className="body-text mb-6" style={{ color: 'rgba(240,230,200,0.55)' }}>
+                <p className="body-text mb-6" style={{ color: 'var(--ink-60)' }}>
                   Le compte <strong style={{ color: 'var(--gold)' }}>{user?.name}</strong> ne dispose pas du rôle staff.
                 </p>
                 <SignOutButton label="Se déconnecter" className="btn-secondary" />
@@ -99,15 +99,15 @@ export default async function EspaceStaffPage() {
 
               {/* Barre identité */}
               <div className="flex items-center justify-between flex-wrap gap-4 p-4"
-                style={{ border: '1px solid rgba(184,134,11,0.3)', backgroundColor: 'rgba(184,134,11,0.05)' }}>
+                style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
                 <div className="flex items-center gap-3">
                   <div className="official-seal"
                     style={{ width: '40px', height: '40px', color: 'var(--gold)', borderColor: 'var(--gold)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.85rem' }}>
                     S.F.
                   </div>
                   <div>
-                    <div className="label-display" style={{ color: 'rgba(184,134,11,0.7)', fontSize: '0.65rem' }}>Staff connecté</div>
-                    <p className="section-heading" style={{ color: 'var(--parchment)', fontSize: '1rem' }}>{user?.name}</p>
+                    <div className="label-display" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>Staff connecté</div>
+                    <p className="section-heading" style={{ color: 'var(--ink)', fontSize: '1rem' }}>{user?.name}</p>
                   </div>
                 </div>
                 <SignOutButton label="Déconnexion" className="btn-secondary" />
@@ -116,20 +116,20 @@ export default async function EspaceStaffPage() {
               {/* Stats Discord */}
               {stats && (
                 <div>
-                  <div className="label-display mb-4" style={{ color: 'rgba(240,230,200,0.3)', letterSpacing: '0.25em' }}>
+                  <div className="label-display mb-4" style={{ color: 'var(--ink-40)', letterSpacing: '0.25em' }}>
                     Statistiques du serveur
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
                       { label: 'Membres Discord', value: stats.memberCount.toLocaleString('fr'), color: 'var(--gold)' },
-                      { label: 'En ligne',         value: stats.onlineCount.toLocaleString('fr'),  color: '#3ba55d' },
-                      { label: 'Serveur',          value: stats.name,                              color: 'var(--parchment)' },
-                      { label: 'Statut',           value: 'Opérationnel',                          color: '#3ba55d' },
+                      { label: 'En ligne',         value: stats.onlineCount.toLocaleString('fr'),  color: '#1a5c1a' },
+                      { label: 'Serveur',          value: stats.name,                              color: 'var(--ink)' },
+                      { label: 'Statut',           value: 'Opérationnel',                          color: '#1a5c1a' },
                     ].map(s => (
                       <div key={s.label} className="p-4 text-center"
-                        style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.03)' }}>
+                        style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
                         <div className="section-heading mb-1" style={{ fontSize: '1.25rem', color: s.color }}>{s.value}</div>
-                        <div className="label-display" style={{ color: 'rgba(240,230,200,0.3)', fontSize: '0.65rem' }}>{s.label}</div>
+                        <div className="label-display" style={{ color: 'var(--ink-40)', fontSize: '0.65rem' }}>{s.label}</div>
                       </div>
                     ))}
                   </div>
@@ -141,11 +141,11 @@ export default async function EspaceStaffPage() {
 
                 {/* Annonces — col span 2 */}
                 <div className="lg:col-span-2 p-6"
-                  style={{ border: '1px solid rgba(184,134,11,0.25)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
+                  style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
                   <div className="label-display mb-2" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
                     Communication
                   </div>
-                  <h2 className="section-heading mb-5" style={{ color: 'var(--parchment)', fontSize: '1.15rem' }}>
+                  <h2 className="section-heading mb-5" style={{ color: 'var(--ink)', fontSize: '1.15rem' }}>
                     Publier une annonce
                   </h2>
                   <StaffAnnounceForm />
@@ -154,8 +154,8 @@ export default async function EspaceStaffPage() {
                 {/* Actions rapides */}
                 <div className="space-y-4">
                   <div className="p-5"
-                    style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
-                    <div className="label-display mb-4" style={{ color: 'rgba(240,230,200,0.3)', fontSize: '0.65rem' }}>
+                    style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
+                    <div className="label-display mb-4" style={{ color: 'var(--ink-40)', fontSize: '0.65rem' }}>
                       Actions rapides
                     </div>
                     <div className="space-y-2">
@@ -168,13 +168,13 @@ export default async function EspaceStaffPage() {
                       ].map(a => (
                         <Link key={a.href} href={a.href}
                           className="flex items-center justify-between p-3"
-                          style={{ border: '1px solid rgba(184,134,11,0.15)', backgroundColor: 'rgba(184,134,11,0.03)',
+                          style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-warm)',
                             textDecoration: 'none', transition: 'border-color 0.15s' }}>
                           <div>
                             <div className="label-display" style={{ color: 'var(--gold)', fontSize: '0.72rem' }}>{a.label}</div>
-                            <div className="body-text" style={{ color: 'rgba(240,230,200,0.3)', fontSize: '0.75rem' }}>{a.note}</div>
+                            <div className="body-text" style={{ color: 'var(--ink-40)', fontSize: '0.75rem' }}>{a.note}</div>
                           </div>
-                          <span style={{ color: 'rgba(184,134,11,0.5)', fontFamily: 'var(--font-serif)' }}>→</span>
+                          <span style={{ color: 'rgba(42,54,68,0.20)', fontFamily: 'var(--font-serif)' }}>→</span>
                         </Link>
                       ))}
                     </div>
@@ -184,7 +184,7 @@ export default async function EspaceStaffPage() {
 
               {/* Outils d'administration */}
               <div>
-                <div className="label-display mb-4" style={{ color: 'rgba(240,230,200,0.3)', letterSpacing: '0.25em' }}>
+                <div className="label-display mb-4" style={{ color: 'var(--ink-40)', letterSpacing: '0.25em' }}>
                   Outils d&apos;administration
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -227,27 +227,27 @@ export default async function EspaceStaffPage() {
                     },
                   ].map(o => (
                     <div key={o.title} className="p-5"
-                      style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
+                      style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
                       <div className="flex items-start gap-3">
                         <div className="official-seal flex-shrink-0"
-                          style={{ width: '38px', height: '38px', color: 'var(--gold)', borderColor: 'rgba(184,134,11,0.4)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.85rem' }}>
+                          style={{ width: '38px', height: '38px', color: 'var(--gold)', borderColor: 'rgba(42,54,68,0.20)', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.85rem' }}>
                           {o.initial}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h3 className="section-heading" style={{ color: 'var(--parchment)', fontSize: '0.95rem' }}>
+                            <h3 className="section-heading" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
                               {o.title}
                             </h3>
                             <span style={{
                               fontSize: '0.6rem', padding: '2px 8px', letterSpacing: '0.08em',
                               fontFamily: 'var(--font-display)', textTransform: 'uppercase',
-                              border: '1px solid rgba(184,134,11,0.3)',
-                              color: o.status === 'Disponible' ? '#3ba55d' : 'rgba(184,134,11,0.6)',
+                              border: '1px solid rgba(42,54,68,0.20)',
+                              color: o.status === 'Disponible' ? '#1a5c1a' : 'var(--gold)',
                             }}>
                               {o.status}
                             </span>
                           </div>
-                          <p className="body-text" style={{ color: 'rgba(240,230,200,0.35)', fontSize: '0.82rem' }}>
+                          <p className="body-text" style={{ color: 'var(--ink-60)', fontSize: '0.82rem' }}>
                             {o.desc}
                           </p>
                           {o.href && (
@@ -265,8 +265,8 @@ export default async function EspaceStaffPage() {
 
               {/* Configuration */}
               <div className="p-5"
-                style={{ border: '1px dashed rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.015)' }}>
-                <div className="label-display mb-4" style={{ color: 'rgba(240,230,200,0.25)', letterSpacing: '0.2em' }}>
+                style={{ border: '1px dashed rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-warm)' }}>
+                <div className="label-display mb-4" style={{ color: 'var(--ink-40)', letterSpacing: '0.2em' }}>
                   Configuration système
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -278,8 +278,8 @@ export default async function EspaceStaffPage() {
                   ].map(c => (
                     <div key={c.label} className="flex items-center gap-2">
                       <span style={{ width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
-                        backgroundColor: c.ok ? '#3ba55d' : 'rgba(139,58,30,0.7)', display: 'inline-block' }} />
-                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.3)', fontSize: '0.78rem' }}>{c.label}</span>
+                        backgroundColor: c.ok ? '#1a5c1a' : '#8b1a1a', display: 'inline-block' }} />
+                      <span className="body-text" style={{ color: 'var(--ink-60)', fontSize: '0.78rem' }}>{c.label}</span>
                     </div>
                   ))}
                 </div>
@@ -290,9 +290,9 @@ export default async function EspaceStaffPage() {
         </div>
       </section>
 
-      <section style={{ backgroundColor: '#0d0500', borderTop: '1px solid rgba(184,134,11,0.1)' }} className="py-5">
+      <section style={{ backgroundColor: 'var(--paper-warm)', borderTop: '1px solid var(--rule)' }} className="py-5">
         <div className="container-narrow text-center">
-          <p className="label-display" style={{ color: 'rgba(240,230,200,0.12)', letterSpacing: '0.3em' }}>
+          <p className="label-display" style={{ color: 'var(--ink-20)', letterSpacing: '0.3em' }}>
             Accès journalisé — Wild Frontier RP Administration
           </p>
         </div>

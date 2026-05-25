@@ -33,17 +33,17 @@ export default function StaffCmsPage() {
   }
 
   return (
-    <div style={{ backgroundColor: '#140800', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--paper)', minHeight: '100vh' }}>
       <div className="container-wide py-10">
 
         {/* Header */}
         <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
           <div>
             <Link href="/espace-staff" className="label-display"
-              style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.65rem' }}>
+              style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               ← Espace Staff
             </Link>
-            <h1 className="display-heading mt-1" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--parchment)' }}>
+            <h1 className="display-heading mt-1" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--ink)' }}>
               Gazette du Comté — CMS
             </h1>
           </div>
@@ -57,7 +57,7 @@ export default function StaffCmsPage() {
         {/* Formulaire de création */}
         {showForm && (
           <div className="p-6 mb-8"
-            style={{ border: '1px solid rgba(184,134,11,0.3)', backgroundColor: 'rgba(184,134,11,0.04)' }}>
+            style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
             <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Nouvel article
             </div>
@@ -68,7 +68,7 @@ export default function StaffCmsPage() {
         {/* Formulaire d'édition */}
         {editing && (
           <div className="p-6 mb-8"
-            style={{ border: '1px solid rgba(184,134,11,0.3)', backgroundColor: 'rgba(184,134,11,0.04)' }}>
+            style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
             <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Modifier : {editing.title}
             </div>
@@ -79,11 +79,11 @@ export default function StaffCmsPage() {
         {/* Liste */}
         {loading ? (
           <div className="text-center py-16">
-            <p className="body-text" style={{ color: 'rgba(240,230,200,0.3)' }}>Chargement…</p>
+            <p className="body-text" style={{ color: 'var(--ink-40)' }}>Chargement…</p>
           </div>
         ) : articles.length === 0 ? (
           <div className="text-center py-16">
-            <p className="body-text" style={{ color: 'rgba(240,230,200,0.3)' }}>
+            <p className="body-text" style={{ color: 'var(--ink-40)' }}>
               Aucun article. Créez le premier en cliquant sur &ldquo;Nouvel article&rdquo;.
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function StaffCmsPage() {
           <div className="space-y-3">
             {articles.map(a => (
               <div key={a.id} className="flex items-center gap-4 p-4"
-                style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)' }}>
+                style={{ border: '1px solid rgba(42,54,68,0.20)', backgroundColor: 'var(--paper-card)' }}>
 
                 {a.featured && (
                   <div style={{ width: 4, height: 40, backgroundColor: 'var(--gold)', flexShrink: 0, borderRadius: 2 }} />
@@ -99,10 +99,10 @@ export default function StaffCmsPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className="section-heading" style={{ color: 'var(--parchment)', fontSize: '0.95rem' }}>
+                    <span className="section-heading" style={{ color: 'var(--ink)', fontSize: '0.95rem' }}>
                       {a.title}
                     </span>
-                    <span className="label-display" style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.6rem' }}>
+                    <span className="label-display" style={{ color: 'var(--gold)', fontSize: '0.6rem' }}>
                       {a.category}
                     </span>
                     {a.featured && (
@@ -110,13 +110,13 @@ export default function StaffCmsPage() {
                     )}
                   </div>
                   <div className="flex gap-4 mt-0.5 flex-wrap">
-                    <span className="body-text" style={{ color: 'rgba(240,230,200,0.35)', fontSize: '0.75rem' }}>
+                    <span className="body-text" style={{ color: 'var(--ink-60)', fontSize: '0.75rem' }}>
                       {a.date}
                     </span>
-                    <span className="body-text" style={{ color: 'rgba(240,230,200,0.35)', fontSize: '0.75rem' }}>
+                    <span className="body-text" style={{ color: 'var(--ink-60)', fontSize: '0.75rem' }}>
                       Par {a.author}
                     </span>
-                    <span className="body-text" style={{ color: 'rgba(240,230,200,0.25)', fontSize: '0.75rem' }}>
+                    <span className="body-text" style={{ color: 'var(--ink-40)', fontSize: '0.75rem' }}>
                       Modifié le {new Date(a.updatedAt).toLocaleDateString('fr-FR')}
                     </span>
                   </div>
@@ -136,7 +136,7 @@ export default function StaffCmsPage() {
         {articles.length > 0 && (
           <div className="mt-6">
             <Link href="/journal" target="_blank" className="label-display"
-              style={{ color: 'rgba(184,134,11,0.4)', fontSize: '0.65rem' }}>
+              style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Voir le journal public →
             </Link>
           </div>
