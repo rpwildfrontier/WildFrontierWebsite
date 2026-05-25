@@ -34,27 +34,26 @@ export default async function ArticleDetailPage({ params }: { params: { id: stri
   return (
     <>
       {/* Masthead */}
-      <section
-        className="py-8"
-        style={{ background: 'linear-gradient(170deg, var(--parchment-dark) 0%, var(--parchment-100) 80%)', borderBottom: '3px double var(--border-dark)' }}
-      >
+      <section className="py-10" style={{
+        background: 'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(200,144,24,0.07) 0%, transparent 70%), linear-gradient(180deg, #0d0a05 0%, #060402 100%)',
+        borderBottom: '1px solid rgba(200,144,24,0.2)',
+      }}>
         <div className="container-wide">
-          <div className="flex justify-between items-center mb-5 pb-3" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <Link href="/journal" className="label-display" style={{ color: 'var(--ink-20)', textDecoration: 'none' }}>
+          <div className="flex justify-between items-center mb-6 pb-4" style={{ borderBottom: '1px solid rgba(200,144,24,0.12)' }}>
+            <Link href="/journal" className="label-display" style={{ color: 'rgba(200,144,24,0.5)', textDecoration: 'none' }}>
               ← Gazette du Comté
             </Link>
-            <span className="label-display" style={{ color: 'var(--ink-20)' }}>
-              {article.date}
-            </span>
+            <span className="label-display" style={{ color: 'rgba(200,144,24,0.35)' }}>{article.date}</span>
           </div>
-          <div className="text-center py-5" style={{ borderBottom: '1px solid var(--border-light)', borderTop: '1px solid var(--border)' }}>
-            <div className="label-display mb-3" style={{ color: 'var(--rust)', letterSpacing: '0.3em' }}>
+          <div className="text-center py-6"
+            style={{ borderBottom: '1px solid rgba(200,144,24,0.15)', borderTop: '1px solid rgba(200,144,24,0.1)' }}>
+            <div className="label-display mb-3" style={{ color: 'var(--orange)', letterSpacing: '0.3em' }}>
               {article.category}
             </div>
             <h1 className="display-heading mx-auto" style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', maxWidth: '48rem', lineHeight: 1.2 }}>
               {article.title}
             </h1>
-            <div className="label-display mt-4" style={{ color: 'var(--ink-20)' }}>
+            <div className="label-display mt-4" style={{ color: 'rgba(200,144,24,0.4)' }}>
               Par {article.author}
             </div>
           </div>
@@ -62,38 +61,32 @@ export default async function ArticleDetailPage({ params }: { params: { id: stri
       </section>
 
       {/* Corps de l'article */}
-      <section className="py-14" style={{ backgroundColor: 'var(--parchment-100)' }}>
+      <section className="py-16" style={{ backgroundColor: '#060402' }}>
         <div className="container-narrow">
 
           {/* Chapeau */}
-          <p
-            className="body-text mb-10 pb-8"
-            style={{
-              fontSize: '1.05rem', lineHeight: 1.75, fontStyle: 'italic',
-              color: 'var(--ink-40)', borderBottom: '1px solid var(--border-light)',
-            }}
-          >
+          <p className="body-text mb-10 pb-8"
+            style={{ fontSize: '1.05rem', lineHeight: 1.8, fontStyle: 'italic',
+              borderBottom: '1px solid rgba(200,144,24,0.15)' }}>
             {article.excerpt}
           </p>
 
-          {/* Texte complet */}
+          {/* Content */}
           <div className="space-y-5">
             {paragraphs.map((p, i) => (
-              <p key={i} className="body-text" style={{ fontSize: '0.97rem', lineHeight: 1.8, color: 'var(--ink)' }}>
+              <p key={i} className="body-text" style={{ fontSize: '0.97rem', lineHeight: 1.85 }}>
                 {p}
               </p>
             ))}
           </div>
 
-          {/* Pied de page article */}
-          <div
-            className="mt-14 pt-6 flex items-center justify-between flex-wrap gap-4"
-            style={{ borderTop: '2px solid var(--border)' }}
-          >
-            <div className="label-display" style={{ color: 'var(--ink-20)' }}>
+          {/* Footer */}
+          <div className="mt-14 pt-6 flex items-center justify-between flex-wrap gap-4"
+            style={{ borderTop: '1px solid rgba(200,144,24,0.15)' }}>
+            <div className="label-display" style={{ color: 'rgba(200,144,24,0.35)' }}>
               Gazette du Comté · {article.date} · {article.author}
             </div>
-            <Link href="/journal" className="label-display" style={{ color: 'var(--rust)', textDecoration: 'none' }}>
+            <Link href="/journal" className="label-display" style={{ color: 'var(--orange)', textDecoration: 'none' }}>
               ← Retour au journal
             </Link>
           </div>

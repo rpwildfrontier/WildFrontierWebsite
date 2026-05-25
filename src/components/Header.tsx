@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const navLinks = [
   { href: '/univers',      label: 'Univers' },
@@ -15,68 +15,98 @@ const navLinks = [
 ]
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen,   setMenuOpen]   = useState(false)
+  const [scrolled,   setScrolled]   = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header style={{ backgroundColor: 'var(--ink)', borderBottom: '3px solid var(--gold)' }}>
-
-      {/* Bandeau supérieur */}
-      <div style={{ borderBottom: '1px solid rgba(184, 134, 11, 0.2)', padding: '5px 0' }}>
+    <header
+      style={{
+        position:        'sticky',
+        top:             0,
+        zIndex:          50,
+        backgroundColor: scrolled ? 'rgba(6,4,2,0.97)' : 'rgba(6,4,2,0.88)',
+        backdropFilter:  'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
+        borderBottom:    '1px solid rgba(200,144,24,0.3)',
+        boxShadow:       scrolled ? '0 4px 32px rgba(0,0,0,0.6)' : 'none',
+        transition:      'background-color 0.3s, box-shadow 0.3s',
+      }}
+    >
+      {/* Top micro-bar */}
+      <div style={{ borderBottom: '1px solid rgba(200,144,24,0.1)', padding: '4px 0' }}>
         <div className="container-wide flex justify-between items-center">
-          <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, fontSize: '0.6rem' }}>
-            Comté de New Hanover — Territoire de l&apos;Ouest — An de grâce 1886
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.55rem', letterSpacing: '0.28em', color: 'rgba(200,144,24,0.4)', textTransform: 'uppercase' }}>
+            Comté de New Hanover — An de grâce 1886
           </span>
           <div className="flex items-center gap-5">
             <Link href="/espace-joueur" className="nav-link-dark">Espace Joueur</Link>
-            <span style={{ color: 'rgba(184, 134, 11, 0.25)' }}>|</span>
+            <span style={{ color: 'rgba(200,144,24,0.2)' }}>|</span>
             <Link href="/espace-staff" className="nav-link-dark">Administration</Link>
           </div>
         </div>
       </div>
 
       {/* Masthead */}
-      <div className="container-wide py-8 text-center">
+      <div className="container-wide py-5 text-center">
         <Link href="/" style={{ textDecoration: 'none', display: 'block' }}>
-          {/* Ligne décorative supérieure */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to right, transparent, rgba(184,134,11,0.4))' }} />
-            <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, letterSpacing: '0.35em' }}>
-              Gazette Officielle
+
+          {/* Decorative rule above */}
+          <div className="flex items-center justify-center gap-5 mb-3">
+            <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.5))' }} />
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(200,144,24,0.45)', textTransform: 'uppercase' }}>
+              ✦ Whitelist Strict · RP Dur & Organique · RedM ✦
             </span>
-            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to left, transparent, rgba(184,134,11,0.4))' }} />
+            <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to left, transparent, rgba(200,144,24,0.5))' }} />
           </div>
 
-          {/* Titre principal */}
+          {/* Brand title — Cinzel for that AAA western feel */}
           <h1
-            className="display-heading"
             style={{
-              fontSize: 'clamp(2.2rem, 6vw, 4.2rem)',
-              color: 'var(--parchment-50)',
-              letterSpacing: '0.06em',
-              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
+              fontFamily:  'var(--font-cinzel)',
+              fontWeight:  900,
+              fontSize:    'clamp(1.8rem, 5vw, 3.2rem)',
+              letterSpacing: '0.12em',
+              background:  'linear-gradient(180deg, #f2e6cc 0%, #d4a040 55%, #8a6018 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              lineHeight:  1.1,
+              textShadow:  'none',
             }}
           >
             Wild Frontier
           </h1>
 
-          <div
-            className="label-display mt-2"
-            style={{ color: 'var(--gold)', opacity: 0.6, letterSpacing: '0.55em', fontSize: '0.65rem' }}
-          >
+          <div style={{
+            fontFamily:    'var(--font-display)',
+            fontSize:      '0.58rem',
+            letterSpacing: '0.65em',
+            color:         'rgba(200,144,24,0.5)',
+            textTransform: 'uppercase',
+            marginTop:     '6px',
+          }}>
             Roleplay
           </div>
 
-          {/* Ligne décorative inférieure */}
-          <div className="flex items-center justify-center gap-3 mt-4">
-            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
-            <div style={{ height: '3px', width: '96px', background: 'rgba(184,134,11,0.5)' }} />
-            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
+          {/* Amber glow bar */}
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.4))' }} />
+            <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.8)' }} />
+            <div style={{ height: '2px', width: 120, background: 'linear-gradient(to right, rgba(200,144,24,0.3), rgba(200,144,24,0.6), rgba(200,144,24,0.3))' }} />
+            <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.8)' }} />
+            <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to left, transparent, rgba(200,144,24,0.4))' }} />
           </div>
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav style={{ borderTop: '1px solid rgba(184, 134, 11, 0.18)' }}>
+      <nav style={{ borderTop: '1px solid rgba(200,144,24,0.12)' }}>
         <div className="container-wide">
           {/* Desktop */}
           <ul className="hidden md:flex items-stretch justify-center">
@@ -84,49 +114,48 @@ export default function Header() {
               <li key={link.href} className="flex items-stretch">
                 <Link
                   href={link.href}
-                  className="nav-link-dark flex items-center px-5 py-4 hover:bg-white/5"
-                  style={{ transition: 'color 0.15s ease, background-color 0.15s ease' }}
+                  className="nav-link-dark flex items-center px-5 py-3"
+                  style={{ position: 'relative', transition: 'color 0.15s' }}
                 >
                   {link.label}
                 </Link>
                 {i < navLinks.length - 1 && (
-                  <span
-                    className="self-center"
-                    style={{ color: 'rgba(184,134,11,0.2)', userSelect: 'none', fontSize: '0.4rem' }}
-                  >
-                    ◆
-                  </span>
+                  <span style={{ alignSelf: 'center', color: 'rgba(200,144,24,0.2)', fontSize: '0.35rem' }}>◆</span>
                 )}
               </li>
             ))}
           </ul>
 
-          {/* Mobile */}
+          {/* Mobile toggle */}
           <div className="md:hidden flex justify-end py-3">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-              className="label-display px-4 py-2 transition-colors"
+              aria-label={menuOpen ? 'Fermer' : 'Menu'}
               style={{
-                color: 'var(--gold)',
-                border: '1px solid rgba(184,134,11,0.35)',
-                fontSize: '0.62rem',
-                background: 'none',
-                cursor: 'pointer',
+                fontFamily:  'var(--font-display)',
+                fontSize:    '0.6rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color:       'var(--amber)',
+                border:      '1px solid rgba(200,144,24,0.35)',
+                background:  'none',
+                padding:     '6px 16px',
+                cursor:      'pointer',
+                transition:  'border-color 0.15s',
               }}
             >
-              {menuOpen ? 'Fermer' : 'Menu'}
+              {menuOpen ? '✕ Fermer' : '☰ Menu'}
             </button>
           </div>
 
           {menuOpen && (
-            <ul className="md:hidden pb-2">
+            <ul className="md:hidden pb-3" style={{ borderTop: '1px solid rgba(200,144,24,0.1)' }}>
               {navLinks.map(link => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     className="nav-link-dark block px-4 py-3"
-                    style={{ borderBottom: '1px solid rgba(184,134,11,0.1)' }}
+                    style={{ borderBottom: '1px solid rgba(200,144,24,0.08)' }}
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
@@ -137,6 +166,9 @@ export default function Header() {
           )}
         </div>
       </nav>
+
+      {/* Bottom amber glow line */}
+      <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.5), transparent)' }} />
     </header>
   )
 }
