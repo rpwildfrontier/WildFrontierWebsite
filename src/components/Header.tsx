@@ -19,12 +19,12 @@ function Logo() {
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <path
           d="M14 2L16.5 8.5L23.5 7L20.5 13.5L26 17L20.5 20.5L23.5 27L16.5 25.5L14 26L11.5 25.5L4.5 27L7.5 20.5L2 17L7.5 13.5L4.5 7L11.5 8.5L14 2Z"
-          fill="#C9982A"
-          stroke="#9A7018"
+          fill="#8B6914"
+          stroke="#7A5C0A"
           strokeWidth="0.6"
         />
-        <circle cx="14" cy="17" r="4.5" fill="#F8F7F4" stroke="#9A7018" strokeWidth="0.8"/>
-        <circle cx="14" cy="17" r="2.5" fill="#C9982A"/>
+        <circle cx="14" cy="17" r="4.5" fill="#F7F2E8" stroke="#7A5C0A" strokeWidth="0.8"/>
+        <circle cx="14" cy="17" r="2.5" fill="#8B6914"/>
       </svg>
       <div>
         <div style={{
@@ -32,10 +32,10 @@ function Logo() {
           fontWeight: 700,
           fontSize: '0.84rem',
           letterSpacing: '0.08em',
-          color: 'var(--fg)',
+          color: 'var(--ink)',
           lineHeight: 1,
         }}>
-          WILD FRONTIER <span style={{ fontSize: '0.54rem', letterSpacing: '0.20em', color: 'var(--fg-40)' }}>RP</span>
+          WILD FRONTIER <span style={{ fontSize: '0.54rem', letterSpacing: '0.20em', color: 'var(--ink-40)', verticalAlign: 'super' }}>RP</span>
         </div>
       </div>
     </Link>
@@ -83,18 +83,18 @@ export default function Header() {
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      backgroundColor: 'rgba(255,255,255,0.92)',
+      backgroundColor: 'rgba(247,242,232,0.95)',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
-      borderBottom: '1px solid rgba(28,20,8,0.08)',
+      borderBottom: '1px solid rgba(26,18,8,0.10)',
       boxShadow: scrolled
-        ? '0 4px 24px rgba(28,20,8,0.10)'
-        : '0 1px 0 rgba(28,20,8,0.05)',
+        ? '0 2px 16px rgba(26,18,8,0.09)'
+        : 'none',
       transition: 'box-shadow 0.3s',
     }}>
 
       {/* ── Main bar ───────────────────────────────── */}
-      <div style={{ maxWidth: 480, margin: '0 auto', padding: '0 14px' }}>
+      <div className="container-wide">
         <div style={{ display: 'flex', alignItems: 'center', height: 56, gap: 8 }}>
 
           <Logo />
@@ -124,7 +124,7 @@ export default function Header() {
               width: 36, height: 36,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'var(--fg-60)',
+              color: 'var(--ink-60)',
             }}>
               <SearchIcon size={20} color="currentColor" />
             </button>
@@ -132,7 +132,7 @@ export default function Header() {
               width: 36, height: 36,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'var(--fg-60)',
+              color: 'var(--ink-60)',
               position: 'relative',
             }}>
               <BellIcon size={20} color="currentColor" />
@@ -141,8 +141,8 @@ export default function Header() {
                 position: 'absolute', top: 7, right: 7,
                 width: 6, height: 6,
                 borderRadius: '50%',
-                background: '#C9982A',
-                border: '1.5px solid rgba(255,255,255,0.92)',
+                background: 'var(--seal)',
+                border: '1.5px solid rgba(247,242,232,0.95)',
               }} />
             </button>
             {/* Profile dropdown */}
@@ -153,24 +153,25 @@ export default function Header() {
                 aria-haspopup="true"
                 style={{
                   display: 'flex', alignItems: 'center', gap: 5,
-                  background: profileOpen ? 'rgba(28,20,8,0.10)' : 'rgba(28,20,8,0.06)',
-                  border: '1px solid rgba(28,20,8,0.10)',
-                  borderRadius: 9999,
-                  padding: '4px 10px 4px 4px',
+                  background: profileOpen ? 'rgba(26,18,8,0.08)' : 'rgba(26,18,8,0.05)',
+                  border: '1px solid rgba(26,18,8,0.10)',
+                  borderRadius: 4,
+                  padding: '4px 9px 4px 4px',
                   cursor: 'pointer',
                   transition: 'background 0.15s',
-                  color: 'var(--fg-40)',
+                  color: 'var(--ink-40)',
                 }}
               >
                 <div style={{
-                  width: 26, height: 26, borderRadius: '50%',
-                  background: 'linear-gradient(135deg,#C9982A,#9A7018)',
+                  width: 26, height: 26, borderRadius: 3,
+                  background: 'linear-gradient(135deg,#B8920E,#8B6914)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '0.75rem', color: '#fff', fontWeight: 700,
+                  fontFamily: 'var(--font-cinzel)',
+                  fontSize: '0.75rem', color: '#FAF5EC', fontWeight: 700,
                   flexShrink: 0,
                 }}>J</div>
                 <span style={{
-                  display: 'inline-block',
+                  display: 'inline-flex',
                   transition: 'transform 0.2s',
                   transform: profileOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 }}>
@@ -184,25 +185,26 @@ export default function Header() {
                   position: 'absolute', top: 'calc(100% + 8px)', right: 0,
                   minWidth: 200,
                   background: '#FFFFFF',
-                  border: '1px solid rgba(28,20,8,0.10)',
-                  borderRadius: 16,
-                  boxShadow: '0 8px 32px rgba(28,20,8,0.12), 0 2px 8px rgba(28,20,8,0.06)',
+                  border: '1px solid rgba(26,18,8,0.10)',
+                  borderRadius: 6,
+                  boxShadow: '0 8px 32px rgba(26,18,8,0.12)',
                   overflow: 'hidden',
                   zIndex: 200,
                   animation: 'dropdownIn 0.15s ease-out both',
                 }}>
                   {/* User info */}
-                  <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid rgba(28,20,8,0.07)' }}>
+                  <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid var(--rule)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{
-                        width: 36, height: 36, borderRadius: '50%',
-                        background: 'linear-gradient(135deg,#C9982A,#9A7018)',
+                        width: 36, height: 36, borderRadius: 4,
+                        background: 'linear-gradient(135deg,#B8920E,#8B6914)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '0.9rem', color: '#fff', fontWeight: 700, flexShrink: 0,
+                        fontFamily: 'var(--font-cinzel)',
+                        fontSize: '0.9rem', color: '#FAF5EC', fontWeight: 700, flexShrink: 0,
                       }}>J</div>
                       <div>
-                        <div style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)', lineHeight: 1.2 }}>Joueur</div>
-                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)', marginTop: 1 }}>Candidature en cours</div>
+                        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--ink)', lineHeight: 1.2 }}>Joueur</div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--ink-40)', marginTop: 1 }}>Candidature en cours</div>
                       </div>
                     </div>
                   </div>
@@ -210,9 +212,9 @@ export default function Header() {
                   {/* Menu items */}
                   <div style={{ padding: '6px 0' }}>
                     {[
-                      { href: '/espace-joueur',   label: 'Mon espace',        icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg> },
-                      { href: '/candidatures',    label: 'Ma candidature',    icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="14" height="16" rx="2"/><line x1="7" y1="8" x2="13" y2="8"/><line x1="7" y1="11" x2="11" y2="11"/></svg> },
-                      { href: '/journal',         label: 'Annonces',          icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2.5a5.5 5.5 0 0 1 5.5 5.5c0 3 .8 4.5 1.5 5.5H3c.7-1 1.5-2.5 1.5-5.5A5.5 5.5 0 0 1 10 2.5Z"/><path d="M8.5 16.5a1.5 1.5 0 0 0 3 0"/></svg> },
+                      { href: '/espace-joueur',   label: 'Mon espace',     icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg> },
+                      { href: '/candidatures',    label: 'Ma candidature', icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="14" height="16" rx="2"/><line x1="7" y1="8" x2="13" y2="8"/><line x1="7" y1="11" x2="11" y2="11"/></svg> },
+                      { href: '/journal',         label: 'Annonces',       icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2.5a5.5 5.5 0 0 1 5.5 5.5c0 3 .8 4.5 1.5 5.5H3c.7-1 1.5-2.5 1.5-5.5A5.5 5.5 0 0 1 10 2.5Z"/><path d="M8.5 16.5a1.5 1.5 0 0 0 3 0"/></svg> },
                     ].map(item => (
                       <Link
                         key={item.href}
@@ -222,23 +224,23 @@ export default function Header() {
                           display: 'flex', alignItems: 'center', gap: 10,
                           padding: '9px 16px',
                           textDecoration: 'none',
-                          color: 'var(--fg-60)',
+                          color: 'var(--ink-60)',
                           fontFamily: 'var(--font-body)',
                           fontSize: '0.80rem',
                           fontWeight: 500,
                           transition: 'background 0.1s, color 0.1s',
                         }}
-                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8F7F4'; (e.currentTarget as HTMLElement).style.color = 'var(--fg)' }}
-                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--fg-60)' }}
+                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--gold-tint)'; (e.currentTarget as HTMLElement).style.color = 'var(--ink)' }}
+                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--ink-60)' }}
                       >
-                        <span style={{ color: 'var(--fg-40)', display: 'flex' }}>{item.icon}</span>
+                        <span style={{ color: 'var(--ink-40)', display: 'flex' }}>{item.icon}</span>
                         {item.label}
                       </Link>
                     ))}
                   </div>
 
                   {/* Divider + logout */}
-                  <div style={{ borderTop: '1px solid rgba(28,20,8,0.07)', padding: '6px 0 4px' }}>
+                  <div style={{ borderTop: '1px solid var(--rule)', padding: '6px 0 4px' }}>
                     <Link
                       href="/api/auth/signout"
                       onClick={() => setProfileOpen(false)}
@@ -246,13 +248,13 @@ export default function Header() {
                         display: 'flex', alignItems: 'center', gap: 10,
                         padding: '9px 16px',
                         textDecoration: 'none',
-                        color: '#C84040',
+                        color: 'var(--seal)',
                         fontFamily: 'var(--font-body)',
                         fontSize: '0.80rem',
                         fontWeight: 500,
                         transition: 'background 0.1s',
                       }}
-                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(200,64,64,0.06)'}
+                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--seal-lt)'}
                       onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                     >
                       <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -271,38 +273,36 @@ export default function Header() {
       </div>
 
       {/* ── Tab bar (mobile only) ───────────────────── */}
-      <div className="md:hidden" style={{ borderTop: '1px solid rgba(28,20,8,0.06)' }}>
-        <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex' }}>
+      <div className="md:hidden" style={{ borderTop: '1px solid var(--rule)', background: 'var(--bg-paper)' }}>
+        <div style={{ display: 'flex' }}>
 
           {/* RÈGLEMENT */}
           <Link href="/reglement" style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '11px 6px', textDecoration: 'none',
-            borderRight: '1px solid rgba(28,20,8,0.06)',
+            borderRight: '1px solid var(--rule)',
           }}>
-            <BookIcon size={14} color="currentColor" />
+            <BookIcon size={14} color="var(--ink-60)" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: 'var(--fg-60)',
+              color: 'var(--ink-60)',
             }}>Règlement</span>
-            <span style={{ color: 'var(--fg-20)', fontSize: '0.85rem' }}>→</span>
           </Link>
 
           {/* CANDIDATER — featured */}
           <Link href="/candidatures" style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '11px 6px', textDecoration: 'none',
-            background: 'linear-gradient(135deg, rgba(196,148,42,0.10) 0%, rgba(196,148,42,0.05) 100%)',
-            borderRight: '1px solid rgba(28,20,8,0.06)',
+            background: 'var(--gold-tint)',
+            borderRight: '1px solid var(--rule)',
           }}>
-            <HatIcon size={14} color="#C4942A" />
+            <HatIcon size={14} color="var(--gold)" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 800,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: '#C4942A',
+              color: 'var(--gold)',
             }}>Candidater</span>
-            <span style={{ color: '#C4942A', fontSize: '0.85rem', opacity: 0.6 }}>→</span>
           </Link>
 
           {/* DISCORD */}
@@ -316,7 +316,7 @@ export default function Header() {
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: 'var(--fg-60)',
+              color: 'var(--ink-60)',
             }}>Discord</span>
           </Link>
         </div>
