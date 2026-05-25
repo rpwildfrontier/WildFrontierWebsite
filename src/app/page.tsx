@@ -1,11 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import {
+  MountainIcon, ScrollIcon, NewspaperIcon, BoxIcon,
+  BookIcon, HatIcon, DiscordIcon, QuestionIcon, MailIcon,
+  MegaphoneIcon,
+} from '@/components/Icons'
 
 export const metadata: Metadata = {
   title: 'Wild Frontier RP — Portail Officiel',
 }
 
-// Progress ring — gold on dark
+// Progress ring — gold on light
 function ProgressRing({ pct, size = 80 }: { pct: number; size?: number }) {
   const r = (size - 10) / 2
   const circ = 2 * Math.PI * r
@@ -16,13 +21,13 @@ function ProgressRing({ pct, size = 80 }: { pct: number; size?: number }) {
         <circle
           cx={size / 2} cy={size / 2} r={r}
           fill="none"
-          stroke="rgba(201,152,42,0.18)"
+          stroke="rgba(196,148,42,0.15)"
           strokeWidth={7}
         />
         <circle
           cx={size / 2} cy={size / 2} r={r}
           fill="none"
-          stroke="#C9982A"
+          stroke="#C4942A"
           strokeWidth={7}
           strokeLinecap="round"
           strokeDasharray={circ}
@@ -34,7 +39,7 @@ function ProgressRing({ pct, size = 80 }: { pct: number; size?: number }) {
           fontFamily: 'var(--font-heading)',
           fontWeight: 700,
           fontSize: '1.05rem',
-          color: '#EDE0C4',
+          color: 'var(--fg)',
         }}>{pct}%</div>
       </div>
     </div>
@@ -47,35 +52,41 @@ const navItems = [
     label: 'Univers',
     desc: 'Découvrez un monde vivant, réaliste et sans compromis.',
     thumb: 'linear-gradient(135deg,#1E4A2E 0%,#0D2818 100%)',
-    icon: '🏔️',
+    IconComponent: MountainIcon,
   },
   {
     href: '/reglement',
     label: 'Règlement',
     desc: 'Les lois du comté pour préserver l\'immersion et le respect.',
     thumb: 'linear-gradient(135deg,#4A2E14 0%,#2A1A08 100%)',
-    icon: '📖',
+    IconComponent: ScrollIcon,
   },
   {
     href: '/journal',
     label: 'Journal du Comté',
     desc: 'Toutes les annonces, événements et nouvelles officielles.',
     thumb: 'linear-gradient(135deg,#1A2E4A 0%,#0A1A2E 100%)',
-    icon: '📰',
+    IconComponent: NewspaperIcon,
   },
   {
     href: '/archives',
     label: 'Archives',
     desc: 'Accédez aux archives vérifiées et aux anciens numéros.',
     thumb: 'linear-gradient(135deg,#3A2E18 0%,#201A0A 100%)',
-    icon: '🗄️',
+    IconComponent: BoxIcon,
   },
 ]
 
-const announcementIcons: Record<number, { bg: string; icon: string }> = {
-  0: { bg: 'linear-gradient(135deg,#4A2E14,#2A1A08)', icon: '📖' },
-  1: { bg: 'linear-gradient(135deg,#1E3A1E,#0D2010)', icon: '🎪' },
-  2: { bg: 'linear-gradient(135deg,#1A2E4A,#0A1A2E)', icon: '💰' },
+const announcementColors: Record<number, { bg: string }> = {
+  0: { bg: 'linear-gradient(135deg,#4A2E14,#2A1A08)' },
+  1: { bg: 'linear-gradient(135deg,#1E3A1E,#0D2010)' },
+  2: { bg: 'linear-gradient(135deg,#1A2E4A,#0A1A2E)' },
+}
+
+const announcementIcons: Record<number, React.ReactNode> = {
+  0: <ScrollIcon size={18} color="#EDE0C4" />,
+  1: <MegaphoneIcon size={18} color="#EDE0C4" />,
+  2: <BoxIcon size={18} color="#EDE0C4" />,
 }
 
 const latestAnnouncements = [
@@ -97,8 +108,12 @@ export default function HomePage() {
             minHeight: 220,
           }}
         >
-          {/* Gold star ornament */}
-          <div style={{ fontSize: '1.4rem', color: '#C9982A', marginBottom: '0.65rem', opacity: 0.85 }}>✦</div>
+          {/* Gold star ornament — SVG */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.65rem', opacity: 0.85 }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="#C4942A">
+              <path d="M8 0L9.8 5.5H16L11 9L13 14.5L8 11L3 14.5L5 9L0 5.5H6.2Z"/>
+            </svg>
+          </div>
 
           <h1 style={{
             fontFamily: 'var(--font-display)',
@@ -162,7 +177,7 @@ export default function HomePage() {
       >
         <div style={{ display: 'flex', gap: 10 }}>
           <Link href="/reglement" className="quick-action-card" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: '1.1rem' }}>📖</span>
+            <BookIcon size={18} color="var(--fg-60)" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.72rem', fontWeight: 700,
               letterSpacing: '0.07em', textTransform: 'uppercase',
@@ -171,7 +186,7 @@ export default function HomePage() {
             <span style={{ color: 'var(--fg-25)' }}>›</span>
           </Link>
           <Link href="/candidatures" className="quick-action-card primary" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: '1.1rem' }}>🤠</span>
+            <HatIcon size={18} color="#FFFFFF" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.72rem', fontWeight: 700,
               letterSpacing: '0.07em', textTransform: 'uppercase',
@@ -180,9 +195,7 @@ export default function HomePage() {
             <span style={{ color: 'rgba(13,8,4,0.50)' }}>›</span>
           </Link>
           <Link href="https://discord.gg/" className="quick-action-card" style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-            <svg width="18" height="18" viewBox="0 0 71 55" fill="#7289DA">
-              <path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40 40 0 0 0-1.8 3.6 54 54 0 0 0-16.4 0A40 40 0 0 0 25.6.4 58.3 58.3 0 0 0 11 4.9C1.6 19 -.9 32.7.3 46.3a59 59 0 0 0 17.9 9 42.7 42.7 0 0 0 3.7-6 38.2 38.2 0 0 1-5.8-2.8l1.4-1.1a42 42 0 0 0 35.9 0l1.4 1.1a38.3 38.3 0 0 1-5.8 2.8 42.6 42.6 0 0 0 3.7 6 58.8 58.8 0 0 0 17.9-9C72 30.4 68.8 16.8 60.1 4.9ZM23.7 38a6.7 6.7 0 0 1-6.3-7 6.7 6.7 0 0 1 6.3-7 6.7 6.7 0 0 1 6.3 7 6.7 6.7 0 0 1-6.3 7Zm23.6 0a6.7 6.7 0 0 1-6.3-7 6.7 6.7 0 0 1 6.3-7 6.7 6.7 0 0 1 6.3 7 6.7 6.7 0 0 1-6.3 7Z"/>
-            </svg>
+            <DiscordIcon size={18} />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.72rem', fontWeight: 700,
               letterSpacing: '0.07em', textTransform: 'uppercase',
@@ -210,9 +223,9 @@ export default function HomePage() {
                 <Link key={item.href} href={item.href} className="nav-list-item">
                   <div
                     className="nav-list-icon"
-                    style={{ background: item.thumb, border: 'none', fontSize: '1.4rem' }}
+                    style={{ background: item.thumb, border: 'none' }}
                   >
-                    {item.icon}
+                    <item.IconComponent size={22} color="#EDE0C4" />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{
@@ -245,8 +258,8 @@ export default function HomePage() {
                   width: 38, height: 38, borderRadius: '50%',
                   background: 'linear-gradient(135deg,#C9982A,#9A7018)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.1rem', flexShrink: 0,
-                }}>❓</div>
+                  flexShrink: 0,
+                }}><QuestionIcon size={18} color="#EDE0C4" /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{
                     fontFamily: 'var(--font-heading)',
@@ -257,15 +270,15 @@ export default function HomePage() {
                     fontSize: '0.68rem', color: 'var(--fg-40)',
                   }}>Questions fréquentes</div>
                 </div>
-                <span style={{ color: 'rgba(237,224,196,0.22)', fontSize: '1rem' }}>›</span>
+                <span style={{ color: 'var(--fg-20)', fontSize: '1rem' }}>›</span>
               </Link>
               <Link href="/contact" className="mini-card">
                 <div style={{
                   width: 38, height: 38, borderRadius: '50%',
                   background: 'linear-gradient(135deg,#2E5A4A,#1A3A2E)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.1rem', flexShrink: 0,
-                }}>✉️</div>
+                  flexShrink: 0,
+                }}><MailIcon size={18} color="#EDE0C4" /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{
                     fontFamily: 'var(--font-heading)',
@@ -276,7 +289,7 @@ export default function HomePage() {
                     fontSize: '0.68rem', color: 'var(--fg-40)',
                   }}>Nous contacter</div>
                 </div>
-                <span style={{ color: 'rgba(237,224,196,0.22)', fontSize: '1rem' }}>›</span>
+                <span style={{ color: 'var(--fg-20)', fontSize: '1rem' }}>›</span>
               </Link>
             </div>
           </div>
@@ -284,13 +297,13 @@ export default function HomePage() {
           {/* RIGHT COLUMN — candidature + annonces */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
 
-            {/* Candidature card — dark */}
+            {/* Candidature card */}
             <div style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border)',
               borderRadius: 20,
               padding: '16px 14px',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.45)',
+              boxShadow: '0 2px 12px rgba(28,20,8,0.08)',
             }}>
               <div style={{
                 display: 'flex', alignItems: 'center',
@@ -352,16 +365,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Announcements card — dark */}
+            {/* Announcements card */}
             <div style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border)',
               borderRadius: 20,
               padding: '16px 14px',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.45)',
+              boxShadow: '0 2px 12px rgba(28,20,8,0.08)',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12 }}>
-                <span style={{ fontSize: '0.9rem' }}>📣</span>
+                <MegaphoneIcon size={16} color="var(--fg-40)" />
                 <span style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: '0.65rem', fontWeight: 700,
@@ -377,17 +390,17 @@ export default function HomePage() {
                       display: 'flex', alignItems: 'flex-start', gap: 10,
                       padding: '10px 0',
                       borderBottom: i < latestAnnouncements.length - 1
-                        ? '1px solid rgba(201,152,42,0.08)'
+                        ? '1px solid rgba(28,20,8,0.06)'
                         : 'none',
                     }}
                   >
                     <div style={{
                       width: 38, height: 38, borderRadius: 10,
-                      background: announcementIcons[i].bg,
+                      background: announcementColors[i].bg,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '1rem', flexShrink: 0,
+                      flexShrink: 0,
                     }}>
-                      {announcementIcons[i].icon}
+                      {announcementIcons[i]}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{
@@ -414,8 +427,8 @@ export default function HomePage() {
               </div>
               <Link href="/journal" style={{
                 display: 'block', textAlign: 'center', marginTop: 12,
-                background: 'rgba(201,152,42,0.08)',
-                border: '1px solid rgba(201,152,42,0.18)',
+                background: 'rgba(196,148,42,0.08)',
+                border: '1px solid rgba(196,148,42,0.18)',
                 borderRadius: 10, padding: '8px',
                 textDecoration: 'none',
                 fontFamily: 'var(--font-body)',

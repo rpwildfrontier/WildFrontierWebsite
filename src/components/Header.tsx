@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { BookIcon, HatIcon, SearchIcon, BellIcon } from './Icons'
 
 const navLinks = [
   { href: '/univers',      label: 'Univers' },
@@ -22,7 +23,7 @@ function Logo() {
           stroke="#9A7018"
           strokeWidth="0.6"
         />
-        <circle cx="14" cy="17" r="4.5" fill="#0D0804" stroke="#9A7018" strokeWidth="0.8"/>
+        <circle cx="14" cy="17" r="4.5" fill="#F8F7F4" stroke="#9A7018" strokeWidth="0.8"/>
         <circle cx="14" cy="17" r="2.5" fill="#C9982A"/>
       </svg>
       <div>
@@ -31,31 +32,13 @@ function Logo() {
           fontWeight: 700,
           fontSize: '0.84rem',
           letterSpacing: '0.08em',
-          color: '#EDE0C4',
+          color: 'var(--fg)',
           lineHeight: 1,
         }}>
-          WILD FRONTIER <span style={{ fontSize: '0.54rem', letterSpacing: '0.20em', color: 'rgba(237,224,196,0.45)' }}>RP</span>
+          WILD FRONTIER <span style={{ fontSize: '0.54rem', letterSpacing: '0.20em', color: 'var(--fg-40)' }}>RP</span>
         </div>
       </div>
     </Link>
-  )
-}
-
-function SearchIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
-      <circle cx="9" cy="9" r="5.5"/>
-      <path d="M13.5 13.5L17 17"/>
-    </svg>
-  )
-}
-
-function BellIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 2.5a5.5 5.5 0 0 1 5.5 5.5c0 3 .8 4.5 1.5 5.5H3c.7-1 1.5-2.5 1.5-5.5A5.5 5.5 0 0 1 10 2.5Z"/>
-      <path d="M8.5 16.5a1.5 1.5 0 0 0 3 0"/>
-    </svg>
   )
 }
 
@@ -73,13 +56,13 @@ export default function Header() {
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      backgroundColor: 'rgba(13,8,4,0.88)',
+      backgroundColor: 'rgba(255,255,255,0.92)',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
-      borderBottom: '1px solid rgba(201,152,42,0.12)',
+      borderBottom: '1px solid rgba(28,20,8,0.08)',
       boxShadow: scrolled
-        ? '0 4px 24px rgba(0,0,0,0.55)'
-        : '0 1px 0 rgba(201,152,42,0.07)',
+        ? '0 4px 24px rgba(28,20,8,0.10)'
+        : '0 1px 0 rgba(28,20,8,0.05)',
       transition: 'box-shadow 0.3s',
     }}>
 
@@ -114,32 +97,32 @@ export default function Header() {
               width: 36, height: 36,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'rgba(237,224,196,0.55)',
+              color: 'var(--fg-60)',
             }}>
-              <SearchIcon />
+              <SearchIcon size={20} color="currentColor" />
             </button>
             <button style={{
               width: 36, height: 36,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'rgba(237,224,196,0.55)',
+              color: 'var(--fg-60)',
               position: 'relative',
             }}>
-              <BellIcon />
+              <BellIcon size={20} color="currentColor" />
               {/* notification dot */}
               <span style={{
                 position: 'absolute', top: 7, right: 7,
                 width: 6, height: 6,
                 borderRadius: '50%',
                 background: '#C9982A',
-                border: '1.5px solid #0D0804',
+                border: '1.5px solid rgba(255,255,255,0.92)',
               }} />
             </button>
             {/* Avatar chip */}
             <Link href="/espace-joueur" style={{
               display: 'flex', alignItems: 'center', gap: 5,
-              background: 'rgba(30,19,10,0.90)',
-              border: '1px solid rgba(201,152,42,0.22)',
+              background: 'rgba(28,20,8,0.06)',
+              border: '1px solid rgba(28,20,8,0.10)',
               borderRadius: 9999,
               padding: '4px 10px 4px 4px',
               textDecoration: 'none',
@@ -150,7 +133,7 @@ export default function Header() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '0.75rem', color: '#0D0804', fontWeight: 700,
               }}>J</div>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="rgba(237,224,196,0.40)" strokeWidth="1.5" strokeLinecap="round">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--fg-40)" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M2 3.5L5 6.5L8 3.5"/>
               </svg>
             </Link>
@@ -159,38 +142,38 @@ export default function Header() {
       </div>
 
       {/* ── Tab bar (mobile only) ───────────────────── */}
-      <div className="md:hidden" style={{ borderTop: '1px solid rgba(201,152,42,0.09)' }}>
+      <div className="md:hidden" style={{ borderTop: '1px solid rgba(28,20,8,0.06)' }}>
         <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex' }}>
 
           {/* RÈGLEMENT */}
           <Link href="/reglement" style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '11px 6px', textDecoration: 'none',
-            borderRight: '1px solid rgba(201,152,42,0.09)',
+            borderRight: '1px solid rgba(28,20,8,0.06)',
           }}>
-            <span style={{ fontSize: '1rem' }}>📖</span>
+            <BookIcon size={14} color="currentColor" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: 'rgba(237,224,196,0.60)',
+              color: 'var(--fg-60)',
             }}>Règlement</span>
-            <span style={{ color: 'rgba(237,224,196,0.22)', fontSize: '0.85rem' }}>→</span>
+            <span style={{ color: 'var(--fg-20)', fontSize: '0.85rem' }}>→</span>
           </Link>
 
           {/* CANDIDATER — featured */}
           <Link href="/candidatures" style={{
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '11px 6px', textDecoration: 'none',
-            background: 'linear-gradient(135deg, rgba(201,152,42,0.14) 0%, rgba(201,152,42,0.07) 100%)',
-            borderRight: '1px solid rgba(201,152,42,0.09)',
+            background: 'linear-gradient(135deg, rgba(196,148,42,0.10) 0%, rgba(196,148,42,0.05) 100%)',
+            borderRight: '1px solid rgba(28,20,8,0.06)',
           }}>
-            <span style={{ fontSize: '1.1rem' }}>🤠</span>
+            <HatIcon size={14} color="#C4942A" />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 800,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: '#C9982A',
+              color: '#C4942A',
             }}>Candidater</span>
-            <span style={{ color: '#C9982A', fontSize: '0.85rem', opacity: 0.6 }}>→</span>
+            <span style={{ color: '#C4942A', fontSize: '0.85rem', opacity: 0.6 }}>→</span>
           </Link>
 
           {/* DISCORD */}
@@ -198,13 +181,13 @@ export default function Header() {
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '11px 6px', textDecoration: 'none',
           }}>
-            <svg width="16" height="16" viewBox="0 0 71 55" fill="#7289DA">
+            <svg width="16" height="16" viewBox="0 0 71 55" fill="#5865F2">
               <path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40 40 0 0 0-1.8 3.6 54 54 0 0 0-16.4 0A40 40 0 0 0 25.6.4 58.3 58.3 0 0 0 11 4.9C1.6 19 -.9 32.7.3 46.3a59 59 0 0 0 17.9 9 42.7 42.7 0 0 0 3.7-6 38.2 38.2 0 0 1-5.8-2.8l1.4-1.1a42 42 0 0 0 35.9 0l1.4 1.1a38.3 38.3 0 0 1-5.8 2.8 42.6 42.6 0 0 0 3.7 6 58.8 58.8 0 0 0 17.9-9C72 30.4 68.8 16.8 60.1 4.9ZM23.7 38a6.7 6.7 0 0 1-6.3-7 6.7 6.7 0 0 1 6.3-7 6.7 6.7 0 0 1 6.3 7 6.7 6.7 0 0 1-6.3 7Zm23.6 0a6.7 6.7 0 0 1-6.3-7 6.7 6.7 0 0 1 6.3-7 6.7 6.7 0 0 1 6.3 7 6.7 6.7 0 0 1-6.3 7Z"/>
             </svg>
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: 'rgba(237,224,196,0.60)',
+              color: 'var(--fg-60)',
             }}>Discord</span>
           </Link>
         </div>
