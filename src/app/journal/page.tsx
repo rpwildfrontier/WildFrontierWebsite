@@ -1,28 +1,28 @@
 import type { Metadata } from 'next'
-import articlesData from '@/data/articles.json'
+import { listArticles } from '@/lib/kv'
+import articlesJson from '@/data/articles.json'
 
 export const metadata: Metadata = {
   title: 'Journal du Comté',
   description: 'La Gazette du Comté — Actualités, chroniques et annonces officielles de Wild Frontier RP.',
 }
 
-type Article = {
-  id: number
-  category: string
-  date: string
-  title: string
-  excerpt: string
-  author: string
-  featured: boolean
-}
-
-const articles = articlesData as Article[]
+type Article = { id: string | number; category: string; date: string; title: string; excerpt: string; author: string; featured: boolean }
 
 const categories = ['Tous', 'Faits divers', 'Politique', 'Justice', 'Avis de décès', 'Annonce commerciale', 'Chronique']
 
-export default function JournalPage() {
+export default async function JournalPage() {
+  // KV articles first, fall back to static JSON if KV is empty
+  let articles: Article[] = []
+  try {
+    const kvArticles = await listArticles()
+    articles = kvArticles.length > 0 ? kvArticles : (articlesJson as Article[])
+  } catch {
+    articles = articlesJson as Article[]
+  }
+
   const featured = articles.find(a => a.featured)
-  const rest = articles.filter(a => !a.featured)
+  const rest     = articles.filter(a => !a.featured)
 
   return (
     <>

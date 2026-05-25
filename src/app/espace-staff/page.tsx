@@ -160,11 +160,11 @@ export default async function EspaceStaffPage() {
                     </div>
                     <div className="space-y-2">
                       {[
-                        { label: 'Voir les candidatures', href: '/candidatures', note: 'Formulaire public' },
-                        { label: 'Gazette du Comté',      href: '/journal',      note: 'Gérer les articles' },
-                        { label: 'Archives officielles',  href: '/archives',     note: 'Registres et documents' },
-                        { label: 'Institutions',          href: '/institutions', note: 'Structure politique' },
-                        { label: 'Espace Joueur',         href: '/espace-joueur',note: 'Vue joueur' },
+                        { label: 'Candidatures',        href: '/espace-staff/candidatures', note: 'Examiner les dossiers' },
+                        { label: 'CMS — Journal',        href: '/espace-staff/cms',          note: 'Créer / modifier les articles' },
+                        { label: 'Archives officielles', href: '/archives',                  note: 'Registres et documents' },
+                        { label: 'Institutions',         href: '/institutions',              note: 'Structure politique' },
+                        { label: 'Espace Joueur',        href: '/espace-joueur',             note: 'Vue joueur' },
                       ].map(a => (
                         <Link key={a.href} href={a.href}
                           className="flex items-center justify-between p-3"
