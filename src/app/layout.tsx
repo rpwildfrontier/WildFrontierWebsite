@@ -47,7 +47,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ backgroundColor: '#1A0E05' }}>
+      <body>
         <AuthProvider>
           <div className="page-wrapper">
             <Header />
