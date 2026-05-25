@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { createCandidature } from '@/lib/kv'
 
 export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions)
+  const discordId = (session?.user as { id?: string })?.id ?? ''
+
   const body = await req.json()
   const {
     prenom, nom, age, ville, metier,
@@ -15,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   // Store in KV
   const candidature = await createCandidature({
-    discordName, steamId, steamName, cfxreUsername,
+    discordId, discordName, steamId, steamName, cfxreUsername,
     prenom, nom, age, ville, metier, histoire, experience, motivation,
   })
 

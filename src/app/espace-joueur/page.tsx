@@ -5,6 +5,7 @@ import { cookies } from 'next/headers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { readSignedCookie } from '@/lib/signed-cookie'
+import { getCandidatureByDiscordId } from '@/lib/kv'
 import SignInButton from '@/components/SignInButton'
 import SignOutButton from '@/components/SignOutButton'
 import type { SteamData, CfxreData } from '@/app/candidatures/page'
@@ -37,6 +38,10 @@ export default async function EspaceJoueurPage() {
 
   const steamData = readSignedCookie<SteamData>(cookieStore.get('wf_steam')?.value ?? '')
   const cfxreData = readSignedCookie<CfxreData>(cookieStore.get('wf_cfxre')?.value ?? '')
+
+  const candidature = user?.id
+    ? await getCandidatureByDiscordId(user.id).catch(() => null)
+    : null
 
   return (
     <>
@@ -281,38 +286,73 @@ export default async function EspaceJoueurPage() {
                   </>
 
                 ) : (
-                  /* Candidature en attente */
+                  /* Candidature en attente / rejetée */
                   <>
-                    <div className="document-panel">
-                      <div className="label-display mb-2" style={{ color: 'var(--ink-20)' }}>Suivi de candidature</div>
-                      <h3 className="section-heading mb-6" style={{ fontSize: '1.2rem' }}>Votre dossier est en cours d&apos;examen</h3>
-
-                      <div className="space-y-5">
-                        {[
-                          { n: '1', label: 'Dossier soumis',       done: true,  note: 'Transmis au staff via Discord' },
-                          { n: '2', label: 'Examen du dossier',    done: false, note: 'Analyse par l\'équipe' },
-                          { n: '3', label: 'Entretien RP',         done: false, note: 'Si le dossier est retenu' },
-                          { n: '4', label: 'Validation & accès',   done: false, note: 'Rôle Discord attribué — accès serveur ouvert' },
-                        ].map(step => (
-                          <div key={step.n} className="flex items-start gap-4">
-                            <div className="official-seal flex-shrink-0"
-                              style={{ width: '36px', height: '36px', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.85rem',
-                                color: step.done ? '#1a5c1a' : 'var(--ink-40)',
-                                borderColor: step.done ? '#1a5c1a' : 'var(--border-light)',
-                                backgroundColor: step.done ? 'rgba(26,92,26,0.08)' : 'transparent' }}>
-                              {step.done ? '✓' : step.n}
+                    {candidature?.status === 'rejected' ? (
+                      /* ── Rejected ──────────────────────────── */
+                      <div className="document-panel">
+                        <div className="label-display mb-2" style={{ color: 'var(--rust)' }}>Candidature</div>
+                        <h3 className="section-heading mb-4" style={{ fontSize: '1.2rem' }}>Dossier non retenu</h3>
+                        <div className="p-4 mb-4" style={{ border: '1px solid rgba(139,58,30,0.4)', backgroundColor: 'rgba(139,58,30,0.06)' }}>
+                          <p className="body-text" style={{ fontSize: '0.9rem' }}>
+                            Votre candidature n&apos;a pas été retenue par le staff.
+                            Vous pouvez contacter un membre du staff sur Discord pour plus d&apos;informations.
+                          </p>
+                          {candidature.statusNote && (
+                            <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(139,58,30,0.2)' }}>
+                              <div className="label-display mb-1" style={{ color: 'var(--rust)', fontSize: '0.65rem' }}>Message du staff</div>
+                              <p className="body-text" style={{ fontSize: '0.88rem' }}>{candidature.statusNote}</p>
                             </div>
-                            <div className="pt-1 flex-1">
-                              <div className="section-heading" style={{ fontSize: '0.95rem', color: step.done ? '#1a5c1a' : 'var(--ink)' }}>
-                                {step.label}
-                              </div>
-                              <div className="body-text" style={{ fontSize: '0.82rem', color: 'var(--ink-40)' }}>{step.note}</div>
-                            </div>
-                            {step.done && <span className="badge badge-validated flex-shrink-0">Fait</span>}
-                          </div>
-                        ))}
+                          )}
+                        </div>
+                        <Link href="/candidatures" className="btn-primary" style={{ fontSize: '0.85rem' }}>
+                          Soumettre un nouveau dossier →
+                        </Link>
                       </div>
-                    </div>
+                    ) : (
+                      /* ── Pending (or no KV record — fallback) ── */
+                      <div className="document-panel">
+                        <div className="label-display mb-2" style={{ color: 'var(--ink-20)' }}>Suivi de candidature</div>
+                        <h3 className="section-heading mb-6" style={{ fontSize: '1.2rem' }}>Votre dossier est en cours d&apos;examen</h3>
+
+                        {candidature?.statusNote && (
+                          <div className="mb-5 p-3" style={{ border: '1px solid var(--border)', backgroundColor: 'rgba(232,213,163,0.2)' }}>
+                            <div className="label-display mb-1" style={{ color: 'var(--ink-20)', fontSize: '0.65rem' }}>Message du staff</div>
+                            <p className="body-text" style={{ fontSize: '0.88rem' }}>{candidature.statusNote}</p>
+                          </div>
+                        )}
+
+                        <div className="space-y-5">
+                          {(() => {
+                            const kvStatus = candidature?.status
+                            const steps = [
+                              { n: '1', label: 'Dossier soumis',     done: !!candidature || true, note: 'Transmis au staff via Discord' },
+                              { n: '2', label: 'Examen du dossier',  done: kvStatus === 'approved', note: 'Analyse par l\'équipe' },
+                              { n: '3', label: 'Entretien RP',       done: false, note: 'Si le dossier est retenu' },
+                              { n: '4', label: 'Validation & accès', done: false, note: 'Rôle Discord attribué — accès serveur ouvert' },
+                            ]
+                            return steps.map(step => (
+                              <div key={step.n} className="flex items-start gap-4">
+                                <div className="official-seal flex-shrink-0"
+                                  style={{ width: '36px', height: '36px', fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.85rem',
+                                    color: step.done ? '#1a5c1a' : 'var(--ink-40)',
+                                    borderColor: step.done ? '#1a5c1a' : 'var(--border-light)',
+                                    backgroundColor: step.done ? 'rgba(26,92,26,0.08)' : 'transparent' }}>
+                                  {step.done ? '✓' : step.n}
+                                </div>
+                                <div className="pt-1 flex-1">
+                                  <div className="section-heading" style={{ fontSize: '0.95rem', color: step.done ? '#1a5c1a' : 'var(--ink)' }}>
+                                    {step.label}
+                                  </div>
+                                  <div className="body-text" style={{ fontSize: '0.82rem', color: 'var(--ink-40)' }}>{step.note}</div>
+                                </div>
+                                {step.done && <span className="badge badge-validated flex-shrink-0">Fait</span>}
+                              </div>
+                            ))
+                          })()}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="parchment-card">

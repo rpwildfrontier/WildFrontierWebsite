@@ -1,5 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
+import { getCandidatureByDiscordId } from '@/lib/kv'
 
 const GUILD_ID    = process.env.DISCORD_GUILD_ID  ?? ''
 const ROLE_STAFF  = process.env.DISCORD_ROLE_STAFF ?? ''
@@ -41,6 +42,12 @@ export const authOptions: NextAuthOptions = {
       // fetchMemberRoles uses next: { revalidate: 60 } — actual API call cached 60 s.
       if (token.discordId) {
         token.guildRoles = await fetchMemberRoles(token.discordId as string)
+        try {
+          const cand = await getCandidatureByDiscordId(token.discordId as string)
+          token.candidatureApproved = cand?.status === 'approved'
+        } catch {
+          token.candidatureApproved = false
+        }
       }
       return token
     },
@@ -56,7 +63,8 @@ export const authOptions: NextAuthOptions = {
         const discordId = (token.discordId  as string)   ?? ''
         u.id            = discordId
         u.isStaff       = (ROLE_STAFF ? roles.includes(ROLE_STAFF) : false) || STAFF_IDS.includes(discordId)
-        u.isJoueurValide = ROLE_JOUEUR ? roles.includes(ROLE_JOUEUR) : false
+        u.isJoueurValide = (ROLE_JOUEUR ? roles.includes(ROLE_JOUEUR) : false)
+                          || (token.candidatureApproved as boolean ?? false)
       }
       return session
     },

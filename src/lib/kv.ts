@@ -14,6 +14,7 @@ export interface Candidature {
   statusNote?:   string
   statusAt?:     string
   // Accounts
+  discordId?:    string   // Discord user ID (snowflake)
   discordName:   string
   steamId:       string
   steamName:     string
@@ -65,7 +66,16 @@ export async function createCandidature(data: Omit<Candidature, 'id' | 'createdA
   }
   await kv.set(candKey(candidature.id), candidature)
   await kv.lpush(CAND_LIST, candidature.id)
+  if (data.discordId) {
+    await kv.set(`candidature:discord:${data.discordId}`, candidature.id)
+  }
   return candidature
+}
+
+export async function getCandidatureByDiscordId(discordId: string): Promise<Candidature | null> {
+  const id = await kv.get<string>(`candidature:discord:${discordId}`)
+  if (!id) return null
+  return getCandidature(id)
 }
 
 export async function getCandidature(id: string): Promise<Candidature | null> {
