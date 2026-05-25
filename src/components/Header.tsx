@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BookIcon, HatIcon, SearchIcon, BellIcon } from './Icons'
 
 const navLinks = [
@@ -42,13 +42,40 @@ function Logo() {
   )
 }
 
+function ChevronDown() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <path d="M2 3.5L5 6.5L8 3.5"/>
+    </svg>
+  )
+}
+
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled]       = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const profileRef                    = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false)
+      }
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setProfileOpen(false)
+    }
+    document.addEventListener('mousedown', onClickOutside)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside)
+      document.removeEventListener('keydown', onKeyDown)
+    }
   }, [])
 
   return (
@@ -118,25 +145,127 @@ export default function Header() {
                 border: '1.5px solid rgba(255,255,255,0.92)',
               }} />
             </button>
-            {/* Avatar chip */}
-            <Link href="/espace-joueur" style={{
-              display: 'flex', alignItems: 'center', gap: 5,
-              background: 'rgba(28,20,8,0.06)',
-              border: '1px solid rgba(28,20,8,0.10)',
-              borderRadius: 9999,
-              padding: '4px 10px 4px 4px',
-              textDecoration: 'none',
-            }}>
-              <div style={{
-                width: 26, height: 26, borderRadius: '50%',
-                background: 'linear-gradient(135deg,#C9982A,#9A7018)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.75rem', color: '#0D0804', fontWeight: 700,
-              }}>J</div>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--fg-40)" strokeWidth="1.5" strokeLinecap="round">
-                <path d="M2 3.5L5 6.5L8 3.5"/>
-              </svg>
-            </Link>
+            {/* Profile dropdown */}
+            <div ref={profileRef} style={{ position: 'relative' }}>
+              <button
+                onClick={() => setProfileOpen(v => !v)}
+                aria-expanded={profileOpen}
+                aria-haspopup="true"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  background: profileOpen ? 'rgba(28,20,8,0.10)' : 'rgba(28,20,8,0.06)',
+                  border: '1px solid rgba(28,20,8,0.10)',
+                  borderRadius: 9999,
+                  padding: '4px 10px 4px 4px',
+                  cursor: 'pointer',
+                  transition: 'background 0.15s',
+                  color: 'var(--fg-40)',
+                }}
+              >
+                <div style={{
+                  width: 26, height: 26, borderRadius: '50%',
+                  background: 'linear-gradient(135deg,#C9982A,#9A7018)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.75rem', color: '#fff', fontWeight: 700,
+                  flexShrink: 0,
+                }}>J</div>
+                <span style={{
+                  display: 'inline-block',
+                  transition: 'transform 0.2s',
+                  transform: profileOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                }}>
+                  <ChevronDown />
+                </span>
+              </button>
+
+              {/* Dropdown panel */}
+              {profileOpen && (
+                <div style={{
+                  position: 'absolute', top: 'calc(100% + 8px)', right: 0,
+                  minWidth: 200,
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(28,20,8,0.10)',
+                  borderRadius: 16,
+                  boxShadow: '0 8px 32px rgba(28,20,8,0.12), 0 2px 8px rgba(28,20,8,0.06)',
+                  overflow: 'hidden',
+                  zIndex: 200,
+                  animation: 'dropdownIn 0.15s ease-out both',
+                }}>
+                  {/* User info */}
+                  <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid rgba(28,20,8,0.07)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div style={{
+                        width: 36, height: 36, borderRadius: '50%',
+                        background: 'linear-gradient(135deg,#C9982A,#9A7018)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '0.9rem', color: '#fff', fontWeight: 700, flexShrink: 0,
+                      }}>J</div>
+                      <div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)', lineHeight: 1.2 }}>Joueur</div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)', marginTop: 1 }}>Candidature en cours</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu items */}
+                  <div style={{ padding: '6px 0' }}>
+                    {[
+                      { href: '/espace-joueur',   label: 'Mon espace',        icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg> },
+                      { href: '/candidatures',    label: 'Ma candidature',    icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="14" height="16" rx="2"/><line x1="7" y1="8" x2="13" y2="8"/><line x1="7" y1="11" x2="11" y2="11"/></svg> },
+                      { href: '/journal',         label: 'Annonces',          icon: <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2.5a5.5 5.5 0 0 1 5.5 5.5c0 3 .8 4.5 1.5 5.5H3c.7-1 1.5-2.5 1.5-5.5A5.5 5.5 0 0 1 10 2.5Z"/><path d="M8.5 16.5a1.5 1.5 0 0 0 3 0"/></svg> },
+                    ].map(item => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setProfileOpen(false)}
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: 10,
+                          padding: '9px 16px',
+                          textDecoration: 'none',
+                          color: 'var(--fg-60)',
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '0.80rem',
+                          fontWeight: 500,
+                          transition: 'background 0.1s, color 0.1s',
+                        }}
+                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8F7F4'; (e.currentTarget as HTMLElement).style.color = 'var(--fg)' }}
+                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--fg-60)' }}
+                      >
+                        <span style={{ color: 'var(--fg-40)', display: 'flex' }}>{item.icon}</span>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Divider + logout */}
+                  <div style={{ borderTop: '1px solid rgba(28,20,8,0.07)', padding: '6px 0 4px' }}>
+                    <Link
+                      href="/api/auth/signout"
+                      onClick={() => setProfileOpen(false)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        padding: '9px 16px',
+                        textDecoration: 'none',
+                        color: '#C84040',
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '0.80rem',
+                        fontWeight: 500,
+                        transition: 'background 0.1s',
+                      }}
+                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(200,64,64,0.06)'}
+                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M13 3h4a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-4"/>
+                        <path d="M9 14l4-4-4-4"/>
+                        <line x1="13" y1="10" x2="3" y2="10"/>
+                      </svg>
+                      Se déconnecter
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

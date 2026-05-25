@@ -627,6 +627,11 @@ select.form-input option { background: var(--bg-card); color: var(--fg); }
 }
 .anim-fade-up { animation: fadeUp 0.4s ease-out both; }
 
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
 /* ══════════════════════════════════════════════════════════
    DARK PREMIUM WESTERN COMPONENTS
    ══════════════════════════════════════════════════════════ */
