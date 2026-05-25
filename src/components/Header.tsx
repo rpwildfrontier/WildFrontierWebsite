@@ -1,164 +1,159 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 const navLinks = [
   { href: '/univers',      label: 'Univers' },
   { href: '/reglement',    label: 'Règlement' },
-  { href: '/institutions', label: 'Institutions' },
-  { href: '/metiers',      label: 'Métiers' },
   { href: '/journal',      label: 'Journal' },
+  { href: '/archives',     label: 'Archives' },
   { href: '/faq',          label: 'F.A.Q.' },
+  { href: '/contact',      label: 'Contact' },
+]
+
+const tabLinks = [
+  { href: '/reglement',    icon: '📖', label: 'RÈGLEMENT',  arrow: true },
+  { href: '/candidatures', icon: '🤠', label: 'CANDIDATER', featured: true },
+  { href: 'https://discord.gg/wildfrontier', icon: '💬', label: 'DISCORD', external: true },
 ]
 
 function Logo() {
   return (
-    <Link href="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6 }}>
-      <span style={{ fontFamily: 'var(--font-cinzel)', fontWeight: 700, fontSize: '1.2rem', letterSpacing: '0.06em', color: 'var(--fg)' }}>
-        Wild Frontier
-      </span>
-      <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '0.58rem', letterSpacing: '0.22em', color: 'rgba(42,54,68,0.40)', textTransform: 'uppercase' }}>
-        RP
+    <Link href="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 7 }}>
+      <span style={{ color: 'var(--gold)', fontSize: '1rem', lineHeight: 1, flexShrink: 0 }}>✦</span>
+      <span style={{
+        fontFamily: 'var(--font-cinzel)',
+        fontWeight: 700,
+        fontSize: '1.05rem',
+        letterSpacing: '0.08em',
+        color: 'var(--fg)',
+        textTransform: 'uppercase' as const,
+        whiteSpace: 'nowrap' as const,
+      }}>
+        Wild Frontier RP
       </span>
     </Link>
   )
 }
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const path = usePathname()
 
   const headerStyle: React.CSSProperties = {
-    position:        'sticky',
-    top:             0,
-    zIndex:          50,
-    backgroundColor: '#F9F6F0',
-    borderBottom:    '1px solid rgba(42,54,68,0.14)',
-    boxShadow:       scrolled ? '0 2px 16px rgba(42,54,68,0.10)' : 'none',
-    transition:      'box-shadow 0.3s',
+    position: 'sticky',
+    top: 0,
+    zIndex: 50,
+    backgroundColor: '#120A03',
+    borderBottom: '1px solid rgba(200,150,60,0.3)',
   }
 
   return (
     <header style={headerStyle}>
 
-      {/* ── Desktop row ────────────────────────────────────── */}
-      <div className="hidden md:block">
+      {/* ── Top bar ─────────────────────────────────────────── */}
+      <div>
         <div className="container-wide">
-          <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58 }}>
 
             <Logo />
 
-            {/* Nav — centered in remaining space */}
-            <nav style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+            {/* Desktop nav — center */}
+            <nav className="hidden md:flex" style={{ alignItems: 'center', gap: 2 }}>
               {navLinks.map(link => (
-                <Link key={link.href} href={link.href} className="nav-link-dark" style={{ padding: '8px 10px' }}>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="nav-link-dark"
+                  style={{ padding: '8px 10px', color: path.startsWith(link.href) ? 'var(--gold)' : undefined }}
+                >
                   {link.label}
                 </Link>
               ))}
             </nav>
 
-            {/* Action buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-              <Link href="/espace-joueur" className="btn-outline-sand" style={{ padding: '8px 16px', fontSize: '0.68rem' }}>
-                Espace Joueur
-              </Link>
-              <Link href="/candidatures" className="btn-primary" style={{ padding: '9px 18px', fontSize: '0.68rem' }}>
-                Candidater
+            {/* Right icons */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexShrink: 0 }}>
+              {/* Search icon */}
+              <button
+                aria-label="Rechercher"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(200,150,60,0.75)', fontSize: '1.1rem', lineHeight: 1, padding: 4 }}
+              >
+                🔍
+              </button>
+              {/* Bell icon */}
+              <button
+                aria-label="Notifications"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(200,150,60,0.75)', fontSize: '1.1rem', lineHeight: 1, padding: 4 }}
+              >
+                🔔
+              </button>
+              {/* Avatar */}
+              <Link href="/espace-joueur" aria-label="Espace Joueur">
+                <div style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: '50%',
+                  background: 'var(--bg-warm)',
+                  border: '1.5px solid rgba(200,150,60,0.45)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.8rem',
+                  color: 'var(--gold)',
+                  fontFamily: 'var(--font-cinzel)',
+                  fontWeight: 700,
+                  flexShrink: 0,
+                }}>
+                  J
+                </div>
               </Link>
             </div>
+
           </div>
         </div>
       </div>
 
-      {/* ── Mobile row ─────────────────────────────────────── */}
-      <div className="md:hidden">
-        <div className="container-wide">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56 }}>
-
-            <Logo />
-
-            <button
-              onClick={() => setMenuOpen(v => !v)}
-              aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-              aria-expanded={menuOpen}
-              style={{
-                width:          44,
-                height:         44,
-                display:        'flex',
-                alignItems:     'center',
-                justifyContent: 'center',
-                color:          'var(--fg)',
-                border:         '1px solid rgba(42,54,68,0.25)',
-                borderRadius:   '3px',
-                background:     menuOpen ? 'rgba(42,54,68,0.06)' : 'transparent',
-                cursor:         'pointer',
-                fontSize:       '1.15rem',
-                lineHeight:     1,
-                transition:     'background 0.15s',
-                flexShrink:     0,
-              }}
+      {/* ── Tab bar (mobile only) ────────────────────────────── */}
+      <div className="md:hidden tab-nav">
+        {tabLinks.map(tab => {
+          const isActive = path.startsWith(tab.href) && !tab.external
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`tab-nav-item${isActive || tab.featured ? ' active' : ''}`}
+              target={tab.external ? '_blank' : undefined}
+              rel={tab.external ? 'noopener noreferrer' : undefined}
+              style={tab.featured ? { background: '#2D1608', color: '#C8963E' } : undefined}
             >
-              {menuOpen ? '✕' : '☰'}
-            </button>
-          </div>
-        </div>
+              <span style={{ fontSize: '0.9rem' }}>{tab.icon}</span>
+              <span>{tab.label}</span>
+              {tab.arrow && <span style={{ opacity: 0.6, marginLeft: 2 }}>›</span>}
+            </Link>
+          )
+        })}
+      </div>
 
-        {/* Mobile dropdown */}
-        {menuOpen && (
-          <div style={{ backgroundColor: '#F9F6F0', borderTop: '1px solid rgba(42,54,68,0.10)' }}>
-            <div className="container-wide" style={{ paddingTop: '0.5rem', paddingBottom: '1rem' }}>
-              <ul style={{ listStyle: 'none' }}>
-                {navLinks.map(link => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      style={{
-                        display:       'flex',
-                        alignItems:    'center',
-                        padding:       '13px 0',
-                        borderBottom:  '1px solid rgba(42,54,68,0.08)',
-                        fontFamily:    'var(--font-body)',
-                        fontSize:      '0.92rem',
-                        fontWeight:    500,
-                        color:         'var(--fg)',
-                        textDecoration: 'none',
-                        minHeight:     44,
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <div style={{ display: 'flex', gap: 8, marginTop: '1rem' }}>
-                <Link
-                  href="/espace-joueur"
-                  className="btn-outline-sand"
-                  onClick={() => setMenuOpen(false)}
-                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.70rem' }}
-                >
-                  Espace Joueur
-                </Link>
-                <Link
-                  href="/candidatures"
-                  className="btn-primary"
-                  onClick={() => setMenuOpen(false)}
-                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.70rem' }}
-                >
-                  Candidater
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
+      {/* ── Desktop tab bar ──────────────────────────────────── */}
+      <div className="hidden md:flex tab-nav">
+        {tabLinks.map(tab => {
+          const isActive = path.startsWith(tab.href) && !tab.external
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`tab-nav-item${isActive || tab.featured ? ' active' : ''}`}
+              target={tab.external ? '_blank' : undefined}
+              rel={tab.external ? 'noopener noreferrer' : undefined}
+              style={tab.featured ? { background: '#2D1608', color: '#C8963E' } : undefined}
+            >
+              <span style={{ fontSize: '0.9rem' }}>{tab.icon}</span>
+              <span>{tab.label}</span>
+              {tab.arrow && <span style={{ opacity: 0.6, marginLeft: 2 }}>›</span>}
+            </Link>
+          )
+        })}
       </div>
 
     </header>

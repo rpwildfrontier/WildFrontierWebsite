@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import BottomNav from '@/components/BottomNav'
 import AuthProvider from '@/components/AuthProvider'
 
 export const metadata: Metadata = {
@@ -46,7 +47,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body style={{ backgroundColor: '#1A0E05' }}>
         <AuthProvider>
           <div className="page-wrapper">
             <Header />
@@ -55,6 +56,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <BottomNav />
         </AuthProvider>
       </body>
     </html>
