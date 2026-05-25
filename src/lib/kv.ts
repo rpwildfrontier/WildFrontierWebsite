@@ -1,5 +1,7 @@
-import { kv } from '@vercel/kv'
+import { Redis } from '@upstash/redis'
 import { randomUUID } from 'crypto'
+
+const kv = Redis.fromEnv()
 
 /* ── Types ─────────────────────────────────────────── */
 
