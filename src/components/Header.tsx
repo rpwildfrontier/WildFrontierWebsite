@@ -35,7 +35,7 @@ export default function Header() {
 
       {/* Main nav row */}
       <div className="container-wide">
-        <div className="flex items-center justify-between" style={{ height: 64 }}>
+        <div className="flex items-center" style={{ height: 64, gap: '1rem' }}>
 
           {/* Logo */}
           <Link href="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
@@ -61,10 +61,10 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Nav — desktop center */}
-          <nav className="hidden md:flex items-center gap-1" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          {/* Nav — desktop center (fills remaining space, centered) */}
+          <nav className="hidden md:flex items-center justify-center gap-1" style={{ flex: 1 }}>
             {navLinks.map(link => (
-              <Link key={link.href} href={link.href} className="nav-link-dark" style={{ padding: '8px 12px' }}>
+              <Link key={link.href} href={link.href} className="nav-link-dark" style={{ padding: '8px 10px' }}>
                 {link.label}
               </Link>
             ))}
@@ -79,6 +79,9 @@ export default function Header() {
               Candidater
             </Link>
           </div>
+
+          {/* Spacer on mobile so hamburger is right-aligned */}
+          <div className="md:hidden" style={{ flex: 1 }} />
 
           {/* Mobile hamburger */}
           <button
