@@ -51,35 +51,36 @@ export default function HomePage() {
     <>
       {/* ══ HERO ════════════════════════════════════════════ */}
       <section style={{ backgroundColor: 'var(--bg)', padding: 'clamp(1rem, 3vw, 1.5rem)' }}>
-        <div className="hero-western" style={{ padding: 'clamp(2.5rem, 7vw, 4rem) 1.5rem', textAlign: 'center', minHeight: 200 }}>
+        <div className="hero-western" style={{ padding: 'clamp(2.5rem, 7vw, 4rem) 1.5rem', textAlign: 'center', minHeight: 220 }}>
           {/* Decorative star */}
-          <div style={{ fontSize: '1.5rem', color: '#E8C87A', marginBottom: '0.6rem', textShadow: '0 0 12px rgba(232,200,122,0.6)' }}>✦</div>
+          <div style={{ fontSize: '1.5rem', color: '#8F6420', marginBottom: '0.6rem' }}>✦</div>
           <h1 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(2.2rem, 8vw, 4.5rem)',
             letterSpacing: '0.08em',
-            color: '#F5EBD0',
+            color: '#2B1A08',
             lineHeight: 1.05,
             marginBottom: '0.6rem',
-            textShadow: '0 2px 16px rgba(0,0,0,0.5)',
+            textShadow: '0 1px 3px rgba(247,242,234,0.6)',
           }}>
             WILD FRONTIER RP
           </h1>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: '1.2rem' }}>
-            <div style={{ height: '1px', width: 32, background: 'rgba(232,200,122,0.5)' }} />
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.6rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(232,200,122,0.9)', margin: 0, whiteSpace: 'nowrap' }}>
+            <div style={{ height: '1px', width: 32, background: 'rgba(43,26,8,0.30)' }} />
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.6rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(43,26,8,0.65)', margin: 0, whiteSpace: 'nowrap' }}>
               Le portail officiel de la whitelist
             </p>
-            <div style={{ height: '1px', width: 32, background: 'rgba(232,200,122,0.5)' }} />
+            <div style={{ height: '1px', width: 32, background: 'rgba(43,26,8,0.30)' }} />
           </div>
           <a href="/candidatures" style={{
             display: 'inline-block',
             fontFamily: 'var(--font-body)', fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
-            color: 'rgba(232,200,122,0.95)',
-            border: '1px solid rgba(232,200,122,0.45)',
+            color: '#2B1A08',
+            border: '1px solid rgba(43,26,8,0.35)',
             borderRadius: 9999, padding: '9px 22px',
             textDecoration: 'none',
-            backdropFilter: 'blur(2px)',
+            background: 'rgba(247,242,234,0.45)',
+            backdropFilter: 'blur(4px)',
           }}>
             L&apos;expérience western immersive
           </a>
@@ -124,31 +125,26 @@ export default function HomePage() {
                   <span className="nav-list-arrow">›</span>
                 </Link>
               ))}
+            </div>
 
-              {/* FAQ + Contact inside card bottom */}
-              <div style={{ display: 'flex', borderTop: '1px solid rgba(120,90,50,0.08)' }}>
-                <Link href="/faq" style={{
-                  flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px',
-                  textDecoration: 'none', transition: 'background 0.12s',
-                }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#B8852E,#8F6420)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>❓</div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>FAQ</div>
-                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)' }}>Questions fréquentes</div>
-                  </div>
-                </Link>
-                <div style={{ width: 1, background: 'rgba(120,90,50,0.08)', alignSelf: 'stretch' }} />
-                <Link href="/contact" style={{
-                  flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px',
-                  textDecoration: 'none', transition: 'background 0.12s',
-                }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#6A8A7A,#3E5A4A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>✉️</div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>Contact</div>
-                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)' }}>Nous contacter</div>
-                  </div>
-                </Link>
-              </div>
+            {/* Mini cards: FAQ + Contact */}
+            <div style={{ display: 'flex', gap: 10 }}>
+              <Link href="/faq" className="mini-card">
+                <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg,#B8852E,#8F6420)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>❓</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>FAQ</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-40)' }}>Questions fréquentes</div>
+                </div>
+                <span style={{ color: 'rgba(43,33,24,0.25)', fontSize: '1rem' }}>›</span>
+              </Link>
+              <Link href="/contact" className="mini-card">
+                <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg,#6A8A7A,#3E5A4A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>✉️</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>Contact</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-40)' }}>Nous contacter</div>
+                </div>
+                <span style={{ color: 'rgba(43,33,24,0.25)', fontSize: '1rem' }}>›</span>
+              </Link>
             </div>
           </div>
 
@@ -185,8 +181,9 @@ export default function HomePage() {
 
             {/* Announcements card */}
             <div style={{ background: '#FFFFFF', border: '1px solid rgba(120,90,50,0.12)', borderRadius: 20, padding: '16px 14px', boxShadow: '0 8px 24px rgba(60,40,20,0.06)' }}>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--fg-40)', marginBottom: 12 }}>
-                Dernières annonces
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12 }}>
+                <span style={{ fontSize: '0.9rem' }}>📣</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--fg-40)' }}>Dernières annonces</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {latestAnnouncements.map((a, i) => (
