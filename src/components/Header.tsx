@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const navLinks = [
   { href: '/univers',      label: 'Univers' },
@@ -9,134 +9,158 @@ const navLinks = [
   { href: '/institutions', label: 'Institutions' },
   { href: '/metiers',      label: 'Métiers' },
   { href: '/journal',      label: 'Journal' },
-  { href: '/archives',     label: 'Archives' },
-  { href: '/candidatures', label: 'Candidatures' },
   { href: '/faq',          label: 'F.A.Q.' },
 ]
 
+function Logo() {
+  return (
+    <Link href="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6 }}>
+      <span style={{ fontFamily: 'var(--font-cinzel)', fontWeight: 700, fontSize: '1.2rem', letterSpacing: '0.06em', color: 'var(--fg)' }}>
+        Wild Frontier
+      </span>
+      <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '0.58rem', letterSpacing: '0.22em', color: 'rgba(42,54,68,0.40)', textTransform: 'uppercase' }}>
+        RP
+      </span>
+    </Link>
+  )
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const headerStyle: React.CSSProperties = {
+    position:        'sticky',
+    top:             0,
+    zIndex:          50,
+    backgroundColor: '#F9F6F0',
+    borderBottom:    '1px solid rgba(42,54,68,0.14)',
+    boxShadow:       scrolled ? '0 2px 16px rgba(42,54,68,0.10)' : 'none',
+    transition:      'box-shadow 0.3s',
+  }
 
   return (
-    <header style={{ backgroundColor: 'var(--ink)', borderBottom: '3px solid var(--gold)' }}>
+    <header style={headerStyle}>
 
-      {/* Bandeau supérieur */}
-      <div style={{ borderBottom: '1px solid rgba(184, 134, 11, 0.2)', padding: '5px 0' }}>
-        <div className="container-wide flex justify-between items-center">
-          <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, fontSize: '0.6rem' }}>
-            Comté de New Hanover — Territoire de l&apos;Ouest — An de grâce 1886
-          </span>
-          <div className="flex items-center gap-5">
-            <Link href="/espace-joueur" className="nav-link-dark">Espace Joueur</Link>
-            <span style={{ color: 'rgba(184, 134, 11, 0.25)' }}>|</span>
-            <Link href="/espace-staff" className="nav-link-dark">Administration</Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Masthead */}
-      <div className="container-wide py-8 text-center">
-        <Link href="/" style={{ textDecoration: 'none', display: 'block' }}>
-          {/* Ligne décorative supérieure */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to right, transparent, rgba(184,134,11,0.4))' }} />
-            <span className="label-display" style={{ color: 'var(--gold)', opacity: 0.55, letterSpacing: '0.35em' }}>
-              Gazette Officielle
-            </span>
-            <div style={{ height: '1px', width: '80px', background: 'linear-gradient(to left, transparent, rgba(184,134,11,0.4))' }} />
-          </div>
-
-          {/* Titre principal */}
-          <h1
-            className="display-heading"
-            style={{
-              fontSize: 'clamp(2.2rem, 6vw, 4.2rem)',
-              color: 'var(--parchment-50)',
-              letterSpacing: '0.06em',
-              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
-            }}
-          >
-            Wild Frontier
-          </h1>
-
-          <div
-            className="label-display mt-2"
-            style={{ color: 'var(--gold)', opacity: 0.6, letterSpacing: '0.55em', fontSize: '0.65rem' }}
-          >
-            Roleplay
-          </div>
-
-          {/* Ligne décorative inférieure */}
-          <div className="flex items-center justify-center gap-3 mt-4">
-            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
-            <div style={{ height: '3px', width: '96px', background: 'rgba(184,134,11,0.5)' }} />
-            <div style={{ height: '1px', width: '48px', background: 'rgba(184,134,11,0.35)' }} />
-          </div>
-        </Link>
-      </div>
-
-      {/* Navigation */}
-      <nav style={{ borderTop: '1px solid rgba(184, 134, 11, 0.18)' }}>
+      {/* ── Desktop row ────────────────────────────────────── */}
+      <div className="hidden md:block">
         <div className="container-wide">
-          {/* Desktop */}
-          <ul className="hidden md:flex items-stretch justify-center">
-            {navLinks.map((link, i) => (
-              <li key={link.href} className="flex items-stretch">
-                <Link
-                  href={link.href}
-                  className="nav-link-dark flex items-center px-5 py-4 hover:bg-white/5"
-                  style={{ transition: 'color 0.15s ease, background-color 0.15s ease' }}
-                >
+          <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+
+            <Logo />
+
+            {/* Nav — centered in remaining space */}
+            <nav style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+              {navLinks.map(link => (
+                <Link key={link.href} href={link.href} className="nav-link-dark" style={{ padding: '8px 10px' }}>
                   {link.label}
                 </Link>
-                {i < navLinks.length - 1 && (
-                  <span
-                    className="self-center"
-                    style={{ color: 'rgba(184,134,11,0.2)', userSelect: 'none', fontSize: '0.4rem' }}
-                  >
-                    ◆
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
+              ))}
+            </nav>
 
-          {/* Mobile */}
-          <div className="md:hidden flex justify-end py-3">
+            {/* Action buttons */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+              <Link href="/espace-joueur" className="btn-outline-sand" style={{ padding: '8px 16px', fontSize: '0.68rem' }}>
+                Espace Joueur
+              </Link>
+              <Link href="/candidatures" className="btn-primary" style={{ padding: '9px 18px', fontSize: '0.68rem' }}>
+                Candidater
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Mobile row ─────────────────────────────────────── */}
+      <div className="md:hidden">
+        <div className="container-wide">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56 }}>
+
+            <Logo />
+
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => setMenuOpen(v => !v)}
               aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-              className="label-display px-4 py-2 transition-colors"
+              aria-expanded={menuOpen}
               style={{
-                color: 'var(--gold)',
-                border: '1px solid rgba(184,134,11,0.35)',
-                fontSize: '0.62rem',
-                background: 'none',
-                cursor: 'pointer',
+                width:          44,
+                height:         44,
+                display:        'flex',
+                alignItems:     'center',
+                justifyContent: 'center',
+                color:          'var(--fg)',
+                border:         '1px solid rgba(42,54,68,0.25)',
+                borderRadius:   '3px',
+                background:     menuOpen ? 'rgba(42,54,68,0.06)' : 'transparent',
+                cursor:         'pointer',
+                fontSize:       '1.15rem',
+                lineHeight:     1,
+                transition:     'background 0.15s',
+                flexShrink:     0,
               }}
             >
-              {menuOpen ? 'Fermer' : 'Menu'}
+              {menuOpen ? '✕' : '☰'}
             </button>
           </div>
-
-          {menuOpen && (
-            <ul className="md:hidden pb-2">
-              {navLinks.map(link => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="nav-link-dark block px-4 py-3"
-                    style={{ borderBottom: '1px solid rgba(184,134,11,0.1)' }}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
-      </nav>
+
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <div style={{ backgroundColor: '#F9F6F0', borderTop: '1px solid rgba(42,54,68,0.10)' }}>
+            <div className="container-wide" style={{ paddingTop: '0.5rem', paddingBottom: '1rem' }}>
+              <ul style={{ listStyle: 'none' }}>
+                {navLinks.map(link => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      style={{
+                        display:       'flex',
+                        alignItems:    'center',
+                        padding:       '13px 0',
+                        borderBottom:  '1px solid rgba(42,54,68,0.08)',
+                        fontFamily:    'var(--font-body)',
+                        fontSize:      '0.92rem',
+                        fontWeight:    500,
+                        color:         'var(--fg)',
+                        textDecoration: 'none',
+                        minHeight:     44,
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div style={{ display: 'flex', gap: 8, marginTop: '1rem' }}>
+                <Link
+                  href="/espace-joueur"
+                  className="btn-outline-sand"
+                  onClick={() => setMenuOpen(false)}
+                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.70rem' }}
+                >
+                  Espace Joueur
+                </Link>
+                <Link
+                  href="/candidatures"
+                  className="btn-primary"
+                  onClick={() => setMenuOpen(false)}
+                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.70rem' }}
+                >
+                  Candidater
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
     </header>
   )
 }

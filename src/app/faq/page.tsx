@@ -24,7 +24,7 @@ const faqs = [
       },
       {
         q: 'Quel jeu faut-il avoir ?',
-        a: 'Il faut posséder Red Dead Redemption II sur Steam, et installer RedM (l\'équivalent de FiveM pour RDR2, disponible sur CFX.re). Les deux sont nécessaires pour accéder au serveur.',
+        a: 'Il faut posséder Red Dead Redemption II (Steam ou Rockstar Games Launcher), et installer RedM (l\'équivalent de FiveM pour RDR2, disponible sur CFX.re). Les deux sont nécessaires pour accéder au serveur.',
       },
     ],
   },

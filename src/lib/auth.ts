@@ -1,11 +1,10 @@
 import type { NextAuthOptions } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
 
-const GUILD_ID    = process.env.DISCORD_GUILD_ID ?? ''
+const GUILD_ID    = process.env.DISCORD_GUILD_ID  ?? ''
 const ROLE_STAFF  = process.env.DISCORD_ROLE_STAFF ?? ''
 const ROLE_JOUEUR = process.env.DISCORD_ROLE_JOUEUR ?? ''
-const BOT_TOKEN   = process.env.DISCORD_BOT_TOKEN ?? ''
-// Fallback legacy : liste d'IDs Discord staff
+const BOT_TOKEN   = process.env.DISCORD_BOT_TOKEN  ?? ''
 const STAFF_IDS   = (process.env.STAFF_DISCORD_IDS ?? '').split(',').map(s => s.trim()).filter(Boolean)
 
 async function fetchMemberRoles(userId: string): Promise<string[]> {
@@ -16,8 +15,7 @@ async function fetchMemberRoles(userId: string): Promise<string[]> {
       next: { revalidate: 60 },
     })
     if (!res.ok) return []
-    const member = await res.json()
-    return (member.roles as string[]) ?? []
+    return ((await res.json()).roles as string[]) ?? []
   } catch {
     return []
   }
@@ -26,40 +24,43 @@ async function fetchMemberRoles(userId: string): Promise<string[]> {
 export const authOptions: NextAuthOptions = {
   providers: [
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID ?? '',
+      clientId:     process.env.DISCORD_CLIENT_ID     ?? '',
       clientSecret: process.env.DISCORD_CLIENT_SECRET ?? '',
     }),
+    // CFX.re account linking uses the Discourse User API Key flow
+    // via custom routes /api/auth/cfxre/connect + /api/auth/cfxre/callback.
+    // No NextAuth provider needed — result is stored in a signed cookie (wf_cfxre).
   ],
+
   callbacks: {
     async jwt({ token, account }) {
-      if (account) {
-        token.discordId = account.providerAccountId
-        // Récupère les rôles Discord au moment du login
-        const roles = await fetchMemberRoles(account.providerAccountId)
-        token.guildRoles = roles
+      if (account?.provider === 'discord') {
+        token.discordId  = account.providerAccountId
+        token.guildRoles = await fetchMemberRoles(account.providerAccountId)
       }
       return token
     },
+
     async session({ session, token }) {
       if (session.user) {
-        const roles = (token.guildRoles as string[]) ?? []
-        const discordId = token.discordId as string
         const u = session.user as {
-          id?: string
-          isStaff?: boolean
+          id?:             string
+          isStaff?:        boolean
           isJoueurValide?: boolean
         }
-        u.id = discordId
-        u.isStaff = (ROLE_STAFF ? roles.includes(ROLE_STAFF) : false) ||
-                    STAFF_IDS.includes(discordId)
+        const roles     = (token.guildRoles as string[]) ?? []
+        const discordId = (token.discordId  as string)   ?? ''
+        u.id            = discordId
+        u.isStaff       = (ROLE_STAFF ? roles.includes(ROLE_STAFF) : false) || STAFF_IDS.includes(discordId)
         u.isJoueurValide = ROLE_JOUEUR ? roles.includes(ROLE_JOUEUR) : false
       }
       return session
     },
   },
+
   pages: {
     signIn: '/candidatures',
-    error: '/candidatures',
+    error:  '/candidatures',
   },
   secret: process.env.NEXTAUTH_SECRET,
 }

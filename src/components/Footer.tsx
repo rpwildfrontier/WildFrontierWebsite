@@ -7,7 +7,7 @@ export default function Footer() {
     <footer style={{ backgroundColor: 'var(--bg-deep)', borderTop: '1px solid rgba(42,54,68,0.18)' }}>
       <div className="container-wide" style={{ paddingTop: 'clamp(2.5rem, 6vw, 3.5rem)', paddingBottom: 'clamp(2.5rem, 6vw, 3.5rem)' }}>
 
-        {/* Brand — full width on mobile, 1 col on desktop */}
+        {/* Brand — full width on mobile, above link columns */}
         <div style={{ marginBottom: 'clamp(1.5rem, 4vw, 2.5rem)', paddingBottom: 'clamp(1.5rem, 4vw, 2.5rem)', borderBottom: '1px solid rgba(42,54,68,0.10)' }}>
           <div style={{ fontFamily: 'var(--font-cinzel)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.06em', color: 'var(--fg)', marginBottom: '0.75rem' }}>
             Wild Frontier RP
@@ -23,39 +23,39 @@ export default function Footer() {
 
           {/* Serveur */}
           <div>
-            <div className="label-display mb-3" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '5px' }}>Le Serveur</div>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+            <div className="label-display mb-4" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '6px' }}>Le Serveur</div>
+            <ul className="space-y-2.5">
               {[
                 { href: '/univers',      label: 'Univers & Lore' },
                 { href: '/reglement',    label: 'Règlement' },
                 { href: '/institutions', label: 'Institutions' },
                 { href: '/metiers',      label: 'Métiers' },
               ].map(l => (
-                <li key={l.href}><Link href={l.href} className="footer-link" style={{ fontSize: '0.88rem' }}>{l.label}</Link></li>
+                <li key={l.href}><Link href={l.href} className="footer-link">{l.label}</Link></li>
               ))}
             </ul>
           </div>
 
           {/* Publications */}
           <div>
-            <div className="label-display mb-3" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '5px' }}>Publications</div>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+            <div className="label-display mb-4" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '6px' }}>Publications</div>
+            <ul className="space-y-2.5">
               {[
                 { href: '/journal',  label: 'Journal du comté' },
                 { href: '/archives', label: 'Archives' },
                 { href: '/faq',      label: 'F.A.Q.' },
                 { href: '/contact',  label: 'Contact' },
               ].map(l => (
-                <li key={l.href}><Link href={l.href} className="footer-link" style={{ fontSize: '0.88rem' }}>{l.label}</Link></li>
+                <li key={l.href}><Link href={l.href} className="footer-link">{l.label}</Link></li>
               ))}
             </ul>
           </div>
 
           {/* Rejoindre — spans 2 cols on mobile so it's full width */}
           <div className="col-span-2 md:col-span-1">
-            <div className="label-display mb-3" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '5px' }}>Rejoindre</div>
+            <div className="label-display mb-4" style={{ borderBottom: '1px solid var(--rule)', paddingBottom: '6px' }}>Rejoindre</div>
             <p className="body-text mb-4" style={{ fontSize: '0.85rem' }}>
-              Whitelist strict — Discord, Steam/Rockstar, CFX.re requis.
+              Whitelist strict. Trois comptes requis : Discord, Steam/Rockstar, CFX.re.
             </p>
             <Link href="/candidatures" className="btn-primary" style={{ fontSize: '0.68rem' }}>
               Candidater

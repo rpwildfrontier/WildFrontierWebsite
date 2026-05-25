@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: 'Déposez votre candidature pour rejoindre Wild Frontier RP.',
 }
 
-export type SteamData  = { id: string; name: string; avatar: string; ownsRdr2: boolean }
-export type CfxreData  = { username: string; name: string; avatar: string }
+export type SteamData  = { id: string; name: string; avatar: string }
+export type CfxreData  = { username: string; cfxreId: string; name: string; avatar: string }
 
 const etapes = [
   { n: '1', title: 'Lire',      desc: 'Lisez le règlement et l\'univers du serveur.' },
