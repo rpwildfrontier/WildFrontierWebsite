@@ -35,8 +35,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       if (account?.provider === 'discord') {
-        token.discordId  = account.providerAccountId
-        token.guildRoles = await fetchMemberRoles(account.providerAccountId)
+        token.discordId = account.providerAccountId
+      }
+      // Always re-fetch roles so status reflects Discord changes without re-login.
+      // fetchMemberRoles uses next: { revalidate: 60 } — actual API call cached 60 s.
+      if (token.discordId) {
+        token.guildRoles = await fetchMemberRoles(token.discordId as string)
       }
       return token
     },

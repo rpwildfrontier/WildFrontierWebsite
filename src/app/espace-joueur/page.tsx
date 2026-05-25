@@ -55,7 +55,7 @@ export default async function EspaceJoueurPage() {
               <div className="label-display mb-1" style={{ color: 'var(--gold)', opacity: 0.65, letterSpacing: '0.3em' }}>
                 {user ? (user.isJoueurValide ? '✦ Joueur validé' : 'Candidature en cours') : 'Accès restreint'}
               </div>
-              <h1 className="display-heading" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', color: 'var(--parchment)' }}>
+              <h1 className="display-heading" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', color: 'var(--fg)' }}>
                 {user?.name ?? 'Espace Joueur'}
               </h1>
               {user && (

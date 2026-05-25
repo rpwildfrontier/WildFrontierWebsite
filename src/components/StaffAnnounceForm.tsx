@@ -4,11 +4,17 @@ import { useState } from 'react'
 
 type Priority = 'normale' | 'importante' | 'urgente'
 
-const priorities: { value: Priority; label: string; color: number; badge: string }[] = [
-  { value: 'normale',    label: 'Normale',    color: 0xb8860b, badge: '#7a5e00' },
-  { value: 'importante', label: 'Importante', color: 0xe07b00, badge: '#b85c00' },
-  { value: 'urgente',    label: 'Urgente',    color: 0x8b1a1a, badge: '#8b1a1a' },
+const priorities: { value: Priority; label: string }[] = [
+  { value: 'normale',    label: 'Normale' },
+  { value: 'importante', label: 'Importante' },
+  { value: 'urgente',    label: 'Urgente' },
 ]
+
+const priorityAccent: Record<Priority, string> = {
+  normale:    'var(--sand-dk)',
+  importante: 'var(--brick)',
+  urgente:    '#8b1a1a',
+}
 
 export default function StaffAnnounceForm() {
   const [title,    setTitle]    = useState('')
@@ -49,7 +55,7 @@ export default function StaffAnnounceForm() {
       )}
 
       <div>
-        <label className="form-label" style={{ color: 'rgba(240,230,200,0.6)' }}>Titre de l&apos;annonce *</label>
+        <label className="form-label">Titre de l&apos;annonce *</label>
         <input
           type="text"
           className="form-input"
@@ -57,55 +63,61 @@ export default function StaffAnnounceForm() {
           value={title}
           onChange={e => setTitle(e.target.value)}
           required
-          style={{ backgroundColor: 'rgba(240,230,200,0.05)', borderColor: 'rgba(184,134,11,0.3)', color: 'var(--parchment)' }}
         />
       </div>
 
       <div>
-        <label className="form-label" style={{ color: 'rgba(240,230,200,0.6)' }}>Message *</label>
+        <label className="form-label">Message *</label>
         <textarea
           className="form-input"
           placeholder="Contenu de l'annonce..."
           value={message}
           onChange={e => setMessage(e.target.value)}
           required
-          style={{ minHeight: '120px', resize: 'vertical', backgroundColor: 'rgba(240,230,200,0.05)', borderColor: 'rgba(184,134,11,0.3)', color: 'var(--parchment)' }}
+          style={{ minHeight: '120px', resize: 'vertical' }}
         />
       </div>
 
       <div>
-        <label className="form-label" style={{ color: 'rgba(240,230,200,0.6)' }}>Priorité</label>
+        <label className="form-label">Priorité</label>
         <div className="flex gap-3 flex-wrap">
-          {priorities.map(p => (
-            <button
-              key={p.value}
-              type="button"
-              onClick={() => setPriority(p.value)}
-              style={{
-                padding: '6px 16px',
-                border: `1.5px solid ${priority === p.value ? p.badge : 'rgba(184,134,11,0.2)'}`,
-                backgroundColor: priority === p.value ? `${p.badge}22` : 'transparent',
-                color: priority === p.value ? 'var(--parchment)' : 'rgba(240,230,200,0.4)',
-                fontFamily: 'var(--font-display)',
-                fontSize: '0.75rem',
-                letterSpacing: '0.1em',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              {p.label}
-            </button>
-          ))}
+          {priorities.map(p => {
+            const active = priority === p.value
+            const accent = priorityAccent[p.value]
+            return (
+              <button
+                key={p.value}
+                type="button"
+                onClick={() => setPriority(p.value)}
+                style={{
+                  padding: '6px 18px',
+                  border: `1.5px solid ${active ? accent : 'rgba(42,54,68,0.20)'}`,
+                  backgroundColor: active ? `${accent}18` : 'transparent',
+                  color: active ? accent : 'var(--fg-60)',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  borderRadius: '3px',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                {p.label}
+              </button>
+            )
+          })}
         </div>
       </div>
 
       {state === 'error' && (
-        <p className="label-display" style={{ color: 'var(--rust)' }}>Erreur : {error}</p>
+        <p className="label-display" style={{ color: 'var(--brick)' }}>Erreur : {error}</p>
       )}
 
       <button
         type="submit"
-        className="btn-gold"
+        className="btn-primary"
         disabled={state === 'loading' || !title.trim() || !message.trim()}
         style={{ opacity: state === 'loading' ? 0.6 : 1 }}
       >
