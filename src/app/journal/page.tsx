@@ -28,28 +28,28 @@ export default async function JournalPage() {
     <>
       {/* Masthead */}
       <section style={{
-        background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,144,24,0.07) 0%, transparent 70%), linear-gradient(180deg, #0d0a05 0%, #060402 100%)',
-        borderBottom: '1px solid rgba(200,144,24,0.2)',
+        background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,144,24,0.12) 0%, transparent 70%), linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
+        borderBottom: '1px solid rgba(120,80,5,0.35)',
       }} className="py-10">
         <div className="container-wide">
           {/* Dateline */}
           <div className="flex justify-between items-center mb-6 pb-4"
-            style={{ borderBottom: '1px solid rgba(200,144,24,0.12)' }}>
-            <span className="label-display" style={{ color: 'rgba(200,144,24,0.4)' }}>Comté de New Hanover, Territoire de l&apos;Ouest</span>
-            <span className="label-display" style={{ color: 'rgba(200,144,24,0.4)' }}>Lundi, 24 Mai 1887</span>
-            <span className="label-display" style={{ color: 'rgba(200,144,24,0.4)' }}>Prix : 5 cents</span>
+            style={{ borderBottom: '1px solid rgba(120,80,5,0.22)' }}>
+            <span className="label-display" style={{ color: 'rgba(140,90,8,0.72)' }}>Comté de New Hanover, Territoire de l&apos;Ouest</span>
+            <span className="label-display" style={{ color: 'rgba(140,90,8,0.72)' }}>Lundi, 24 Mai 1887</span>
+            <span className="label-display" style={{ color: 'rgba(140,90,8,0.72)' }}>Prix : 5 cents</span>
           </div>
 
           {/* Masthead title */}
           <div className="text-center py-8"
-            style={{ borderBottom: '1px solid rgba(200,144,24,0.18)', borderTop: '1px solid rgba(200,144,24,0.12)' }}>
-            <div className="label-display mb-3" style={{ color: 'rgba(200,144,24,0.4)', letterSpacing: '0.35em' }}>
+            style={{ borderBottom: '1px solid rgba(120,80,5,0.30)', borderTop: '1px solid rgba(120,80,5,0.22)' }}>
+            <div className="label-display mb-3" style={{ color: 'rgba(140,90,8,0.72)', letterSpacing: '0.35em' }}>
               Journal officiel du
             </div>
             <h1 className="display-heading" style={{ fontSize: 'clamp(2.2rem, 6vw, 4.5rem)' }}>
               Gazette du Comté
             </h1>
-            <div className="label-display mt-3" style={{ color: 'rgba(200,144,24,0.35)', letterSpacing: '0.2em' }}>
+            <div className="label-display mt-3" style={{ color: 'rgba(140,90,8,0.65)', letterSpacing: '0.2em' }}>
               Fondée en l&apos;an de grâce 1879 &nbsp;·&nbsp; Publiée chaque semaine
             </div>
           </div>
@@ -57,13 +57,13 @@ export default async function JournalPage() {
       </section>
 
       {/* Category filters */}
-      <section className="py-4" style={{ borderBottom: '1px solid rgba(200,144,24,0.12)', backgroundColor: '#080503' }}>
+      <section className="py-4" style={{ borderBottom: '1px solid rgba(120,80,5,0.22)', backgroundColor: 'var(--bg-surface)' }}>
         <div className="container-wide flex flex-wrap gap-2 justify-center">
           {categories.map(cat => (
             <button key={cat} className="label-display px-3 py-1.5 transition-all"
               style={{
-                color: 'rgba(200,144,24,0.5)',
-                border: '1px solid rgba(200,144,24,0.2)',
+                color: 'rgba(140,90,8,0.80)',
+                border: '1px solid rgba(120,80,5,0.35)',
                 background: 'none',
                 cursor: 'pointer',
                 fontSize: '0.58rem',
@@ -76,7 +76,7 @@ export default async function JournalPage() {
       </section>
 
       {/* Articles */}
-      <section className="py-16" style={{ backgroundColor: '#060402' }}>
+      <section className="py-16" style={{ backgroundColor: 'var(--bg-base)' }}>
         <div className="container-wide">
 
           {/* À la une */}
@@ -96,7 +96,7 @@ export default async function JournalPage() {
                     </Link>
                     <p className="body-text mb-5">{featured.excerpt}</p>
                     <div className="flex items-center justify-between flex-wrap gap-2">
-                      <div className="meta-text" style={{ color: 'rgba(200,144,24,0.35)' }}>
+                      <div className="meta-text" style={{ color: 'rgba(140,90,8,0.65)' }}>
                         {featured.date} — {featured.author}
                       </div>
                       <Link href={`/journal/${featured.id}`} className="label-display"
@@ -122,7 +122,7 @@ export default async function JournalPage() {
           {/* Grid */}
           <div className="newspaper-grid">
             {rest.map(article => (
-              <article key={article.id} className="pb-6" style={{ borderBottom: '1px solid rgba(200,144,24,0.12)' }}>
+              <article key={article.id} className="pb-6" style={{ borderBottom: '1px solid rgba(120,80,5,0.22)' }}>
                 <div className="meta-text mb-2" style={{ color: 'var(--orange)' }}>{article.category}</div>
                 <Link href={`/journal/${article.id}`} style={{ textDecoration: 'none' }}>
                   <h3 className="section-heading mb-3" style={{ fontSize: '1.15rem', lineHeight: 1.3 }}>
@@ -131,11 +131,11 @@ export default async function JournalPage() {
                 </Link>
                 <p className="body-text mb-4" style={{ fontSize: '0.92rem' }}>{article.excerpt}</p>
                 <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="meta-text" style={{ color: 'rgba(200,144,24,0.3)' }}>
+                  <div className="meta-text" style={{ color: 'rgba(140,90,8,0.58)' }}>
                     {article.date} — {article.author}
                   </div>
                   <Link href={`/journal/${article.id}`} className="label-display"
-                    style={{ color: 'rgba(200,144,24,0.5)', fontSize: '0.6rem' }}>
+                    style={{ color: 'rgba(140,90,8,0.80)', fontSize: '0.6rem' }}>
                     Lire →
                   </Link>
                 </div>
@@ -145,7 +145,7 @@ export default async function JournalPage() {
 
           {/* Pagination */}
           <div className="mt-14 pt-8 text-center label-display"
-            style={{ borderTop: '1px solid rgba(200,144,24,0.15)', color: 'rgba(200,144,24,0.3)' }}>
+            style={{ borderTop: '1px solid rgba(120,80,5,0.28)', color: 'rgba(140,90,8,0.58)' }}>
             Page 1 sur 12 — Archives disponibles à la bibliothèque du comté
           </div>
         </div>

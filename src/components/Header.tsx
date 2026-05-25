@@ -30,23 +30,23 @@ export default function Header() {
         position:        'sticky',
         top:             0,
         zIndex:          50,
-        backgroundColor: scrolled ? 'rgba(6,4,2,0.97)' : 'rgba(6,4,2,0.92)',
+        backgroundColor: scrolled ? 'rgba(250,243,230,0.98)' : 'rgba(250,243,230,0.94)',
         backdropFilter:  'blur(14px)',
         WebkitBackdropFilter: 'blur(14px)',
-        borderBottom:    '1px solid rgba(200,144,24,0.3)',
-        boxShadow:       scrolled ? '0 4px 32px rgba(0,0,0,0.6)' : 'none',
+        borderBottom:    '1px solid rgba(120,80,5,0.35)',
+        boxShadow:       scrolled ? '0 4px 24px rgba(100,60,0,0.15)' : 'none',
         transition:      'background-color 0.3s, box-shadow 0.3s',
       }}
     >
       {/* Top micro-bar — desktop only */}
-      <div className="hidden md:block" style={{ borderBottom: '1px solid rgba(200,144,24,0.1)', padding: '4px 0' }}>
+      <div className="hidden md:block" style={{ borderBottom: '1px solid rgba(120,80,5,0.18)', padding: '4px 0' }}>
         <div className="container-wide flex justify-between items-center">
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.55rem', letterSpacing: '0.28em', color: 'rgba(200,144,24,0.55)', textTransform: 'uppercase' }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.55rem', letterSpacing: '0.28em', color: 'rgba(120,80,5,0.65)', textTransform: 'uppercase' }}>
             Comté de New Hanover — An de grâce 1886
           </span>
           <div className="flex items-center gap-5">
             <Link href="/espace-joueur" className="nav-link-dark">Espace Joueur</Link>
-            <span style={{ color: 'rgba(200,144,24,0.3)' }}>|</span>
+            <span style={{ color: 'rgba(120,80,5,0.30)' }}>|</span>
             <Link href="/espace-staff" className="nav-link-dark">Administration</Link>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Header() {
               fontWeight:    900,
               fontSize:      '1.45rem',
               letterSpacing: '0.1em',
-              background:    'linear-gradient(180deg, #f2e6cc 0%, #d4a040 55%, #8a6018 100%)',
+              background:    'linear-gradient(180deg, #b07010 0%, #7a4a08 55%, #3d2804 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -81,9 +81,9 @@ export default function Header() {
               display:         'flex',
               alignItems:      'center',
               justifyContent:  'center',
-              color:           'var(--amber)',
-              border:          '1px solid rgba(200,144,24,0.45)',
-              background:      menuOpen ? 'rgba(200,144,24,0.08)' : 'none',
+              color:           'var(--amber-dk)',
+              border:          '1px solid rgba(120,80,5,0.45)',
+              background:      menuOpen ? 'rgba(120,80,5,0.08)' : 'none',
               cursor:          'pointer',
               fontSize:        '1.1rem',
               transition:      'background 0.15s, border-color 0.15s',
@@ -98,11 +98,11 @@ export default function Header() {
         <div className="hidden md:block py-5 text-center">
           <Link href="/" style={{ textDecoration: 'none', display: 'block' }}>
             <div className="flex items-center justify-center gap-5 mb-3">
-              <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.5))' }} />
-              <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(200,144,24,0.55)', textTransform: 'uppercase' }}>
+              <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to right, transparent, rgba(120,80,5,0.45))' }} />
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(120,80,5,0.65)', textTransform: 'uppercase' }}>
                 ✦ Whitelist Strict · RP Dur & Organique · RedM ✦
               </span>
-              <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to left, transparent, rgba(200,144,24,0.5))' }} />
+              <div style={{ height: '1px', width: '60px', background: 'linear-gradient(to left, transparent, rgba(120,80,5,0.45))' }} />
             </div>
 
             <h1
@@ -111,7 +111,7 @@ export default function Header() {
                 fontWeight:    900,
                 fontSize:      'clamp(1.8rem, 5vw, 3.2rem)',
                 letterSpacing: '0.12em',
-                background:    'linear-gradient(180deg, #f2e6cc 0%, #d4a040 55%, #8a6018 100%)',
+                background:    'linear-gradient(180deg, #b07010 0%, #7a4a08 55%, #3d2804 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -126,7 +126,7 @@ export default function Header() {
               fontFamily:    'var(--font-display)',
               fontSize:      '0.58rem',
               letterSpacing: '0.65em',
-              color:         'rgba(200,144,24,0.55)',
+              color:         'rgba(120,80,5,0.65)',
               textTransform: 'uppercase',
               marginTop:     '6px',
             }}>
@@ -134,11 +134,11 @@ export default function Header() {
             </div>
 
             <div className="flex items-center justify-center gap-2 mt-3">
-              <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.4))' }} />
-              <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.8)' }} />
-              <div style={{ height: '2px', width: 120, background: 'linear-gradient(to right, rgba(200,144,24,0.3), rgba(200,144,24,0.6), rgba(200,144,24,0.3))' }} />
-              <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.8)' }} />
-              <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to left, transparent, rgba(200,144,24,0.4))' }} />
+              <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to right, transparent, rgba(120,80,5,0.40))' }} />
+              <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.5)' }} />
+              <div style={{ height: '2px', width: 120, background: 'linear-gradient(to right, rgba(120,80,5,0.28), rgba(200,144,24,0.6), rgba(120,80,5,0.28))' }} />
+              <div style={{ width: 6, height: 6, background: 'var(--amber)', borderRadius: '50%', boxShadow: '0 0 8px rgba(200,144,24,0.5)' }} />
+              <div style={{ height: '1px', flex: 1, maxWidth: 80, background: 'linear-gradient(to left, transparent, rgba(120,80,5,0.40))' }} />
             </div>
           </Link>
         </div>
@@ -158,7 +158,7 @@ export default function Header() {
                   {link.label}
                 </Link>
                 {i < navLinks.length - 1 && (
-                  <span style={{ alignSelf: 'center', color: 'rgba(200,144,24,0.25)', fontSize: '0.35rem' }}>◆</span>
+                  <span style={{ alignSelf: 'center', color: 'rgba(120,80,5,0.22)', fontSize: '0.35rem' }}>◆</span>
                 )}
               </li>
             ))}
@@ -176,7 +176,7 @@ export default function Header() {
                   <Link
                     href={link.href}
                     className="nav-link-dark flex items-center px-2 py-4"
-                    style={{ borderBottom: '1px solid rgba(200,144,24,0.1)', minHeight: 44 }}
+                    style={{ borderBottom: '1px solid rgba(120,80,5,0.15)', minHeight: 44 }}
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
@@ -199,7 +199,7 @@ export default function Header() {
       )}
 
       {/* Bottom amber glow line */}
-      <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(200,144,24,0.5), transparent)' }} />
+      <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(120,80,5,0.45), transparent)' }} />
     </header>
   )
 }

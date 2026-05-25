@@ -59,30 +59,30 @@ export default function HomePage() {
       <section
         className="relative py-28 md:py-40 overflow-hidden"
         style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,144,24,0.08) 0%, transparent 70%), linear-gradient(180deg, #0d0a05 0%, #060402 100%)',
-          borderBottom: '1px solid rgba(200,144,24,0.2)',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,144,24,0.12) 0%, transparent 70%), linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
+          borderBottom: '1px solid rgba(120,80,5,0.35)',
         }}
       >
         {/* Diagonal lines texture */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `repeating-linear-gradient(-55deg, transparent, transparent 40px, rgba(200,144,24,0.025) 40px, rgba(200,144,24,0.025) 41px)`,
+          backgroundImage: `repeating-linear-gradient(-55deg, transparent, transparent 40px, rgba(120,80,5,0.06) 40px, rgba(120,80,5,0.06) 41px)`,
         }} />
 
         {/* Corner accents */}
         <div className="absolute top-8 left-8 pointer-events-none" style={{
           width: 48, height: 48,
-          borderTop: '1px solid rgba(200,144,24,0.4)',
-          borderLeft: '1px solid rgba(200,144,24,0.4)',
+          borderTop: '1px solid rgba(120,80,5,0.55)',
+          borderLeft: '1px solid rgba(120,80,5,0.55)',
         }} />
         <div className="absolute top-8 right-8 pointer-events-none" style={{
           width: 48, height: 48,
-          borderTop: '1px solid rgba(200,144,24,0.4)',
-          borderRight: '1px solid rgba(200,144,24,0.4)',
+          borderTop: '1px solid rgba(120,80,5,0.55)',
+          borderRight: '1px solid rgba(120,80,5,0.55)',
         }} />
 
         <div className="container-narrow relative text-center">
           {/* Eyebrow */}
-          <div className="label-display mb-8" style={{ color: 'rgba(200,144,24,0.55)', letterSpacing: '0.4em' }}>
+          <div className="label-display mb-8" style={{ color: 'rgba(140,90,8,0.85)', letterSpacing: '0.4em' }}>
             ✦ &nbsp; Whitelist strict · RP Dur & Organique · RedM &nbsp; ✦
           </div>
 
@@ -118,15 +118,15 @@ export default function HomePage() {
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-0"
-            style={{ border: '1px solid rgba(200,144,24,0.15)' }}>
+            style={{ border: '1px solid rgba(120,80,5,0.28)' }}>
             {[
               { label: 'Whitelist',    value: 'Trois comptes requis' },
               { label: 'Période',      value: 'Amérique, 1886' },
               { label: 'Philosophie',  value: 'RP dur & organique' },
             ].map((item, i) => (
               <div key={item.label} className="text-center py-5 px-2 sm:py-6 sm:px-4"
-                style={{ borderLeft: i > 0 ? '1px solid rgba(200,144,24,0.15)' : undefined }}>
-                <div className="label-display mb-2" style={{ color: 'rgba(200,144,24,0.65)' }}>{item.label}</div>
+                style={{ borderLeft: i > 0 ? '1px solid rgba(120,80,5,0.28)' : undefined }}>
+                <div className="label-display mb-2" style={{ color: 'rgba(140,90,8,0.88)' }}>{item.label}</div>
                 <div className="section-heading" style={{ fontSize: 'clamp(0.7rem, 2vw, 0.95rem)', fontWeight: 600 }}>{item.value}</div>
               </div>
             ))}
@@ -135,24 +135,24 @@ export default function HomePage() {
       </section>
 
       {/* ══ PITCH ═════════════════════════════════════════════ */}
-      <section className="py-24 md:py-32" style={{ background: 'linear-gradient(180deg, #060402 0%, #0d0a05 100%)' }}>
+      <section className="py-24 md:py-32" style={{ background: 'linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 100%)' }}>
         <div className="container-narrow">
           <div className="text-center mb-16">
-            <div className="label-display mb-4" style={{ color: 'rgba(200,144,24,0.45)', letterSpacing: '0.4em' }}>
+            <div className="label-display mb-4" style={{ color: 'rgba(140,90,8,0.75)', letterSpacing: '0.4em' }}>
               Ce qui nous différencie
             </div>
             <h2 className="section-heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }}>
               Un monde à part entière
             </h2>
             <div className="rule-ornament mt-6" style={{ maxWidth: '20rem', margin: '1.5rem auto 0' }}>
-              <span style={{ color: 'rgba(200,144,24,0.5)' }}>◆</span>
+              <span style={{ color: 'rgba(140,90,8,0.80)' }}>◆</span>
             </div>
           </div>
 
           {/* Pull quote */}
           <div className="pull-quote mb-14">
             <p>&ldquo;Un monde où presque rien d&apos;important ne peut arriver sans intervention humaine.&rdquo;</p>
-            <footer className="label-display mt-4" style={{ color: 'rgba(200,144,24,0.4)', display: 'block' }}>
+            <footer className="label-display mt-4" style={{ color: 'rgba(140,90,8,0.72)', display: 'block' }}>
               — Charte fondatrice de Wild Frontier RP
             </footer>
           </div>
@@ -174,20 +174,20 @@ export default function HomePage() {
 
       {/* ══ JOURNAL ═══════════════════════════════════════════ */}
       <section className="py-24 md:py-32" style={{
-        background: 'linear-gradient(180deg, #0d0a05 0%, #060402 100%)',
-        borderTop: '1px solid rgba(200,144,24,0.15)',
-        borderBottom: '1px solid rgba(200,144,24,0.15)',
+        background: 'linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)',
+        borderTop: '1px solid rgba(120,80,5,0.28)',
+        borderBottom: '1px solid rgba(120,80,5,0.28)',
       }}>
         <div className="container-wide">
           {/* Masthead */}
-          <div className="text-center mb-14 pb-8" style={{ borderBottom: '1px solid rgba(200,144,24,0.18)' }}>
-            <div className="label-display mb-3" style={{ color: 'rgba(200,144,24,0.4)', letterSpacing: '0.4em' }}>
+          <div className="text-center mb-14 pb-8" style={{ borderBottom: '1px solid rgba(120,80,5,0.30)' }}>
+            <div className="label-display mb-3" style={{ color: 'rgba(140,90,8,0.72)', letterSpacing: '0.4em' }}>
               Nouvelles du comté
             </div>
             <h2 className="display-heading" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
               La Gazette du Comté
             </h2>
-            <div className="label-display mt-3" style={{ color: 'rgba(200,144,24,0.35)' }}>
+            <div className="label-display mt-3" style={{ color: 'rgba(140,90,8,0.65)' }}>
               Dernières publications — Édition du jour
             </div>
           </div>
@@ -195,13 +195,13 @@ export default function HomePage() {
           {/* Articles */}
           <div className="newspaper-grid">
             {latestArticles.map(article => (
-              <article key={article.title} className="pb-6" style={{ borderBottom: '1px solid rgba(200,144,24,0.12)' }}>
+              <article key={article.title} className="pb-6" style={{ borderBottom: '1px solid rgba(120,80,5,0.22)' }}>
                 <div className="meta-text mb-2" style={{ color: 'var(--orange)' }}>{article.category}</div>
                 <h3 className="section-heading mb-3" style={{ fontSize: '1.15rem', lineHeight: 1.3 }}>
                   {article.title}
                 </h3>
                 <p className="body-text mb-4" style={{ fontSize: '0.95rem' }}>{article.excerpt}</p>
-                <div className="meta-text" style={{ color: 'rgba(228,212,168,0.6)' }}>
+                <div className="meta-text" style={{ color: 'rgba(26,14,4,0.72)' }}>
                   {article.date} — {article.author}
                 </div>
               </article>
@@ -215,7 +215,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ CTA CANDIDATURE ═══════════════════════════════════ */}
-      <section className="py-24 md:py-32" style={{ background: 'linear-gradient(180deg, #060402 0%, #0d0a05 100%)' }}>
+      <section className="py-24 md:py-32" style={{ background: 'linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 100%)' }}>
         <div className="container-narrow">
           <div className="document-panel text-center">
 
@@ -227,7 +227,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="label-display mb-4" style={{ color: 'rgba(200,144,24,0.55)', letterSpacing: '0.35em' }}>
+            <div className="label-display mb-4" style={{ color: 'rgba(140,90,8,0.85)', letterSpacing: '0.35em' }}>
               Avis officiel
             </div>
 
@@ -242,8 +242,8 @@ export default function HomePage() {
 
             {/* Conditions */}
             <div className="inline-block text-left mb-10 px-6 py-5"
-              style={{ border: '1px solid rgba(200,144,24,0.2)', backgroundColor: 'rgba(200,144,24,0.04)' }}>
-              <div className="label-display mb-4" style={{ color: 'rgba(200,144,24,0.45)' }}>
+              style={{ border: '1px solid rgba(120,80,5,0.35)', backgroundColor: 'rgba(200,144,24,0.04)' }}>
+              <div className="label-display mb-4" style={{ color: 'rgba(140,90,8,0.75)' }}>
                 Conditions requises pour candidater
               </div>
               <ul className="space-y-2">
@@ -270,17 +270,17 @@ export default function HomePage() {
 
       {/* ══ INSTITUTIONS ══════════════════════════════════════ */}
       <section className="py-24 md:py-32"
-        style={{ background: 'linear-gradient(180deg, #0d0a05 0%, #060402 100%)', borderTop: '1px solid rgba(200,144,24,0.15)' }}>
+        style={{ background: 'linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%)', borderTop: '1px solid rgba(120,80,5,0.28)' }}>
         <div className="container-wide">
           <div className="text-center mb-14">
-            <div className="label-display mb-3" style={{ color: 'rgba(200,144,24,0.45)', letterSpacing: '0.4em' }}>
+            <div className="label-display mb-3" style={{ color: 'rgba(140,90,8,0.75)', letterSpacing: '0.4em' }}>
               Structure du comté
             </div>
             <h2 className="section-heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }}>
               Les Institutions
             </h2>
             <div className="rule-ornament mt-6" style={{ maxWidth: '20rem', margin: '1.5rem auto 0' }}>
-              <span style={{ color: 'rgba(200,144,24,0.5)' }}>◆</span>
+              <span style={{ color: 'rgba(140,90,8,0.80)' }}>◆</span>
             </div>
           </div>
 
