@@ -161,9 +161,9 @@ export default async function EspaceStaffPage() {
                     <div className="space-y-2">
                       {[
                         { label: 'Candidatures',        href: '/espace-staff/candidatures', note: 'Examiner les dossiers' },
+                        { label: 'Whitelist',            href: '/espace-staff/whitelist',    note: 'Joueurs autorisés sur le serveur' },
                         { label: 'CMS — Journal',        href: '/espace-staff/cms',          note: 'Créer / modifier les articles' },
                         { label: 'Archives officielles', href: '/archives',                  note: 'Registres et documents' },
-                        { label: 'Institutions',         href: '/institutions',              note: 'Structure politique' },
                         { label: 'Espace Joueur',        href: '/espace-joueur',             note: 'Vue joueur' },
                       ].map(a => (
                         <Link key={a.href} href={a.href}

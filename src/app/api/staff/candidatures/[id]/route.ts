@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { getCandidature, updateCandidatureStatus, type CandidatureStatus } from '@/lib/kv'
+import { getCandidature, updateCandidatureStatus, addToWhitelist, removeFromWhitelist, type CandidatureStatus } from '@/lib/kv'
 
 function requireStaff() {
   return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
@@ -23,6 +23,21 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const { status, note } = await req.json() as { status: CandidatureStatus; note?: string }
   const updated = await updateCandidatureStatus(params.id, status, note)
   if (!updated) return NextResponse.json({ error: 'Introuvable' }, { status: 404 })
+
+  // Whitelist sync
+  if (updated.cfxreId) {
+    if (status === 'approved') {
+      await addToWhitelist({
+        cfxreId:       updated.cfxreId,
+        cfxreUsername: updated.cfxreUsername,
+        discordName:   updated.discordName,
+        approvedAt:    new Date().toISOString(),
+        approvedBy:    user.name ?? undefined,
+      })
+    } else {
+      await removeFromWhitelist(updated.cfxreId)
+    }
+  }
 
   // Notify Discord
   const webhookUrl = process.env.DISCORD_WEBHOOK_CANDIDATURES

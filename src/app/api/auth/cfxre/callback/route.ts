@@ -42,8 +42,9 @@ export async function GET(req: NextRequest) {
     'User-Api-Client-Id': clientId,
   }
 
-  // Get current username from forum.cfx.re
+  // Get current user from forum.cfx.re
   let username: string
+  let cfxreId: string
   try {
     const sessionRes = await fetch('https://forum.cfx.re/session/current.json', { headers })
     if (!sessionRes.ok) {
@@ -51,7 +52,8 @@ export async function GET(req: NextRequest) {
     }
     const data = await sessionRes.json()
     username   = data.current_user?.username ?? ''
-    if (!username) {
+    cfxreId    = String(data.current_user?.id ?? '')
+    if (!username || !cfxreId) {
       return NextResponse.redirect(`${siteUrl}/candidatures?error=cfxre_user`)
     }
   } catch {
@@ -73,7 +75,7 @@ export async function GET(req: NextRequest) {
 
   const response = NextResponse.redirect(`${siteUrl}/candidatures`)
   response.cookies.delete('wf_cfx_nonce')
-  response.cookies.set('wf_cfxre', signCookie({ username, name, avatar }), {
+  response.cookies.set('wf_cfxre', signCookie({ username, cfxreId, name, avatar }), {
     httpOnly: true,
     secure:   process.env.NODE_ENV === 'production',
     sameSite: 'lax',

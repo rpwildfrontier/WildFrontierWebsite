@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 }
 
 export type SteamData  = { id: string; name: string; avatar: string }
-export type CfxreData  = { username: string; name: string; avatar: string }
+export type CfxreData  = { username: string; cfxreId: string; name: string; avatar: string }
 
 const etapes = [
   { n: '1', title: 'Lire',      desc: 'Lisez le règlement et l\'univers du serveur.' },

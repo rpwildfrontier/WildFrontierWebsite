@@ -18,6 +18,7 @@ export interface Candidature {
   steamId:       string
   steamName:     string
   cfxreUsername: string
+  cfxreId?:      string   // numeric fivem: identifier
   // Character
   prenom:        string
   nom:           string
@@ -27,6 +28,14 @@ export interface Candidature {
   histoire:      string
   experience:    string
   motivation:    string
+}
+
+export interface WhitelistEntry {
+  cfxreId:       string
+  cfxreUsername: string
+  discordName:   string
+  approvedAt:    string
+  approvedBy?:   string
 }
 
 export interface Article {
@@ -125,4 +134,34 @@ export async function deleteArticle(id: string): Promise<void> {
   const filtered = ids.filter(i => i !== id)
   await kv.del(ART_LIST)
   if (filtered.length) await kv.rpush(ART_LIST, ...filtered)
+}
+
+/* ── Whitelist ──────────────────────────────────────── */
+
+const WL_LIST = 'whitelist:list'
+const wlKey   = (id: string) => `whitelist:${id}`
+
+export async function addToWhitelist(entry: WhitelistEntry): Promise<void> {
+  const existing = await kv.get(wlKey(entry.cfxreId))
+  await kv.set(wlKey(entry.cfxreId), entry)
+  if (!existing) await kv.lpush(WL_LIST, entry.cfxreId)
+}
+
+export async function removeFromWhitelist(cfxreId: string): Promise<void> {
+  await kv.del(wlKey(cfxreId))
+  const ids      = await kv.lrange<string>(WL_LIST, 0, -1)
+  const filtered = ids.filter(i => i !== cfxreId)
+  await kv.del(WL_LIST)
+  if (filtered.length) await kv.rpush(WL_LIST, ...filtered)
+}
+
+export async function isWhitelisted(cfxreId: string): Promise<boolean> {
+  return (await kv.get(wlKey(cfxreId))) !== null
+}
+
+export async function listWhitelist(): Promise<WhitelistEntry[]> {
+  const ids = await kv.lrange<string>(WL_LIST, 0, -1)
+  if (!ids.length) return []
+  const all = await Promise.all(ids.map(id => kv.get<WhitelistEntry>(wlKey(id))))
+  return all.filter((e): e is WhitelistEntry => e !== null)
 }
