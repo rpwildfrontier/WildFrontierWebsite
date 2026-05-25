@@ -28,11 +28,17 @@ function ProgressRing({ pct, size = 80 }: { pct: number; size?: number }) {
 }
 
 const navItems = [
-  { href: '/univers',     icon: '🏔️', label: 'Univers',          desc: 'Découvrez un monde vivant, réaliste et sans compromis.' },
-  { href: '/reglement',   icon: '📖', label: 'Règlement',         desc: 'Les lois du comté pour préserver l\'immersion et le respect.' },
-  { href: '/journal',     icon: '📰', label: 'Journal du Comté',  desc: 'Toutes les annonces, événements et nouvelles officielles.' },
-  { href: '/archives',    icon: '🗄️', label: 'Archives',          desc: 'Accédez aux archives vérifiées et aux anciens numéros.' },
+  { href: '/univers',   label: 'Univers',         desc: 'Découvrez un monde vivant, réaliste et sans compromis.',         thumb: 'linear-gradient(135deg,#5C8A6A 0%,#2E5A3E 100%)', icon: '🏔️' },
+  { href: '/reglement', label: 'Règlement',        desc: 'Les lois du comté pour préserver l\'immersion et le respect.',   thumb: 'linear-gradient(135deg,#8A6A3E 0%,#5A3E1E 100%)', icon: '📖' },
+  { href: '/journal',   label: 'Journal du Comté', desc: 'Toutes les annonces, événements et nouvelles officielles.',      thumb: 'linear-gradient(135deg,#4A6A8A 0%,#2E4A5A 100%)', icon: '📰' },
+  { href: '/archives',  label: 'Archives',         desc: 'Accédez aux archives vérifiées et aux anciens numéros.',         thumb: 'linear-gradient(135deg,#7A6E4A 0%,#5A5230 100%)', icon: '🗄️' },
 ]
+
+const announcementIcons: Record<number, { bg: string; icon: string }> = {
+  0: { bg: 'linear-gradient(135deg,#8A6A3E,#5A3E1E)', icon: '📖' },
+  1: { bg: 'linear-gradient(135deg,#5C7A5C,#2E5A2E)', icon: '🎪' },
+  2: { bg: 'linear-gradient(135deg,#4A6A8A,#2E4A5A)', icon: '💰' },
+}
 
 const latestAnnouncements = [
   { date: '6 jours',  title: 'Mise à jour — Règlement v2.3',         excerpt: 'Révision des règles de conflits armés et d\'arrestation.' },
@@ -110,7 +116,7 @@ export default function HomePage() {
             <div className="nav-list-card">
               {navItems.map(item => (
                 <Link key={item.href} href={item.href} className="nav-list-item">
-                  <div className="nav-list-icon">{item.icon}</div>
+                  <div className="nav-list-icon" style={{ background: item.thumb, border: 'none', fontSize: '1.4rem' }}>{item.icon}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.88rem', color: 'var(--fg)', marginBottom: 2 }}>{item.label}</div>
                     <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.72rem', color: 'var(--fg-60)', lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{item.desc}</div>
@@ -118,24 +124,31 @@ export default function HomePage() {
                   <span className="nav-list-arrow">›</span>
                 </Link>
               ))}
-            </div>
 
-            {/* Mini cards: FAQ + Contact */}
-            <div style={{ display: 'flex', gap: 10 }}>
-              <Link href="/faq" className="mini-card">
-                <span style={{ fontSize: '1.3rem' }}>❓</span>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>FAQ</div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-40)' }}>Questions fréquentes</div>
-                </div>
-              </Link>
-              <Link href="/contact" className="mini-card">
-                <span style={{ fontSize: '1.3rem' }}>✉️</span>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>Contact</div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-40)' }}>Nous contacter</div>
-                </div>
-              </Link>
+              {/* FAQ + Contact inside card bottom */}
+              <div style={{ display: 'flex', borderTop: '1px solid rgba(120,90,50,0.08)' }}>
+                <Link href="/faq" style={{
+                  flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px',
+                  textDecoration: 'none', transition: 'background 0.12s',
+                }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#B8852E,#8F6420)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>❓</div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>FAQ</div>
+                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)' }}>Questions fréquentes</div>
+                  </div>
+                </Link>
+                <div style={{ width: 1, background: 'rgba(120,90,50,0.08)', alignSelf: 'stretch' }} />
+                <Link href="/contact" style={{
+                  flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px',
+                  textDecoration: 'none', transition: 'background 0.12s',
+                }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#6A8A7A,#3E5A4A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', flexShrink: 0 }}>✉️</div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--fg)' }}>Contact</div>
+                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--fg-40)' }}>Nous contacter</div>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -177,12 +190,17 @@ export default function HomePage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {latestAnnouncements.map((a, i) => (
-                  <div key={a.title} style={{ padding: '10px 0', borderBottom: i < latestAnnouncements.length - 1 ? '1px solid rgba(120,90,50,0.08)' : 'none' }}>
-                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 6, marginBottom: 2 }}>
-                      <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.75rem', color: 'var(--fg)', lineHeight: 1.3, flex: 1 }}>{a.title}</span>
-                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.60rem', color: 'var(--fg-40)', flexShrink: 0 }}>{a.date}</span>
+                  <div key={a.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 0', borderBottom: i < latestAnnouncements.length - 1 ? '1px solid rgba(120,90,50,0.08)' : 'none' }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: announcementIcons[i].bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem', flexShrink: 0 }}>
+                      {announcementIcons[i].icon}
                     </div>
-                    <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-60)', lineHeight: 1.4 }}>{a.excerpt}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 6, marginBottom: 2 }}>
+                        <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.75rem', color: 'var(--fg)', lineHeight: 1.3, flex: 1 }}>{a.title}</span>
+                        <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.60rem', color: 'var(--fg-40)', flexShrink: 0 }}>{a.date}</span>
+                      </div>
+                      <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.68rem', color: 'var(--fg-60)', lineHeight: 1.4 }}>{a.excerpt}</div>
+                    </div>
                   </div>
                 ))}
               </div>
