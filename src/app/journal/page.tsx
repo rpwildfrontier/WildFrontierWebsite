@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { listArticles } from '@/lib/kv'
 import articlesJson from '@/data/articles.json'
 
@@ -114,12 +115,19 @@ export default async function JournalPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
                   <div className="md:col-span-2">
                     <div className="meta-text mb-2" style={{ color: 'var(--rust)' }}>{featured.category}</div>
-                    <h2 className="section-heading mb-4" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', lineHeight: '1.25' }}>
-                      {featured.title}
-                    </h2>
+                    <Link href={`/journal/${featured.id}`} style={{ textDecoration: 'none' }}>
+                      <h2 className="section-heading mb-4" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', lineHeight: '1.25', color: 'var(--ink)' }}>
+                        {featured.title}
+                      </h2>
+                    </Link>
                     <p className="body-text mb-4">{featured.excerpt}</p>
-                    <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
-                      {featured.date} — {featured.author}
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
+                        {featured.date} — {featured.author}
+                      </div>
+                      <Link href={`/journal/${featured.id}`} className="meta-text" style={{ color: 'var(--rust)', textDecoration: 'none' }}>
+                        Lire la suite →
+                      </Link>
                     </div>
                   </div>
                   <div className="flex justify-center md:justify-end">
@@ -152,12 +160,19 @@ export default async function JournalPage() {
                 style={{ borderBottom: '1px solid var(--border-light)' }}
               >
                 <div className="meta-text mb-2" style={{ color: 'var(--rust)' }}>{article.category}</div>
-                <h3 className="section-heading mb-3" style={{ fontSize: '1.15rem', lineHeight: '1.3' }}>
-                  {article.title}
-                </h3>
+                <Link href={`/journal/${article.id}`} style={{ textDecoration: 'none' }}>
+                  <h3 className="section-heading mb-3" style={{ fontSize: '1.15rem', lineHeight: '1.3', color: 'var(--ink)' }}>
+                    {article.title}
+                  </h3>
+                </Link>
                 <p className="body-text mb-4" style={{ fontSize: '0.92rem' }}>{article.excerpt}</p>
-                <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
-                  {article.date} — {article.author}
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="meta-text" style={{ color: 'var(--ink-20)' }}>
+                    {article.date} — {article.author}
+                  </div>
+                  <Link href={`/journal/${article.id}`} className="meta-text" style={{ color: 'var(--rust)', textDecoration: 'none', fontSize: '0.72rem' }}>
+                    Lire →
+                  </Link>
                 </div>
               </article>
             ))}

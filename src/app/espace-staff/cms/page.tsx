@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import ArticleForm from '@/components/ArticleForm'
 import type { Article } from '@/lib/kv'
 
 export default function StaffCmsPage() {
+  const { data: session }           = useSession()
+  const defaultAuthor               = session?.user?.name ?? 'Rédaction'
   const [articles,   setArticles]   = useState<Article[]>([])
   const [loading,    setLoading]    = useState(true)
   const [showForm,   setShowForm]   = useState(false)
@@ -58,7 +61,7 @@ export default function StaffCmsPage() {
             <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Nouvel article
             </div>
-            <ArticleForm onCancel={() => { setShowForm(false); load() }} />
+            <ArticleForm defaultAuthor={defaultAuthor} onSaved={() => { setShowForm(false); load() }} onCancel={() => setShowForm(false)} />
           </div>
         )}
 
@@ -69,7 +72,7 @@ export default function StaffCmsPage() {
             <div className="label-display mb-4" style={{ color: 'var(--gold)', fontSize: '0.65rem' }}>
               Modifier : {editing.title}
             </div>
-            <ArticleForm article={editing} onCancel={() => { setEditing(null); load() }} />
+            <ArticleForm article={editing} defaultAuthor={defaultAuthor} onSaved={() => { setEditing(null); load() }} onCancel={() => setEditing(null)} />
           </div>
         )}
 

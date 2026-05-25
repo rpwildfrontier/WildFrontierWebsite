@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { listCandidatures, type CandidatureStatus } from '@/lib/kv'
+import CandidatureSearch from '@/components/CandidatureSearch'
 
 const STATUS_LABELS: Record<CandidatureStatus, string> = {
   pending:  'En attente',
@@ -23,90 +25,111 @@ const STATUS_BG: Record<CandidatureStatus, string> = {
 export default async function StaffCandidaturesPage({
   searchParams,
 }: {
-  searchParams: { status?: string }
+  searchParams: { status?: string; q?: string }
 }) {
   const session = await getServerSession(authOptions)
   if (!(session?.user as { isStaff?: boolean })?.isStaff) redirect('/espace-staff')
 
-  const filter     = (searchParams.status as CandidatureStatus | undefined)
-  const candidatures = await listCandidatures(filter)
+  const filter = searchParams.status as CandidatureStatus | undefined
+  const query  = (searchParams.q ?? '').toLowerCase().trim()
 
+  // Single KV call — compute all counts in memory
+  const all  = await listCandidatures()
   const counts = {
-    all:      (await listCandidatures()).length,
-    pending:  (await listCandidatures('pending')).length,
-    approved: (await listCandidatures('approved')).length,
-    rejected: (await listCandidatures('rejected')).length,
+    all:      all.length,
+    pending:  all.filter(c => c.status === 'pending').length,
+    approved: all.filter(c => c.status === 'approved').length,
+    rejected: all.filter(c => c.status === 'rejected').length,
   }
+
+  let candidatures = filter ? all.filter(c => c.status === filter) : all
+  if (query) {
+    candidatures = candidatures.filter(c =>
+      `${c.prenom} ${c.nom} ${c.discordName} ${c.cfxreUsername} ${c.metier}`.toLowerCase().includes(query)
+    )
+  }
+
+  // Most recent first
+  candidatures = candidatures.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
   return (
     <div style={{ backgroundColor: '#140800', minHeight: '100vh' }}>
       <div className="container-wide py-10">
 
         {/* Header */}
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
-          <div>
-            <Link href="/espace-staff" className="label-display"
-              style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.65rem' }}>
-              ← Espace Staff
-            </Link>
-            <h1 className="display-heading mt-1" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--parchment)' }}>
+        <div className="mb-8">
+          <Link href="/espace-staff" className="label-display"
+            style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.65rem' }}>
+            ← Espace Staff
+          </Link>
+          <div className="flex items-start justify-between flex-wrap gap-4 mt-1">
+            <h1 className="display-heading" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--parchment)' }}>
               Candidatures
             </h1>
+            <Suspense>
+              <CandidatureSearch value={query} />
+            </Suspense>
           </div>
-          <div className="flex gap-2 flex-wrap">
-            {([
-              ['', 'Toutes', counts.all],
-              ['pending',  'En attente', counts.pending],
-              ['approved', 'Validées',   counts.approved],
-              ['rejected', 'Refusées',   counts.rejected],
-            ] as const).map(([val, label, count]) => (
-              <Link key={val} href={val ? `?status=${val}` : '/espace-staff/candidatures'}
+        </div>
+
+        {/* Filtres statut */}
+        <div className="flex gap-2 flex-wrap mb-6">
+          {([
+            ['', 'Toutes', counts.all],
+            ['pending',  'En attente', counts.pending],
+            ['approved', 'Validées',   counts.approved],
+            ['rejected', 'Refusées',   counts.rejected],
+          ] as const).map(([val, label, count]) => {
+            const active = (filter ?? '') === val
+            return (
+              <Link
+                key={val}
+                href={val ? `?status=${val}${query ? `&q=${encodeURIComponent(query)}` : ''}` : `/espace-staff/candidatures${query ? `?q=${encodeURIComponent(query)}` : ''}`}
                 style={{
-                  padding:    '6px 14px',
-                  border:     `1.5px solid ${(filter ?? '') === val ? 'rgba(184,134,11,0.6)' : 'rgba(184,134,11,0.2)'}`,
-                  backgroundColor: (filter ?? '') === val ? 'rgba(184,134,11,0.1)' : 'transparent',
-                  color:      (filter ?? '') === val ? 'var(--parchment)' : 'rgba(240,230,200,0.4)',
+                  padding: '6px 14px',
+                  border: `1.5px solid ${active ? 'rgba(184,134,11,0.6)' : 'rgba(184,134,11,0.2)'}`,
+                  backgroundColor: active ? 'rgba(184,134,11,0.1)' : 'transparent',
+                  color: active ? 'var(--parchment)' : 'rgba(240,230,200,0.4)',
                   fontFamily: 'var(--font-display)',
-                  fontSize:   '0.72rem',
+                  fontSize: '0.72rem',
                   letterSpacing: '0.08em',
                   textDecoration: 'none',
                   textTransform: 'uppercase',
                   whiteSpace: 'nowrap',
-                }}>
+                }}
+              >
                 {label} ({count})
               </Link>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
-        {/* List */}
+        {/* Liste */}
         {candidatures.length === 0 ? (
           <div className="text-center py-20">
             <p className="body-text" style={{ color: 'rgba(240,230,200,0.3)' }}>
-              Aucune candidature {filter ? STATUS_LABELS[filter].toLowerCase() : ''}.
+              {query
+                ? `Aucun résultat pour « ${query} »`
+                : `Aucune candidature${filter ? ` ${STATUS_LABELS[filter].toLowerCase()}` : ''}.`}
             </p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {candidatures.map(c => (
               <Link key={c.id} href={`/espace-staff/candidatures/${c.id}`}
                 style={{ display: 'block', textDecoration: 'none' }}>
                 <div className="flex items-center gap-4 p-4"
-                  style={{ border: '1px solid rgba(184,134,11,0.2)', backgroundColor: 'rgba(240,230,200,0.02)',
-                    transition: 'border-color 0.15s', cursor: 'pointer' }}>
+                  style={{ border: '1px solid rgba(184,134,11,0.18)', backgroundColor: 'rgba(240,230,200,0.02)', transition: 'border-color 0.15s' }}>
 
-                  {/* Status dot */}
-                  <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
-                    backgroundColor: STATUS_COLORS[c.status] }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0, backgroundColor: STATUS_COLORS[c.status] }} />
 
-                  {/* Identité */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 flex-wrap">
                       <span className="section-heading" style={{ color: 'var(--parchment)', fontSize: '1rem' }}>
                         {c.prenom} {c.nom}
                       </span>
                       <span style={{
-                        fontSize: '0.65rem', padding: '2px 10px',
+                        fontSize: '0.62rem', padding: '2px 8px',
                         fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase',
                         border: `1px solid ${STATUS_COLORS[c.status]}55`,
                         backgroundColor: STATUS_BG[c.status],
@@ -116,24 +139,24 @@ export default async function StaffCandidaturesPage({
                       </span>
                     </div>
                     <div className="flex gap-4 mt-1 flex-wrap">
-                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.4)', fontSize: '0.78rem' }}>
-                        Discord : {c.discordName}
+                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.35)', fontSize: '0.75rem' }}>
+                        {c.discordName}
                       </span>
-                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.4)', fontSize: '0.78rem' }}>
-                        CFX.re : {c.cfxreUsername}
+                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.35)', fontSize: '0.75rem' }}>
+                        {c.cfxreUsername}
+                        {c.cfxreId && <span style={{ color: 'rgba(184,134,11,0.4)', marginLeft: 4 }}>fivem:{c.cfxreId}</span>}
                       </span>
-                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.4)', fontSize: '0.78rem' }}>
+                      <span className="body-text" style={{ color: 'rgba(240,230,200,0.25)', fontSize: '0.75rem' }}>
                         {c.metier}
                       </span>
                     </div>
                   </div>
 
-                  {/* Date */}
                   <div className="text-right flex-shrink-0">
-                    <div className="label-display" style={{ color: 'rgba(240,230,200,0.25)', fontSize: '0.62rem' }}>
+                    <div className="label-display" style={{ color: 'rgba(240,230,200,0.2)', fontSize: '0.6rem' }}>
                       {new Date(c.createdAt).toLocaleDateString('fr-FR')}
                     </div>
-                    <div className="label-display mt-0.5" style={{ color: 'rgba(184,134,11,0.5)', fontSize: '0.62rem' }}>
+                    <div className="label-display mt-0.5" style={{ color: 'rgba(184,134,11,0.4)', fontSize: '0.6rem' }}>
                       Voir →
                     </div>
                   </div>
@@ -142,6 +165,12 @@ export default async function StaffCandidaturesPage({
             ))}
           </div>
         )}
+
+        <div className="mt-4">
+          <p className="label-display" style={{ color: 'rgba(240,230,200,0.15)', fontSize: '0.6rem' }}>
+            {candidatures.length} dossier{candidatures.length > 1 ? 's' : ''} affiché{candidatures.length > 1 ? 's' : ''}
+          </p>
+        </div>
       </div>
     </div>
   )
