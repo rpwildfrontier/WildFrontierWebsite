@@ -117,17 +117,17 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0"
-            style={{ borderTop: '1px solid rgba(200,144,24,0.15)', borderLeft: '1px solid rgba(200,144,24,0.15)' }}>
+          <div className="grid grid-cols-3 gap-0"
+            style={{ border: '1px solid rgba(200,144,24,0.15)' }}>
             {[
               { label: 'Whitelist',    value: 'Trois comptes requis' },
               { label: 'Période',      value: 'Amérique, 1886' },
               { label: 'Philosophie',  value: 'RP dur & organique' },
-            ].map(item => (
-              <div key={item.label} className="text-center py-6 px-4"
-                style={{ borderRight: '1px solid rgba(200,144,24,0.15)', borderBottom: '1px solid rgba(200,144,24,0.15)' }}>
-                <div className="label-display mb-2" style={{ color: 'rgba(200,144,24,0.45)' }}>{item.label}</div>
-                <div className="section-heading" style={{ fontSize: '0.95rem', fontWeight: 600 }}>{item.value}</div>
+            ].map((item, i) => (
+              <div key={item.label} className="text-center py-5 px-2 sm:py-6 sm:px-4"
+                style={{ borderLeft: i > 0 ? '1px solid rgba(200,144,24,0.15)' : undefined }}>
+                <div className="label-display mb-2" style={{ color: 'rgba(200,144,24,0.65)' }}>{item.label}</div>
+                <div className="section-heading" style={{ fontSize: 'clamp(0.7rem, 2vw, 0.95rem)', fontWeight: 600 }}>{item.value}</div>
               </div>
             ))}
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
                   {article.title}
                 </h3>
                 <p className="body-text mb-4" style={{ fontSize: '0.95rem' }}>{article.excerpt}</p>
-                <div className="meta-text" style={{ color: 'rgba(228,212,168,0.3)' }}>
+                <div className="meta-text" style={{ color: 'rgba(228,212,168,0.6)' }}>
                   {article.date} — {article.author}
                 </div>
               </article>

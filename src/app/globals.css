@@ -28,23 +28,23 @@
   --amber:        #c89018;
   --amber-lt:     #e8b430;
   --amber-dk:     #7a5a10;
-  --amber-glow:   rgba(200, 144, 24, 0.18);
-  --amber-border: rgba(200, 144, 24, 0.28);
-  --amber-border-lt: rgba(200, 144, 24, 0.14);
-  --amber-border-br: rgba(200, 144, 24, 0.55);
+  --amber-glow:      rgba(200, 144, 24, 0.25);
+  --amber-border:    rgba(200, 144, 24, 0.45);
+  --amber-border-lt: rgba(200, 144, 24, 0.24);
+  --amber-border-br: rgba(200, 144, 24, 0.72);
 
   /* Rust / burnt orange – secondary accent */
   --orange:       #c05820;
   --orange-dk:    #7a3010;
-  --orange-glow:  rgba(192, 88, 32, 0.22);
+  --orange-glow:  rgba(192, 88, 32, 0.28);
 
-  /* Text */
+  /* Text — boosted for legibility on dark bg */
   --cream:     #e4d4a8;
-  --cream-80:  rgba(228, 212, 168, 0.80);
-  --cream-60:  rgba(228, 212, 168, 0.60);
-  --cream-40:  rgba(228, 212, 168, 0.40);
-  --cream-20:  rgba(228, 212, 168, 0.20);
-  --cream-10:  rgba(228, 212, 168, 0.10);
+  --cream-80:  rgba(228, 212, 168, 0.92);
+  --cream-60:  rgba(228, 212, 168, 0.76);
+  --cream-40:  rgba(228, 212, 168, 0.58);
+  --cream-20:  rgba(228, 212, 168, 0.40);
+  --cream-10:  rgba(228, 212, 168, 0.22);
 
   /* Status */
   --green:     #3ba55d;
@@ -60,17 +60,17 @@
 
   --ink:        #e4d4a8;
   --ink-light:  #c8b888;
-  --ink-20:     rgba(228, 212, 168, 0.40);
-  --ink-40:     rgba(228, 212, 168, 0.60);
-  --ink-60:     rgba(228, 212, 168, 0.75);
+  --ink-20:     rgba(228, 212, 168, 0.55);
+  --ink-40:     rgba(228, 212, 168, 0.72);
+  --ink-60:     rgba(228, 212, 168, 0.88);
 
   --gold:       #c89018;
   --gold-muted: #8a6810;
   --rust:       #c05820;
 
-  --border:       rgba(200, 144, 24, 0.28);
-  --border-light: rgba(200, 144, 24, 0.14);
-  --border-dark:  rgba(200, 144, 24, 0.52);
+  --border:       rgba(200, 144, 24, 0.42);
+  --border-light: rgba(200, 144, 24, 0.22);
+  --border-dark:  rgba(200, 144, 24, 0.62);
 }
 
 /* ── Reset & Base ───────────────────────────────────────── */
@@ -159,7 +159,7 @@ button { font-family: inherit; }
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--cream-40);
+  color: var(--cream-60);
   line-height: 1.4;
 }
 
@@ -168,7 +168,7 @@ button { font-family: inherit; }
   font-size: 0.64rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--cream-40);
+  color: var(--cream-60);
 }
 
 /* ── Ornaments ──────────────────────────────────────────── */
@@ -340,7 +340,7 @@ button { font-family: inherit; }
   font-size: 0.62rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--cream-40);
+  color: var(--cream-60);
   text-decoration: none;
   transition: color 0.15s;
 }
@@ -349,7 +349,7 @@ button { font-family: inherit; }
 .footer-link {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: var(--cream-40);
+  color: var(--cream-60);
   text-decoration: none;
   transition: color 0.15s;
 }
@@ -360,7 +360,7 @@ button { font-family: inherit; }
   font-size: 0.6rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--cream-20);
+  color: var(--cream-40);
   text-decoration: none;
   transition: color 0.15s;
 }
