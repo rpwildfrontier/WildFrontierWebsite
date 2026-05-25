@@ -30,30 +30,21 @@ export async function GET(req: NextRequest) {
 
   let steamName   = steamId64
   let steamAvatar = ''
-  let ownsRdr2    = false
 
   const apiKey = process.env.STEAM_API_KEY
   if (apiKey) {
     try {
-      const [profileRes, gamesRes] = await Promise.all([
-        fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${apiKey}&steamids=${steamId64}`),
-        fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${apiKey}&steamid=${steamId64}&include_appinfo=false&appids_filter[0]=1174180`),
-      ])
-
+      const profileRes = await fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${apiKey}&steamids=${steamId64}`)
       if (profileRes.ok) {
         const d = await profileRes.json()
         const p = d?.response?.players?.[0]
         if (p) { steamName = p.personaname; steamAvatar = p.avatar }
       }
-      if (gamesRes.ok) {
-        const d = await gamesRes.json()
-        ownsRdr2 = (d?.response?.games?.length ?? 0) > 0
-      }
-    } catch { /* profile public requis */ }
+    } catch { /* profil public requis */ }
   }
 
   const response = NextResponse.redirect(`${siteUrl}/candidatures`)
-  response.cookies.set('wf_steam', signCookie({ id: steamId64, name: steamName, avatar: steamAvatar, ownsRdr2 }), {
+  response.cookies.set('wf_steam', signCookie({ id: steamId64, name: steamName, avatar: steamAvatar }), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',

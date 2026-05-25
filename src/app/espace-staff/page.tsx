@@ -274,7 +274,7 @@ export default async function EspaceStaffPage() {
                     { label: 'Webhook candidatures', ok: !!process.env.DISCORD_WEBHOOK_CANDIDATURES },
                     { label: 'Webhook annonces',     ok: !!(process.env.DISCORD_WEBHOOK_ANNONCES ?? process.env.DISCORD_WEBHOOK_CANDIDATURES) },
                     { label: 'Bot Discord',          ok: !!process.env.DISCORD_BOT_TOKEN },
-                    { label: 'Steam API',            ok: !!process.env.STEAM_API_KEY },
+                    { label: 'KV Storage',           ok: !!(process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL) },
                   ].map(c => (
                     <div key={c.label} className="flex items-center gap-2">
                       <span style={{ width: 8, height: 8, borderRadius: '50%', flexShrink: 0,

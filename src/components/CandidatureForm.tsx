@@ -101,7 +101,7 @@ export default function CandidatureForm({ discordName, discordAvatar, steamData,
           ) : (
             <LinkCard
               service="Steam"
-              hint="Profil public requis"
+              hint="Steam, Epic ou Rockstar"
               action={
                 <a href="/api/auth/steam" className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}>
                   Connecter Steam
