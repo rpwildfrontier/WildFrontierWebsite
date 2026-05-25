@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 import { BookIcon, HatIcon, SearchIcon, BellIcon } from './Icons'
 
 const navLinks = [
@@ -51,6 +52,8 @@ function ChevronDown() {
 }
 
 export default function Header() {
+  const { data: session, status }      = useSession()
+  const isAuthenticated                = status === 'authenticated'
   const [scrolled, setScrolled]       = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef                    = useRef<HTMLDivElement>(null)
@@ -118,35 +121,54 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile: search + bell + avatar */}
+          {/* Mobile: right actions — conditional on auth */}
           <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
-            <button style={{
-              width: 36, height: 36,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'var(--ink-60)',
-            }}>
-              <SearchIcon size={20} color="currentColor" />
-            </button>
-            <button style={{
-              width: 36, height: 36,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: 'none', background: 'transparent', cursor: 'pointer',
-              color: 'var(--ink-60)',
-              position: 'relative',
-            }}>
-              <BellIcon size={20} color="currentColor" />
-              {/* notification dot */}
-              <span style={{
-                position: 'absolute', top: 7, right: 7,
-                width: 6, height: 6,
-                borderRadius: '50%',
-                background: 'var(--seal)',
-                border: '1.5px solid rgba(247,242,232,0.95)',
-              }} />
-            </button>
-            {/* Profile dropdown */}
-            <div ref={profileRef} style={{ position: 'relative' }}>
+
+            {/* Non connecté : bouton connexion compact */}
+            {!isAuthenticated && status !== 'loading' && (
+              <Link href="/candidatures" style={{
+                display: 'flex', alignItems: 'center',
+                fontFamily: 'var(--font-body)', fontSize: '0.65rem', fontWeight: 700,
+                letterSpacing: '0.10em', textTransform: 'uppercase',
+                color: 'var(--ink-60)',
+                border: '1px solid rgba(26,18,8,0.14)',
+                borderRadius: 3, padding: '7px 12px',
+                textDecoration: 'none', background: 'transparent',
+                transition: 'border-color 0.15s, color 0.15s',
+              }}>
+                Se connecter
+              </Link>
+            )}
+
+            {/* Connecté : search + bell + avatar */}
+            {isAuthenticated && (
+              <>
+                <button style={{
+                  width: 36, height: 36,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: 'none', background: 'transparent', cursor: 'pointer',
+                  color: 'var(--ink-60)',
+                }}>
+                  <SearchIcon size={20} color="currentColor" />
+                </button>
+                <button style={{
+                  width: 36, height: 36,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: 'none', background: 'transparent', cursor: 'pointer',
+                  color: 'var(--ink-60)', position: 'relative',
+                }}>
+                  <BellIcon size={20} color="currentColor" />
+                  <span style={{
+                    position: 'absolute', top: 7, right: 7,
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: 'var(--seal)',
+                    border: '1.5px solid rgba(247,242,232,0.95)',
+                  }} />
+                </button>
+              </>
+            )}
+            {/* Profile dropdown — connecté seulement */}
+            {isAuthenticated && <div ref={profileRef} style={{ position: 'relative' }}>
               <button
                 onClick={() => setProfileOpen(v => !v)}
                 aria-expanded={profileOpen}
@@ -162,14 +184,18 @@ export default function Header() {
                   color: 'var(--ink-40)',
                 }}
               >
-                <div style={{
-                  width: 26, height: 26, borderRadius: 3,
-                  background: 'linear-gradient(135deg,#B8920E,#8B6914)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-cinzel)',
-                  fontSize: '0.75rem', color: '#FAF5EC', fontWeight: 700,
-                  flexShrink: 0,
-                }}>J</div>
+                {session?.user?.image ? (
+                  <img src={session.user.image} alt="" style={{ width: 26, height: 26, borderRadius: 3, objectFit: 'cover', flexShrink: 0 }} />
+                ) : (
+                  <div style={{
+                    width: 26, height: 26, borderRadius: 3,
+                    background: 'linear-gradient(135deg,#B8920E,#8B6914)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: 'var(--font-cinzel)',
+                    fontSize: '0.75rem', color: '#FAF5EC', fontWeight: 700,
+                    flexShrink: 0,
+                  }}>{(session?.user?.name ?? '?')[0].toUpperCase()}</div>
+                )}
                 <span style={{
                   display: 'inline-flex',
                   transition: 'transform 0.2s',
@@ -195,16 +221,20 @@ export default function Header() {
                   {/* User info */}
                   <div style={{ padding: '14px 16px 12px', borderBottom: '1px solid var(--rule)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <div style={{
-                        width: 36, height: 36, borderRadius: 4,
-                        background: 'linear-gradient(135deg,#B8920E,#8B6914)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: 'var(--font-cinzel)',
-                        fontSize: '0.9rem', color: '#FAF5EC', fontWeight: 700, flexShrink: 0,
-                      }}>J</div>
+                      {session?.user?.image ? (
+                        <img src={session.user.image} alt="" style={{ width: 36, height: 36, borderRadius: 4, objectFit: 'cover', flexShrink: 0 }} />
+                      ) : (
+                        <div style={{
+                          width: 36, height: 36, borderRadius: 4,
+                          background: 'linear-gradient(135deg,#B8920E,#8B6914)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontFamily: 'var(--font-cinzel)',
+                          fontSize: '0.9rem', color: '#FAF5EC', fontWeight: 700, flexShrink: 0,
+                        }}>{(session?.user?.name ?? 'J')[0].toUpperCase()}</div>
+                      )}
                       <div>
-                        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--ink)', lineHeight: 1.2 }}>Joueur</div>
-                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--ink-40)', marginTop: 1 }}>Candidature en cours</div>
+                        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--ink)', lineHeight: 1.2 }}>{session?.user?.name ?? 'Joueur'}</div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--ink-40)', marginTop: 1 }}>Connecté via Discord</div>
                       </div>
                     </div>
                   </div>
@@ -241,17 +271,17 @@ export default function Header() {
 
                   {/* Divider + logout */}
                   <div style={{ borderTop: '1px solid var(--rule)', padding: '6px 0 4px' }}>
-                    <Link
-                      href="/api/auth/signout"
-                      onClick={() => setProfileOpen(false)}
+                    <button
+                      onClick={() => { setProfileOpen(false); signOut({ callbackUrl: '/' }) }}
                       style={{
                         display: 'flex', alignItems: 'center', gap: 10,
-                        padding: '9px 16px',
-                        textDecoration: 'none',
+                        padding: '9px 16px', width: '100%',
+                        border: 'none', background: 'transparent', cursor: 'pointer',
                         color: 'var(--seal)',
                         fontFamily: 'var(--font-body)',
                         fontSize: '0.80rem',
                         fontWeight: 500,
+                        textAlign: 'left',
                         transition: 'background 0.1s',
                       }}
                       onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--seal-lt)'}
@@ -263,11 +293,11 @@ export default function Header() {
                         <line x1="13" y1="10" x2="3" y2="10"/>
                       </svg>
                       Se déconnecter
-                    </Link>
+                    </button>
                   </div>
                 </div>
               )}
-            </div>
+            </div>}
           </div>
         </div>
       </div>
