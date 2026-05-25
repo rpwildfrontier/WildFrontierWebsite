@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════
-   WILD FRONTIER RP — Design System v8
-   Dark Premium Western Palette
+   WILD FRONTIER RP — Design System v9
+   Light Clean Western Palette
    ═══════════════════════════════════════════════════════════ */
 
 :root {
@@ -14,54 +14,54 @@
   --font-display:  'Special Elite', monospace;
 
   /* ── Core surfaces ───────────────────────────────────── */
-  --bg:           #0D0804;
-  --bg-elevated:  #181008;
-  --bg-card:      #1E130A;
-  --bg-input:     #150F06;
-  --bg-section:   #181008;
-  --bg-deep:      #0A0603;
-  --bg-warm:      #1E130A;
+  --bg:           #F8F7F4;
+  --bg-elevated:  #F2F0EB;
+  --bg-card:      #FFFFFF;
+  --bg-input:     #F8F7F4;
+  --bg-section:   #F2F0EB;
+  --bg-deep:      #ECEAE4;
+  --bg-warm:      #FDFCFA;
 
   /* ── Foreground / text ───────────────────────────────── */
-  --fg:    #EDE0C4;
-  --fg-80: rgba(237,224,196,0.85);
-  --fg-70: rgba(237,224,196,0.70);
-  --fg-60: rgba(237,224,196,0.65);
-  --fg-45: rgba(237,224,196,0.45);
-  --fg-40: rgba(237,224,196,0.45);
-  --fg-25: rgba(237,224,196,0.25);
-  --fg-20: rgba(237,224,196,0.25);
-  --fg-12: rgba(237,224,196,0.12);
-  --fg-10: rgba(237,224,196,0.12);
+  --fg:    #1C1408;
+  --fg-80: rgba(28,20,8,0.82);
+  --fg-70: rgba(28,20,8,0.72);
+  --fg-60: rgba(28,20,8,0.62);
+  --fg-45: rgba(28,20,8,0.45);
+  --fg-40: rgba(28,20,8,0.42);
+  --fg-25: rgba(28,20,8,0.25);
+  --fg-20: rgba(28,20,8,0.22);
+  --fg-12: rgba(28,20,8,0.12);
+  --fg-10: rgba(28,20,8,0.10);
 
   /* ── Gold accent ─────────────────────────────────────── */
-  --gold:    #C9982A;
-  --gold-lt: #E8B840;
+  --gold:    #C4942A;
+  --gold-lt: #DDB040;
   --gold-dk: #9A7018;
-  --brick:   #C9982A;
+  --brick:   #C4942A;
   --brick-dk:#9A7018;
-  --brick-lt:#E8B840;
-  --sand:    #C9982A;
+  --brick-lt:#DDB040;
+  --sand:    #C4942A;
   --sand-dk: #9A7018;
 
   /* ── Borders ─────────────────────────────────────────── */
-  --border:        rgba(201,152,42,0.15);
-  --border-light:  rgba(201,152,42,0.09);
-  --border-md:     rgba(201,152,42,0.25);
-  --border-dark:   rgba(201,152,42,0.40);
-  --border-strong: rgba(201,152,42,0.40);
+  --border:        rgba(28,20,8,0.08);
+  --border-light:  rgba(28,20,8,0.05);
+  --border-md:     rgba(28,20,8,0.14);
+  --border-dark:   rgba(28,20,8,0.22);
+  --border-strong: rgba(28,20,8,0.30);
 
   /* ── Rules (dividers) ────────────────────────────────── */
-  --rule:      rgba(201,152,42,0.12);
-  --rule-md:   rgba(201,152,42,0.22);
-  --rule-bold: rgba(201,152,42,0.40);
-  --rule-gold: rgba(201,152,42,0.30);
+  --rule:      rgba(28,20,8,0.08);
+  --rule-md:   rgba(28,20,8,0.14);
+  --rule-bold: rgba(28,20,8,0.30);
+  --rule-gold: rgba(196,148,42,0.30);
 
   /* ── Status ──────────────────────────────────────────── */
-  --green:     #3D9E3D;
-  --green-dim: rgba(61,158,61,0.15);
-  --red:       #D04848;
-  --red-dim:   rgba(208,72,72,0.15);
+  --green:     #287828;
+  --green-dim: rgba(40,120,40,0.10);
+  --red:       #C84040;
+  --red-dim:   rgba(200,64,64,0.12);
 
   /* ── Legacy aliases (keep for other pages) ───────────── */
   --font-serif:      var(--font-heading);
@@ -88,13 +88,13 @@
   --amber:           var(--gold);
   --amber-lt:        var(--gold-lt);
   --amber-dk:        var(--gold-dk);
-  --amber-glow:      rgba(201,152,42,0.08);
-  --amber-border:    rgba(201,152,42,0.40);
-  --amber-border-lt: rgba(201,152,42,0.22);
-  --amber-border-br: rgba(201,152,42,0.55);
+  --amber-glow:      rgba(196,148,42,0.08);
+  --amber-border:    rgba(196,148,42,0.40);
+  --amber-border-lt: rgba(196,148,42,0.22);
+  --amber-border-br: rgba(196,148,42,0.55);
   --orange:          var(--gold);
   --orange-dk:       var(--gold-dk);
-  --orange-glow:     rgba(201,152,42,0.08);
+  --orange-glow:     rgba(196,148,42,0.08);
   --cream:           var(--fg);
   --cream-80:        var(--fg-80);
   --cream-60:        var(--fg-60);
@@ -126,14 +126,14 @@ body {
 }
 
 ::selection {
-  background-color: rgba(201,152,42,0.25);
+  background-color: rgba(196,148,42,0.18);
   color: var(--fg);
 }
 
 ::-webkit-scrollbar             { width: 6px; }
-::-webkit-scrollbar-track       { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb       { background: rgba(201,152,42,0.30); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(201,152,42,0.50); }
+::-webkit-scrollbar-track       { background: #F2F0EB; }
+::-webkit-scrollbar-thumb       { background: rgba(196,148,42,0.30); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(196,148,42,0.50); }
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
@@ -636,11 +636,11 @@ select.form-input option { background: var(--bg-card); color: var(--fg); }
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: 64px;
-  background: rgba(13,8,4,0.96);
+  background: #FFFFFF;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(201,152,42,0.14);
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.60);
+  border-top: 1px solid rgba(28,20,8,0.08);
+  box-shadow: 0 -2px 16px rgba(28,20,8,0.06);
   display: flex;
   align-items: stretch;
   z-index: 100;
@@ -652,7 +652,7 @@ select.form-input option { background: var(--bg-card); color: var(--fg); }
   align-items: center;
   justify-content: center;
   gap: 3px;
-  color: rgba(237,224,196,0.35);
+  color: rgba(28,20,8,0.35);
   font-family: var(--font-body);
   font-size: 0.58rem;
   font-weight: 600;
@@ -663,9 +663,9 @@ select.form-input option { background: var(--bg-card); color: var(--fg); }
   transition: color 0.15s;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-.bottom-nav-item.active, .bottom-nav-item[data-active="true"] { color: var(--gold); }
-.bottom-nav-item:hover { color: rgba(201,152,42,0.75); }
-.bottom-nav-icon { font-size: 1.25rem; line-height: 1; }
+.bottom-nav-item.active, .bottom-nav-item[data-active="true"] { color: #C4942A; }
+.bottom-nav-item:hover { color: rgba(196,148,42,0.85); }
+.bottom-nav-icon { display: flex; align-items: center; justify-content: center; line-height: 1; }
 
 /* ── Western hero banner ────────────────────────────────── */
 .hero-western {
@@ -681,7 +681,7 @@ select.form-input option { background: var(--bg-card); color: var(--fg); }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(13,8,4,0.45) 0%, rgba(13,8,4,0.65) 100%);
+  background: linear-gradient(180deg, rgba(13,8,4,0.40) 0%, rgba(13,8,4,0.62) 100%);
 }
 .hero-western > * { position: relative; z-index: 2; }
 
