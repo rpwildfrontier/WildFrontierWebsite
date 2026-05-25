@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { BookIcon, HatIcon, SearchIcon, BellIcon } from './Icons'
@@ -15,28 +16,35 @@ const navLinks = [
 
 function Logo() {
   return (
-    <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 9, flexShrink: 0 }}>
-      {/* Sheriff star badge */}
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path
-          d="M14 2L16.5 8.5L23.5 7L20.5 13.5L26 17L20.5 20.5L23.5 27L16.5 25.5L14 26L11.5 25.5L4.5 27L7.5 20.5L2 17L7.5 13.5L4.5 7L11.5 8.5L14 2Z"
-          fill="#8B6914"
-          stroke="#7A5C0A"
-          strokeWidth="0.6"
-        />
-        <circle cx="14" cy="17" r="4.5" fill="#F7F2E8" stroke="#7A5C0A" strokeWidth="0.8"/>
-        <circle cx="14" cy="17" r="2.5" fill="#8B6914"/>
-      </svg>
-      <div>
+    <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+      <Image
+        src="/logoWildFrontier.PNG"
+        alt="Wild Frontier RP"
+        width={44}
+        height={44}
+        style={{ objectFit: 'contain', borderRadius: 3 }}
+        priority
+      />
+      <div style={{ lineHeight: 1 }}>
         <div style={{
-          fontFamily: 'var(--font-cinzel)',
-          fontWeight: 700,
-          fontSize: '0.84rem',
-          letterSpacing: '0.08em',
+          fontFamily: 'var(--font-display)',
+          fontSize: '0.86rem',
+          letterSpacing: '0.05em',
           color: 'var(--ink)',
           lineHeight: 1,
         }}>
-          WILD FRONTIER <span style={{ fontSize: '0.54rem', letterSpacing: '0.20em', color: 'var(--ink-40)', verticalAlign: 'super' }}>RP</span>
+          Wild Frontier
+        </div>
+        <div style={{
+          fontFamily: 'var(--font-body)',
+          fontSize: '0.55rem',
+          fontWeight: 700,
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'var(--ink-40)',
+          marginTop: 2,
+        }}>
+          Roleplay · RedM
         </div>
       </div>
     </Link>
