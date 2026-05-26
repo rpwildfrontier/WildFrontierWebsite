@@ -22,7 +22,7 @@ function Logo() {
         alt="Wild Frontier RP"
         width={44}
         height={44}
-        style={{ objectFit: 'contain', borderRadius: 3 }}
+        style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
         priority
       />
       <div style={{ lineHeight: 1 }}>

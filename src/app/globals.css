@@ -46,9 +46,9 @@
   --bottle-tint:  rgba(30,61,42,0.10);
 
   /* ── Borders & Rules ─────────────────────────────────── */
-  --rule:         rgba(26,18,8,0.10);   /* standard rule */
-  --rule-md:      rgba(26,18,8,0.18);   /* medium rule */
-  --rule-strong:  rgba(26,18,8,0.35);   /* strong rule, dividers */
+  --rule:         rgba(26,18,8,0.14);   /* standard rule */
+  --rule-md:      rgba(26,18,8,0.22);   /* medium rule */
+  --rule-strong:  rgba(26,18,8,0.40);   /* strong rule, dividers */
 
   /* ── Status ──────────────────────────────────────────── */
   --green:        #2A6E2A;
@@ -137,6 +137,8 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
   color: var(--ink);
   line-height: 1.7;
   min-height: 100vh;
@@ -356,7 +358,7 @@ button { font-family: inherit; }
 /* ── Cards & Panels ─────────────────────────────────────── */
 
 .parchment-card {
-  background: var(--bg-card);
+  background: var(--bg-paper);
   border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 1.5rem;
@@ -671,7 +673,7 @@ select.form-input option { background: var(--bg-card); color: var(--ink); }
 
 /* ── Nav list card ──────────────────────────────────────── */
 .nav-list-card {
-  background: var(--bg-card);
+  background: var(--bg-paper);
   border: 1px solid var(--rule);
   border-radius: 6px;
   overflow: hidden;
